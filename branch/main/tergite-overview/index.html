@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tergite overview &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="prev" title="Setup" href="../setup/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tergite overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#contents">Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-tergite">What is Tergite?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-is-tergite-necessary">Why is Tergite necessary?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#operation-of-a-quantum-computer-requires-a-highly-specialized-skillset">1. Operation of a quantum computer requires a highly specialized skillset.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quantum-computers-need-frequent-recalibration">2. Quantum computers need frequent recalibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#idle-time-on-a-quantum-computer-is-very-expensive">3. Idle time on a quantum computer is very expensive.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#what-can-i-do-with-tergite">What can I do with Tergite?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#access-the-wacqt-quantum-computer">1. Access the WACQT quantum computer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calibrate-superconducting-qubit-chips">2. Calibrate superconducting qubit chips</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expose-a-physical-quantum-computer-to-the-internet">3. Expose a physical quantum computer to the internet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#how-does-tergite-work">How does Tergite work?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#components-of-the-stack">Components of the stack</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backend">Backend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#frontend">Frontend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#software-development-kit-sdk">Software Development Kit (SDK)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#automatic-calibration-tool">Automatic Calibration Tool</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-flow">Basic Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#test-out-tergite">Test out Tergite</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tergite overview</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/tergite-overview.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="tergite-overview">
+<h1>Tergite overview<a class="headerlink" href="#tergite-overview" title="Link to this heading"></a></h1>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#what-is-tergite">What is Tergite?</a></p></li>
+<li><p><a class="reference internal" href="#why-is-tergite-necessary">Why is Tergite necessary?</a></p></li>
+<li><p><a class="reference internal" href="#what-can-i-do-with-tergite">What can I do with Tergite?</a></p></li>
+<li><p><a class="reference internal" href="#how-does-tergite-work">How does Tergite work?</a></p></li>
+<li><p><a class="reference internal" href="#test-out-tergite">Test out Tergite</a></p></li>
+</ul>
+</section>
+<section id="what-is-tergite">
+<h2>What is Tergite?<a class="headerlink" href="#what-is-tergite" title="Link to this heading"></a></h2>
+<p>Let’s take a walk down memory lane to the time when classical computers were large expensive machines that could only be afforded by large corporations.
+Back then, batch processing enabled multiple users in a given company to share a single computer.</p>
+<figure class="align-default" id="id1">
+<img alt="An operator working on old mainframe" src="../_images/operator-working-on-mainframe.jpg" />
+<figcaption>
+<p><span class="caption-text">An operator working on an old mainframe</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Quantum computing is at a similar stage today. Quantum computers are large expensive machines that can only be operated by a select few.
+There is need for specialized software to give multiple users simplified access to a single quantum computer.</p>
+<p><a class="reference external" href="https://tergite.github.io/">Tergite</a> is one such collection of software that enables a quantum computer experimentalist to:</p>
+<ul class="simple">
+<li><p>Submit experiments to the quantum computer’s queue.</p></li>
+<li><p>Retrieve results of completed experiments</p></li>
+<li><p>Monitor the device parameters of the quantum computer</p></li>
+</ul>
+<p>Just like in the batch processing of old, the quantum computer requires an operator.<br />
+Through Tergite, an operator of a quantum computer can do the following:</p>
+<ul class="simple">
+<li><p>(Re)calibrate the quantum computer</p></li>
+<li><p>Turn on/off the quantum computer</p></li>
+<li><p>Manage experimentalists’ access to the quantum computer</p></li>
+</ul>
+</section>
+<section id="why-is-tergite-necessary">
+<h2>Why is Tergite necessary?<a class="headerlink" href="#why-is-tergite-necessary" title="Link to this heading"></a></h2>
+<section id="operation-of-a-quantum-computer-requires-a-highly-specialized-skillset">
+<h3>1. Operation of a quantum computer requires a highly specialized skillset.<a class="headerlink" href="#operation-of-a-quantum-computer-requires-a-highly-specialized-skillset" title="Link to this heading"></a></h3>
+<p>Most quantum computers of today are very complex machines that require specialized care in a lab environment.
+The skillset required to operate such machines takes many years of postgraduate studies to master.</p>
+<p>Tergite gives experimentalists, who don’t have this skill, access to the quantum computer to run experiments on it.</p>
+</section>
+<section id="quantum-computers-need-frequent-recalibration">
+<h3>2. Quantum computers need frequent recalibration<a class="headerlink" href="#quantum-computers-need-frequent-recalibration" title="Link to this heading"></a></h3>
+<p>One characteristic of today’s quantum computers is the fact that their device parameters drift with time.
+Temperature changes, cosmic radiation, aging of electronics, mechanincal vibrations etc. cause the
+device parameters of the quantum computers to change with time.</p>
+<p><a class="reference external" href="https://github.com/tergite/tergite-autocalibration/">Tergite autocalibration</a> is library used to recalibrate quantum computers. It is part of the Tergite stack.</p>
+</section>
+<section id="idle-time-on-a-quantum-computer-is-very-expensive">
+<h3>3. Idle time on a quantum computer is very expensive.<a class="headerlink" href="#idle-time-on-a-quantum-computer-is-very-expensive" title="Link to this heading"></a></h3>
+<p>A typical quantum computer today costs more than half a million euros (€500,000).
+Every second a quantum computer lies under-utilized, a lot of money is being thrown down the drain.
+Batching experiments from multiple experimentalists is an attempt to make sure the quantum computer is in use at all times.</p>
+</section>
+</section>
+<section id="what-can-i-do-with-tergite">
+<h2>What can I do with Tergite?<a class="headerlink" href="#what-can-i-do-with-tergite" title="Link to this heading"></a></h2>
+<section id="access-the-wacqt-quantum-computer">
+<h3>1. Access the WACQT quantum computer<a class="headerlink" href="#access-the-wacqt-quantum-computer" title="Link to this heading"></a></h3>
+<p>The Wallenberg Center for Quantum Computing (WACQT) is a Swedish national research programme with a focus on quantum technology.
+One of its major goals is to create a quantum computer that is accessible to Swedish researchers and WACQT industrial partners.
+The WACQT quantum computer is physically housed at <a class="reference external" href="https://www.chalmers.se/">Chalmers University of Technology</a>
+and is operated by <a class="reference external" href="https://chalmersnextlabs.se/">Chalmers Next Labs AB</a>.</p>
+<figure class="align-default" id="id2">
+<img alt="The WACQT quantum computer" src="../_images/wacqt-quantum-computer.jpeg" />
+<figcaption>
+<p><span class="caption-text">The WACQT quantum computer laboratory</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>In order to access this quantum computer via the internet, one has to go through the Tergite stack running at <a class="reference external" href="https://www.qal9000.se">QAL 9000</a>.</p>
+<p>Interacting with the WACQT quantum computer requires the use of the <a class="reference external" href="https://pypi.org/project/tergite/">Tergite software development kit (SDK)</a>.</p>
+</section>
+<section id="calibrate-superconducting-qubit-chips">
+<h3>2. Calibrate superconducting qubit chips<a class="headerlink" href="#calibrate-superconducting-qubit-chips" title="Link to this heading"></a></h3>
+<p>If one has a superconducting quantum chip with a design similar to the WACQT quantum computer chip, it is possible to
+calibrate this chip using the <a class="reference external" href="https://github.com/tergite/tergite-autocalibration/">Tergite autocalibration</a> library.
+Doing this requires substantial hardware and software know-how.</p>
+<p><a class="reference external" href="https://chalmersnextlabs.se/">Chalmers Next Labs AB</a> currently offers a service to calibrate such chips for Swedish Small and Medium Enterprises (SMEs).</p>
+</section>
+<section id="expose-a-physical-quantum-computer-to-the-internet">
+<h3>3. Expose a physical quantum computer to the internet<a class="headerlink" href="#expose-a-physical-quantum-computer-to-the-internet" title="Link to this heading"></a></h3>
+<p>The entire Tergite stack can be run in front of a physical quantum computer to expose it to a select group of
+experimentalists. It contains Identity Access Management (IAM) to handle authorization of only members of a
+given organization. Any organization can use Tergite to spin up a cloud offering for their quantum computers.
+The Tergite stack is open source and free to use or extend under the <a class="reference external" href="https://github.com/tergite/tergite/blob/main/LICENSE.txt">Apache 2.0 License</a>.</p>
+<p>However, there are a few requirements for Tergite to work well:</p>
+<ul class="simple">
+<li><p>The quantum chip should be a superconducting with a similar design to the WACQT quantum computer chip designas described by Kosen et al. in the <a class="reference external" href="https://journals.aps.org/prxquantum/abstract/10.1103/PRXQuantum.5.030350">“Signal Crosstalk in a Flip-Chip Quantum Processor”</a> article.</p></li>
+<li><p>The quantum computer should be controlled by <a class="reference external" href="https://www.qblox.com/">Qblox instruments</a></p></li>
+</ul>
+</section>
+</section>
+<section id="how-does-tergite-work">
+<h2>How does Tergite work?<a class="headerlink" href="#how-does-tergite-work" title="Link to this heading"></a></h2>
+<figure class="align-default" id="id3">
+<img alt="Data flow diagram of Tergite" src="../_images/tergite-data-flow.png" />
+<figcaption>
+<p><span class="caption-text">Data flows in Tergite</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="components-of-the-stack">
+<h3>Components of the stack<a class="headerlink" href="#components-of-the-stack" title="Link to this heading"></a></h3>
+<p>Tergite is composed of four main components:</p>
+<section id="backend">
+<h4><a class="reference external" href="https://github.com/tergite/tergite-backend">Backend</a><a class="headerlink" href="#backend" title="Link to this heading"></a></h4>
+<p>The operating system of the quantum computer. Its basic functions include:</p>
+<ul class="simple">
+<li><p>Transpiling <a class="reference external" href="https://arxiv.org/abs/1809.03452">OpenPulse</a> job definitions to <a class="reference external" href="https://quantify-os.org/docs/quantify-scheduler/dev/tutorials/Schedules%20and%20Pulses.html">Quantify Schedules</a> that can be understood by the Qblox control instruments.</p></li>
+<li><p>Queuing jobs so that the quantum chip can receive one job at a time.</p></li>
+<li><p>Saving the device parameters of the quantum chip, after (re)calibration.</p></li>
+</ul>
+</section>
+<section id="frontend">
+<h4><a class="reference external" href="https://github.com/tergite/tergite-frontend">Frontend</a><a class="headerlink" href="#frontend" title="Link to this heading"></a></h4>
+<p>The public interface through which users on the internet interact with the quantum computer. It consists of:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/tergite/tergite-frontend/tree/main/apps/tergite-mss">RESTful API</a>
+: The programmatic interface through which scripts and other computer programs interact with the quantum computer</p></li>
+<li><p><a class="reference external" href="https://github.com/tergite/tergite-frontend/tree/main/apps/tergite-dashboard">Dashboard</a>
+: The web-based graphical interface through which users interact with the quantum computer</p></li>
+</ul>
+</section>
+<section id="software-development-kit-sdk">
+<h4><a class="reference external" href="https://github.com/tergite/tergite">Software Development Kit (SDK)</a><a class="headerlink" href="#software-development-kit-sdk" title="Link to this heading"></a></h4>
+<p>The Library which eases writing of python scripts and programs that interact with the quantum computer.
+It is based on <a class="reference external" href="https://github.com/Qiskit/qiskit">Qiskit</a> and communicates with the backend using <a class="reference external" href="https://arxiv.org/abs/1809.03452">OpenPulse</a> sent via HTTP/HTTPS</p>
+</section>
+<section id="automatic-calibration-tool">
+<h4><a class="reference external" href="https://github.com/tergite/tergite-autocalibration">Automatic Calibration Tool</a><a class="headerlink" href="#automatic-calibration-tool" title="Link to this heading"></a></h4>
+<p>The Command Line Interface (CLI) used to determine the device parameters of the quantum computer.</p>
+</section>
+</section>
+<section id="basic-flow">
+<h3>Basic Flow<a class="headerlink" href="#basic-flow" title="Link to this heading"></a></h3>
+<p><img alt="User sends quantum experiments to Tergite" src="../_images/tergite-basic-flow-row-1.svg" />
+<img alt="Tergite backend handles quantum experiments" src="../_images/tergite-basic-flow-row-2.svg" />
+<img alt="Qblox instruments run experiments" src="../_images/tergite-basic-flow-row-3.svg" />
+<img alt="User retrieves experiment results" src="../_images/tergite-basic-flow-row-4.svg" /></p>
+</section>
+</section>
+<section id="test-out-tergite">
+<h2>Test out Tergite<a class="headerlink" href="#test-out-tergite" title="Link to this heading"></a></h2>
+<p>It is possible to test out a live instance of Tergite by using the <a class="reference external" href="https://www.qal9000.se/">QAL 9000 quantum computer</a>.
+However, someone from WACQT must have given you permission to use it because it is not open to the general public.</p>
+<p>It is also possible to run Tergite on your own computer.
+The only catch is that you will only be able to run your experiments on simulators.
+Instructions on how to run Tergite locally are found in the <a class="reference external" href="https://tergite.github.io/tutorials/01_quick_start.html">Tergite quick start tutorial</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../setup/" class="btn btn-neutral float-left" title="Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
