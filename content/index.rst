@@ -38,6 +38,7 @@ The quantum autumn school will be held in Stockholm in hybrid form, in-person an
    :maxdepth: 1
    :caption: Day 2
 
+   qec
    notebooks/Decoding_excercise.ipynb
    notebooks/css_code_steane.ipynb
    notebooks/surface_code_threshold.ipynb    
