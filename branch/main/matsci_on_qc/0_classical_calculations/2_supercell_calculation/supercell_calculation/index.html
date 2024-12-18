@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supercell Calculations &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/QAS2024_QAOA_exercise/">Tutorial - Variational Quantum Algorithms</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/css_code_steane/">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/surface_code_threshold/">Tutorial - Estimating the Surface Code Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/option_pricing_tutorial/">Tutorial - Pricing a European call option using quantum computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/flight_scheduling_optimization_qaoa/">Tutorial - Solving Flight Scheduling Optimization using QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README/">Quantum Computing for Materials Science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Supercell Calculations</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/matsci_on_qc/0_classical_calculations/2_supercell_calculation/supercell_calculation.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="supercell-calculations">
+<h1>Supercell Calculations<a class="headerlink" href="#supercell-calculations" title="Link to this heading"></a></h1>
+<p>This directory contains the CP2K calculations for the periodic Al(111) surface with triazole system. The calculations use periodic boundary conditions with a 4x4 surface unit cell and include the complete system (surface + adsorbate) for total energy calculations.</p>
+<section id="system-details">
+<h2>System Details<a class="headerlink" href="#system-details" title="Link to this heading"></a></h2>
+<p>The cell parameters from cp2k.log (reference lines 3-9):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Vector</span> <span class="n">a</span> <span class="p">[</span><span class="n">angstrom</span><span class="p">]:</span>    <span class="mf">11.455</span>     <span class="mf">0.000</span>     <span class="mf">0.000</span>   <span class="o">|</span><span class="n">a</span><span class="o">|</span> <span class="o">=</span>    <span class="mf">11.455130</span>
+<span class="n">Vector</span> <span class="n">b</span> <span class="p">[</span><span class="n">angstrom</span><span class="p">]:</span>     <span class="mf">5.728</span>     <span class="mf">9.920</span>     <span class="mf">0.000</span>   <span class="o">|</span><span class="n">b</span><span class="o">|</span> <span class="o">=</span>    <span class="mf">11.455130</span>
+<span class="n">Vector</span> <span class="n">c</span> <span class="p">[</span><span class="n">angstrom</span><span class="p">]:</span>     <span class="mf">0.000</span>     <span class="mf">0.000</span>    <span class="mf">40.000</span>   <span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="o">=</span>    <span class="mf">40.000000</span>
+<span class="n">Angle</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">),</span> <span class="n">alpha</span> <span class="p">[</span><span class="n">degree</span><span class="p">]:</span> <span class="mf">90.000000</span>
+<span class="n">Angle</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">c</span><span class="p">),</span> <span class="n">beta</span> <span class="p">[</span><span class="n">degree</span><span class="p">]:</span> <span class="mf">90.000000</span>
+<span class="n">Angle</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">),</span> <span class="n">gamma</span> <span class="p">[</span><span class="n">degree</span><span class="p">]:</span> <span class="mf">60.000000</span>
+</pre></div>
+</div>
+</section>
+<section id="calculation-setup">
+<h2>Calculation Setup<a class="headerlink" href="#calculation-setup" title="Link to this heading"></a></h2>
+<p>The calculation uses:</p>
+<ul class="simple">
+<li><p>DFT with PBE functional</p></li>
+<li><p>DZVP-MOLOPT basis set</p></li>
+<li><p>GTH pseudopotentials</p></li>
+<li><p>Periodic boundary conditions (XYZ)</p></li>
+<li><p>Gamma-point sampling</p></li>
+<li><p>OT (Orbital Transformation) method for SCF</p></li>
+</ul>
+</section>
+<section id="input-files">
+<h2>Input Files<a class="headerlink" href="#input-files" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Structure file (<code class="docutils literal notranslate"><span class="pre">al_slab_with_triazole_4x4x6_v10.0.xyz</span></code>):</p></li>
+</ol>
+<ul class="simple">
+<li><p>4×4 Al(111) surface supercell</p></li>
+<li><p>6 layers of Al atoms</p></li>
+<li><p>Triazole molecule at optimized geometry</p></li>
+<li><p>Vacuum spacing of 10 Å</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>CP2K input file (<code class="docutils literal notranslate"><span class="pre">Al111_active_space.inp</span></code>):</p></li>
+</ol>
+<ul class="simple">
+<li><p>Complete DFT setup</p></li>
+<li><p>Cell parameters and periodicity</p></li>
+<li><p>Electronic structure calculation parameters</p></li>
+</ul>
+</section>
+<section id="output-files">
+<h2>Output Files<a class="headerlink" href="#output-files" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Al111_4x4_active_space_adsorbate-RESTART.wfn</span></code>: Wavefunction file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cp2k.log</span></code>: Main output file containing:</p>
+<ul>
+<li><p>Energy convergence</p></li>
+<li><p>Forces</p></li>
+<li><p>Electronic structure information</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run.log</span></code>: Runtime information</p></li>
+</ul>
+</section>
+<section id="cp2k-input-file">
+<h2>CP2K Input File<a class="headerlink" href="#cp2k-input-file" title="Link to this heading"></a></h2>
+<p>The complete CP2K input file (<code class="docutils literal notranslate"><span class="pre">Al111_active_space.inp</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">GLOBAL</span>
+  <span class="n">PROJECT</span> <span class="n">Al111_4x4_active_space_adsorbate</span>
+  <span class="n">PRINT_LEVEL</span> <span class="n">MEDIUM</span>
+  <span class="n">RUN_TYPE</span> <span class="n">ENERGY</span>
+<span class="o">&amp;</span><span class="n">END</span> <span class="n">GLOBAL</span>
+
+<span class="o">&amp;</span><span class="n">FORCE_EVAL</span>
+  <span class="n">METHOD</span> <span class="n">QUICKSTEP</span>
+  <span class="o">&amp;</span><span class="n">DFT</span>
+    <span class="n">BASIS_SET_FILE_NAME</span> <span class="n">BASIS_MOLOPT</span>
+    <span class="n">POTENTIAL_FILE_NAME</span> <span class="n">POTENTIAL</span>
+    <span class="o">&amp;</span><span class="n">QS</span>
+      <span class="n">METHOD</span> <span class="n">GPW</span>
+      <span class="n">EPS_DEFAULT</span> <span class="mf">1.0E-10</span>
+      <span class="n">EXTRAPOLATION</span> <span class="n">ASPC</span>
+      <span class="n">EXTRAPOLATION_ORDER</span> <span class="mi">3</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">QS</span>
+    <span class="o">&amp;</span><span class="n">POISSON</span>
+      <span class="n">PERIODIC</span> <span class="n">XYZ</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">POISSON</span>
+    <span class="o">&amp;</span><span class="n">MGRID</span>
+      <span class="n">CUTOFF</span> <span class="mi">500</span>
+      <span class="n">REL_CUTOFF</span> <span class="mi">60</span>
+      <span class="n">NGRIDS</span> <span class="mi">5</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">MGRID</span>
+    <span class="o">&amp;</span><span class="n">SCF</span>
+      <span class="n">SCF_GUESS</span> <span class="n">MOPAC</span>
+      <span class="n">EPS_SCF</span> <span class="mf">1.0E-6</span>
+      <span class="n">MAX_SCF</span> <span class="mi">500</span>
+      <span class="n">ADDED_MOS</span> <span class="mi">100</span>
+      <span class="o">&amp;</span><span class="n">DIAGONALIZATION</span>
+        <span class="n">ALGORITHM</span> <span class="n">STANDARD</span>
+        <span class="n">EPS_ADAPT</span> <span class="mf">0.01</span>
+      <span class="o">&amp;</span><span class="n">END</span> <span class="n">DIAGONALIZATION</span>
+      <span class="o">&amp;</span><span class="n">MIXING</span>
+        <span class="n">METHOD</span> <span class="n">BROYDEN_MIXING</span>
+        <span class="n">ALPHA</span> <span class="mf">0.1</span>
+        <span class="n">BETA</span> <span class="mf">1.5</span>
+        <span class="n">NBROYDEN</span> <span class="mi">8</span>
+      <span class="o">&amp;</span><span class="n">END</span> <span class="n">MIXING</span>
+      <span class="o">&amp;</span><span class="n">SMEAR</span>
+        <span class="n">METHOD</span> <span class="n">FERMI_DIRAC</span>
+        <span class="n">ELECTRONIC_TEMPERATURE</span> <span class="p">[</span><span class="n">K</span><span class="p">]</span> <span class="mi">1000</span>
+      <span class="o">&amp;</span><span class="n">END</span> <span class="n">SMEAR</span>
+      <span class="o">&amp;</span><span class="n">OUTER_SCF</span>
+        <span class="n">MAX_SCF</span> <span class="mi">50</span>
+        <span class="n">EPS_SCF</span> <span class="mf">1.0E-6</span>
+      <span class="o">&amp;</span><span class="n">END</span> <span class="n">OUTER_SCF</span>
+      <span class="o">&amp;</span><span class="n">PRINT</span>
+        <span class="o">&amp;</span><span class="n">RESTART</span> <span class="n">ON</span>
+        <span class="o">&amp;</span><span class="n">END</span>
+      <span class="o">&amp;</span><span class="n">END</span> <span class="n">PRINT</span>
+      <span class="n">IGNORE_CONVERGENCE_FAILURE</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">SCF</span>
+    <span class="o">&amp;</span><span class="n">XC</span>
+      <span class="o">&amp;</span><span class="n">XC_FUNCTIONAL</span> <span class="n">PBE</span>
+      <span class="o">&amp;</span><span class="n">END</span> <span class="n">XC_FUNCTIONAL</span>
+      <span class="o">&amp;</span><span class="n">VDW_POTENTIAL</span>
+        <span class="n">DISPERSION_FUNCTIONAL</span> <span class="n">PAIR_POTENTIAL</span>
+        <span class="o">&amp;</span><span class="n">PAIR_POTENTIAL</span>
+          <span class="n">TYPE</span> <span class="n">DFTD3</span>
+          <span class="n">PARAMETER_FILE_NAME</span> <span class="n">dftd3</span><span class="o">.</span><span class="n">dat</span>
+          <span class="n">REFERENCE_FUNCTIONAL</span> <span class="n">PBE</span>
+        <span class="o">&amp;</span><span class="n">END</span> <span class="n">PAIR_POTENTIAL</span>
+      <span class="o">&amp;</span><span class="n">END</span> <span class="n">VDW_POTENTIAL</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">XC</span>
+    <span class="o">&amp;</span><span class="n">PRINT</span>
+      <span class="o">&amp;</span><span class="n">MO</span>
+        <span class="n">ENERGIES</span> <span class="n">TRUE</span>
+        <span class="n">OCCUPATION_NUMBERS</span> <span class="n">TRUE</span>
+        <span class="o">&amp;</span><span class="n">EACH</span>
+          <span class="n">QS_SCF</span> <span class="mi">0</span>
+        <span class="o">&amp;</span><span class="n">END</span>
+      <span class="o">&amp;</span><span class="n">END</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">PRINT</span>
+  <span class="o">&amp;</span><span class="n">END</span> <span class="n">DFT</span>
+  <span class="o">&amp;</span><span class="n">SUBSYS</span>
+    <span class="o">&amp;</span><span class="n">CELL</span>
+      <span class="n">A</span> <span class="mf">11.45512985522207</span> <span class="mf">0.00000000000000</span> <span class="mf">0.0000000000</span>
+      <span class="n">B</span> <span class="mf">5.727564927611035</span> <span class="mf">9.92043345827187</span> <span class="mf">0.0000000000</span>
+      <span class="n">C</span> <span class="mf">0.000000000000000</span> <span class="mf">0.00000000000000</span> <span class="mf">40.000000000</span>
+      <span class="n">PERIODIC</span> <span class="n">XYZ</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">CELL</span>
+    <span class="o">&amp;</span><span class="n">TOPOLOGY</span>
+      <span class="n">COORD_FILE_NAME</span> <span class="n">al_slab_with_triazole_4x4x6_v10</span><span class="mf">.0</span><span class="o">.</span><span class="n">xyz</span>
+      <span class="n">COORD_FILE_FORMAT</span> <span class="n">xyz</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">TOPOLOGY</span>
+    <span class="o">&amp;</span><span class="n">KIND</span> <span class="n">Al</span>
+      <span class="n">BASIS_SET</span> <span class="n">DZVP</span><span class="o">-</span><span class="n">MOLOPT</span><span class="o">-</span><span class="n">SR</span><span class="o">-</span><span class="n">GTH</span>
+      <span class="n">POTENTIAL</span> <span class="n">GTH</span><span class="o">-</span><span class="n">PBE</span><span class="o">-</span><span class="n">q3</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">KIND</span>
+    <span class="o">&amp;</span><span class="n">KIND</span> <span class="n">C</span>
+      <span class="n">BASIS_SET</span> <span class="n">DZVP</span><span class="o">-</span><span class="n">MOLOPT</span><span class="o">-</span><span class="n">GTH</span>
+      <span class="n">POTENTIAL</span> <span class="n">GTH</span><span class="o">-</span><span class="n">PBE</span><span class="o">-</span><span class="n">q4</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">KIND</span>
+    <span class="o">&amp;</span><span class="n">KIND</span> <span class="n">N</span>
+      <span class="n">BASIS_SET</span> <span class="n">DZVP</span><span class="o">-</span><span class="n">MOLOPT</span><span class="o">-</span><span class="n">GTH</span>
+      <span class="n">POTENTIAL</span> <span class="n">GTH</span><span class="o">-</span><span class="n">PBE</span><span class="o">-</span><span class="n">q5</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">KIND</span>
+    <span class="o">&amp;</span><span class="n">KIND</span> <span class="n">H</span>
+      <span class="n">BASIS_SET</span> <span class="n">DZVP</span><span class="o">-</span><span class="n">MOLOPT</span><span class="o">-</span><span class="n">GTH</span>
+      <span class="n">POTENTIAL</span> <span class="n">GTH</span><span class="o">-</span><span class="n">PBE</span><span class="o">-</span><span class="n">q1</span>
+    <span class="o">&amp;</span><span class="n">END</span> <span class="n">KIND</span>            
+  <span class="o">&amp;</span><span class="n">END</span> <span class="n">SUBSYS</span>
+<span class="o">&amp;</span><span class="n">END</span> <span class="n">FORCE_EVAL</span>
+</pre></div>
+</div>
+</section>
+<section id="run-script">
+<h2>Run Script<a class="headerlink" href="#run-script" title="Link to this heading"></a></h2>
+<p>The calculation can be executed using the following bash script (<code class="docutils literal notranslate"><span class="pre">run.sh</span></code>):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Set the current directory as the working directory</span>
+<span class="nv">WORK_DIR</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+
+<span class="c1"># Function to check if a command was successful</span>
+check_success<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$?</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: </span><span class="nv">$1</span><span class="s2"> failed&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$WORK_DIR</span>/run.log
+<span class="w">        </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1"># Run CP2K in Docker</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Starting CP2K calculation...&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$WORK_DIR</span>/run.log
+docker<span class="w"> </span>run<span class="w"> </span>--volume-driver<span class="w"> </span><span class="nb">local</span><span class="w"> </span>-v<span class="w"> </span><span class="nv">$WORK_DIR</span>:/mnt<span class="w"> </span>--shm-size<span class="o">=</span>1g<span class="w"> </span>--rm<span class="w"> </span>--user<span class="w"> </span>root<span class="w"> </span>cp2k/cp2k<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;umask 0000 &amp;&amp; mpiexec -genv OMP_NUM_THREADS=1 -np 48 cp2k Al111_active_space.inp&quot;</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$WORK_DIR</span>/cp2k.log<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">&amp;</span>
+
+<span class="c1"># Store the Docker process ID</span>
+<span class="nv">DOCKER_PID</span><span class="o">=</span><span class="nv">$!</span>
+
+<span class="c1"># Wait for the socket file to be created</span>
+<span class="k">while</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-S<span class="w"> </span><span class="nv">$WORK_DIR</span>/embedding_socket<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">   </span>sleep<span class="w"> </span><span class="m">1</span>
+<span class="k">done</span>
+
+<span class="c1"># Run the Python script</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Starting Python VQE calculation...&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$WORK_DIR</span>/run.log
+python<span class="w"> </span>-u<span class="w"> </span>client-vqe-ucc.py<span class="w"> </span>--nalpha<span class="w"> </span><span class="m">1</span><span class="w"> </span>--nbeta<span class="w"> </span><span class="m">1</span><span class="w"> </span>--norbs<span class="w"> </span><span class="m">5</span><span class="w"> </span>--adapt<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$WORK_DIR</span>/python_output.log<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">&amp;</span>
+
+<span class="c1">#PYTHON_PID=$!</span>
+
+<span class="c1"># Wait for both processes to finish</span>
+<span class="nb">wait</span><span class="w"> </span><span class="nv">$DOCKER_PID</span>
+check_success<span class="w"> </span><span class="s2">&quot;CP2K calculation&quot;</span>
+
+<span class="c1">#wait $PYTHON_PID</span>
+<span class="c1">#check_success &quot;Python VQE calculation&quot;</span>
+
+<span class="c1"># Ensure all files are readable and writable</span>
+chmod<span class="w"> </span>-R<span class="w"> </span>a+rw<span class="w"> </span><span class="nv">$WORK_DIR</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Calculations completed. Check cp2k.log and python_output.log for results.&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$WORK_DIR</span>/run.log
+</pre></div>
+</div>
+<p>where you run the script in the directory containing the input file and structure file. as:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>run.sh
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geometry Optimization &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/QAS2024_QAOA_exercise/">Tutorial - Variational Quantum Algorithms</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/css_code_steane/">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/surface_code_threshold/">Tutorial - Estimating the Surface Code Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/option_pricing_tutorial/">Tutorial - Pricing a European call option using quantum computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/flight_scheduling_optimization_qaoa/">Tutorial - Solving Flight Scheduling Optimization using QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README/">Quantum Computing for Materials Science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Geometry Optimization</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/matsci_on_qc/0_classical_calculations/1_geometry_optimization/gemetry_optimize.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="geometry-optimization">
+<h1>Geometry Optimization<a class="headerlink" href="#geometry-optimization" title="Link to this heading"></a></h1>
+<p>This script performs geometry optimization of molecular structures using the ORB-D3 force field, which is a machine learning potential that provides near-DFT quality results at a fraction of the computational cost. It’s specifically built to handle periodic systems like our case.</p>
+<section id="source-code">
+<h2>Source Code<a class="headerlink" href="#source-code" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ase</span>
+<span class="kn">from</span> <span class="nn">ase.io</span> <span class="kn">import</span> <span class="n">read</span><span class="p">,</span> <span class="n">write</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">orb_models.forcefield</span> <span class="kn">import</span> <span class="n">pretrained</span>
+<span class="kn">from</span> <span class="nn">orb_models.forcefield.calculator</span> <span class="kn">import</span> <span class="n">ORBCalculator</span>
+<span class="kn">from</span> <span class="nn">ase.optimize</span> <span class="kn">import</span> <span class="n">BFGS</span>
+<span class="kn">from</span> <span class="nn">ase</span> <span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">calculate_molecule_surface_distance</span><span class="p">(</span><span class="n">atoms</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the average distance between the molecule and the surface.&quot;&quot;&quot;</span>
+    <span class="n">molecule_positions</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">atoms</span><span class="o">.</span><span class="n">get_tags</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">surface_positions</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">atoms</span><span class="o">.</span><span class="n">get_tags</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">mol_pos</span> <span class="ow">in</span> <span class="n">molecule_positions</span><span class="p">:</span>
+        <span class="n">min_dist</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">mol_pos</span> <span class="o">-</span> <span class="n">surf_pos</span><span class="p">)</span> <span class="k">for</span> <span class="n">surf_pos</span> <span class="ow">in</span> <span class="n">surface_positions</span><span class="p">)</span>
+        <span class="n">distances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">min_dist</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">analyze_structure</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze key structural parameters.&quot;&quot;&quot;</span>
+    <span class="n">avg_distance</span> <span class="o">=</span> <span class="n">calculate_molecule_surface_distance</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+    
+    <span class="n">forces</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">get_forces</span><span class="p">()</span>
+    <span class="n">max_force</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">forces</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">avg_force</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">forces</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># Calculate max displacement from initial positions for molecule atoms</span>
+    <span class="n">mol_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">atoms</span><span class="o">.</span><span class="n">get_tags</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="s1">&#39;initial_positions&#39;</span><span class="p">):</span>
+        <span class="n">max_displacement</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="n">atoms</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">mol_indices</span><span class="p">]</span> <span class="o">-</span> <span class="n">atoms</span><span class="o">.</span><span class="n">initial_positions</span><span class="p">[</span><span class="n">mol_indices</span><span class="p">],</span> 
+            <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">max_displacement</span> <span class="o">=</span> <span class="mf">0.0</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="n">energy</span><span class="p">,</span>
+        <span class="s1">&#39;avg_mol_surf_distance&#39;</span><span class="p">:</span> <span class="n">avg_distance</span><span class="p">,</span>
+        <span class="s1">&#39;max_force&#39;</span><span class="p">:</span> <span class="n">max_force</span><span class="p">,</span>
+        <span class="s1">&#39;avg_force&#39;</span><span class="p">:</span> <span class="n">avg_force</span><span class="p">,</span>
+        <span class="s1">&#39;max_displacement&#39;</span><span class="p">:</span> <span class="n">max_displacement</span>
+    <span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Optimize structure using ORB with enhanced monitoring.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;input_file&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to the input XYZ file&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--device&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="s1">&#39;cuda&#39;</span><span class="p">],</span> 
+                       <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Device to run calculations on (default: cpu)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--fmax&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+                       <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Maximum force criterion for optimization (default: 0.01)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--output&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;optimized_structure.xyz&#39;</span><span class="p">,</span>
+                       <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Output file name (default: optimized_structure.xyz)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--save-interval&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                       <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Save intermediate structure every N steps (default: 5)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--max-steps&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+                       <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Maximum number of optimization steps (default: 200)&#39;</span><span class="p">)</span>
+    
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="c1"># Create output directory with timestamp and input file name</span>
+    <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">_%H%M%S&quot;</span><span class="p">)</span>
+    <span class="n">output_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;orb_opt_</span><span class="si">{</span><span class="n">basename</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Set up logging</span>
+    <span class="n">log_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">&quot;optimization.log&quot;</span><span class="p">)</span>
+    <span class="n">trajectory_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">&quot;optimization.traj&quot;</span><span class="p">)</span>
+    <span class="n">analysis_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">&quot;analysis.txt&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_lattice</span><span class="p">(</span><span class="n">lattice_str</span><span class="p">):</span>
+        <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[-+]?\d*\.\d+|\d+&quot;</span><span class="p">,</span> <span class="n">lattice_str</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="c1"># Read structure</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not find file &#39;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Parse header</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">lattice_str</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Lattice=&quot;([^&quot;]+)&quot;&#39;</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pbc_str</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;pbc=&quot;([^&quot;]+)&quot;&#39;</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: File format incorrect. Expected extended XYZ format with Lattice and pbc information.&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">cell</span> <span class="o">=</span> <span class="n">parse_lattice</span><span class="p">(</span><span class="n">lattice_str</span><span class="p">)</span>
+    <span class="n">pbc</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pbc_str</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+
+    <span class="c1"># Parse atoms</span>
+    <span class="n">symbols</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">:]:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="n">symbols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]])</span>
+                <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">4</span><span class="p">]))</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error parsing line: </span><span class="si">{</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error details: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">atoms</span> <span class="o">=</span> <span class="n">Atoms</span><span class="p">(</span>
+        <span class="n">symbols</span><span class="o">=</span><span class="n">symbols</span><span class="p">,</span>
+        <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">,</span>
+        <span class="n">cell</span><span class="o">=</span><span class="n">cell</span><span class="p">,</span>
+        <span class="n">pbc</span><span class="o">=</span><span class="n">pbc</span><span class="p">,</span>
+        <span class="n">tags</span><span class="o">=</span><span class="n">tags</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Store initial positions for displacement analysis</span>
+    <span class="n">atoms</span><span class="o">.</span><span class="n">initial_positions</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully loaded structure with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span><span class="si">}</span><span class="s2"> atoms&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output directory created: </span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Initialize model</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initializing ORB-D3 model on </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">orbff</span> <span class="o">=</span> <span class="n">pretrained</span><span class="o">.</span><span class="n">orb_d3_v2</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">calc</span> <span class="o">=</span> <span class="n">ORBCalculator</span><span class="p">(</span><span class="n">orbff</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">atoms</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">calc</span>  <span class="c1"># Updated syntax for setting calculator</span>
+
+    <span class="c1"># Initial analysis</span>
+    <span class="n">initial_energy</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">get_potential_energy</span><span class="p">()</span>
+    <span class="n">initial_analysis</span> <span class="o">=</span> <span class="n">analyze_structure</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">initial_energy</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">analysis_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Initial structure analysis:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">initial_analysis</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initial energy: </span><span class="si">{</span><span class="n">initial_energy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> eV&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initial molecule-surface distance: </span><span class="si">{</span><span class="n">initial_analysis</span><span class="p">[</span><span class="s1">&#39;avg_mol_surf_distance&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> Å&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Set up optimizer with trajectory saving</span>
+    <span class="n">opt</span> <span class="o">=</span> <span class="n">BFGS</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">trajectory</span><span class="o">=</span><span class="n">trajectory_file</span><span class="p">,</span> <span class="n">logfile</span><span class="o">=</span><span class="n">log_file</span><span class="p">,</span> <span class="n">maxstep</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># Added maxstep for safer optimization</span>
+    
+    <span class="c1"># Custom observer function</span>
+    <span class="k">def</span> <span class="nf">observer</span><span class="p">():</span>
+        <span class="n">current_energy</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">get_potential_energy</span><span class="p">()</span>
+        <span class="n">analysis</span> <span class="o">=</span> <span class="n">analyze_structure</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">current_energy</span><span class="p">)</span>
+        
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">analysis_file</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="n">opt</span><span class="o">.</span><span class="n">get_number_of_steps</span><span class="p">()</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">analysis</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_number_of_steps</span><span class="p">()</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">save_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">intermediate_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;structure_step_</span><span class="si">{</span><span class="n">opt</span><span class="o">.</span><span class="n">get_number_of_steps</span><span class="p">()</span><span class="si">}</span><span class="s2">.xyz&quot;</span><span class="p">)</span>
+            <span class="n">write</span><span class="p">(</span><span class="n">intermediate_file</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;extxyz&#39;</span><span class="p">)</span>
+
+    <span class="n">opt</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+
+    <span class="c1"># Run optimization</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting geometry optimization...&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">fmax</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">fmax</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_steps</span><span class="p">)</span>
+        <span class="n">optimization_status</span> <span class="o">=</span> <span class="s2">&quot;Converged&quot;</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">optimization_status</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Failed: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimization failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Final analysis</span>
+    <span class="n">final_energy</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">get_potential_energy</span><span class="p">()</span>
+    <span class="n">final_analysis</span> <span class="o">=</span> <span class="n">analyze_structure</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">final_energy</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Optimization complete!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Status: </span><span class="si">{</span><span class="n">optimization_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final energy: </span><span class="si">{</span><span class="n">final_energy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> eV&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Energy change: </span><span class="si">{</span><span class="n">final_energy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">initial_energy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> eV&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final molecule-surface distance: </span><span class="si">{</span><span class="n">final_analysis</span><span class="p">[</span><span class="s1">&#39;avg_mol_surf_distance&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> Å&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximum atomic displacement: </span><span class="si">{</span><span class="n">final_analysis</span><span class="p">[</span><span class="s1">&#39;max_displacement&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> Å&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Save final structure</span>
+    <span class="n">final_structure_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+    <span class="n">write</span><span class="p">(</span><span class="n">final_structure_path</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;extxyz&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimized structure saved to </span><span class="si">{</span><span class="n">final_structure_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Full optimization details available in </span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<p>The script can be run from the command line with various options:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>geo_opt.py<span class="w"> </span>input_file.xyz<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+
+Options:
+<span class="w">  </span>--device<span class="w"> </span><span class="o">{</span>cpu,cuda<span class="o">}</span><span class="w">    </span>Device<span class="w"> </span>to<span class="w"> </span>run<span class="w"> </span>calculations<span class="w"> </span>on<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span>cpu<span class="o">)</span>
+<span class="w">  </span>--fmax<span class="w"> </span>FMAX<span class="w">           </span>Maximum<span class="w"> </span>force<span class="w"> </span>criterion<span class="w"> </span><span class="k">for</span><span class="w"> </span>optimization<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span><span class="m">0</span>.01<span class="o">)</span>
+<span class="w">  </span>--output<span class="w"> </span>OUTPUT<span class="w">       </span>Output<span class="w"> </span>file<span class="w"> </span>name<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span>optimized_structure.xyz<span class="o">)</span>
+<span class="w">  </span>--save-interval<span class="w"> </span>N<span class="w">     </span>Save<span class="w"> </span>intermediate<span class="w"> </span>structure<span class="w"> </span>every<span class="w"> </span>N<span class="w"> </span>steps<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span><span class="m">5</span><span class="o">)</span>
+<span class="w">  </span>--max-steps<span class="w"> </span>STEPS<span class="w">    </span>Maximum<span class="w"> </span>number<span class="w"> </span>of<span class="w"> </span>optimization<span class="w"> </span>steps<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span><span class="m">200</span><span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="output-files">
+<h2>Output Files<a class="headerlink" href="#output-files" title="Link to this heading"></a></h2>
+<p>The script creates a timestamped output directory containing:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">optimization.log</span></code>: Detailed optimization progress</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optimization.traj</span></code>: Trajectory file for visualization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">analysis.txt</span></code>: Structure analysis at each step</p></li>
+<li><p>Intermediate structures saved as XYZ files</p></li>
+<li><p>Final optimized structure</p></li>
+</ul>
+</section>
+<section id="example-analysis-output">
+<h2>Example Analysis Output<a class="headerlink" href="#example-analysis-output" title="Link to this heading"></a></h2>
+<p>The script provides detailed analysis including:</p>
+<ul class="simple">
+<li><p>Energy (eV)</p></li>
+<li><p>Average molecule-surface distance (Å)</p></li>
+<li><p>Maximum and average forces</p></li>
+<li><p>Maximum atomic displacement</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

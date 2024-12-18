@@ -1,0 +1,1592 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial - Fault-Tolerant Quantum Computing with CSS codes &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Tutorial - Estimating the Surface Code Threshold" href="../surface_code_threshold/" />
+    <link rel="prev" title="Tutorial - MAP Decoding Exercise" href="../Decoding_excercise/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../QAS2024_QAOA_exercise/">Tutorial - Variational Quantum Algorithms</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#steane-code">Steane Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#code-construction">Code Construction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualizing-the-steane-code">Visualizing the Steane Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#excursion-stim-and-stabilizer-formalism">Excursion: Stim and Stabilizer formalism</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pauli-strings">Pauli Strings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tableau">Tableau</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#circuit">Circuit</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#logical-operators-of-the-steane-code">Logical Operators of the Steane Code</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#quantum-computing-with-logical-qubits">Quantum Computing with Logical Qubits</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#state-initialization">State Initialization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#different-basis-state-preparation">Different Basis State Preparation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#measuring-in-different-basis">Measuring in different Basis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-5">Exercise 5</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transversal-gates">Transversal gates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logical-cnot-implementation">Logical CNOT Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#logical-bell-state">Logical Bell State</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#optional-simulating-the-steane-code-on-noisy-hardware-quantinuum-experiment">Optional: Simulating the Steane Code on noisy Hardware: Quantinuum Experiment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introducing-errors">Introducing Errors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantinuum-error-parameters">Quantinuum error parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#faulty-logical-state-preparation">Faulty logical state preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#syndrome-extraction">Syndrome extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#full-qec-cycle">Full QEC cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-decoder">The Decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simulating-logical-error-rates-for-steane-code-for-each-basis">Simulating Logical Error Rates for Steane Code for each Basis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_code_threshold/">Tutorial - Estimating the Surface Code Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../option_pricing_tutorial/">Tutorial - Pricing a European call option using quantum computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../flight_scheduling_optimization_qaoa/">Tutorial - Solving Flight Scheduling Optimization using QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../matsci_on_qc/README/">Quantum Computing for Materials Science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/notebooks/css_code_steane.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-fault-tolerant-quantum-computing-with-css-codes">
+<h1>Tutorial - Fault-Tolerant Quantum Computing with CSS codes<a class="headerlink" href="#tutorial-fault-tolerant-quantum-computing-with-css-codes" title="Link to this heading"></a></h1>
+<p>In this notebook we’ll explore how fault-tolerant quantum computing looks like at the <strong>circuit-level</strong>.</p>
+<p>For our exploration we’ll introduce the <em>Steane Code</em>, proposed by Andrew Steane in 1996. It is a quantum code from the class of <em>Calderbank-Shor-Steane (CSS)</em> codes which was introduced in the lecture.</p>
+<p>Our <strong>goal</strong> is to understand:</p>
+<ul class="simple">
+<li><p>How is a logical qubit prepared at the circuit-level?</p></li>
+<li><p>How can we implement logical gates between those logical qubits?</p></li>
+<li><p>How does the quantum error correction procedure looks like at the circuit-level?</p></li>
+</ul>
+<p>Let’s explore the Steane code! 🔭</p>
+<section id="steane-code">
+<h2>Steane Code<a class="headerlink" href="#steane-code" title="Link to this heading"></a></h2>
+<p>The Steane code is a <span class="math notranslate nohighlight">\([[7,1,3]]\)</span> stabilizer code, which means that it encodes 7 physical qubits into 1 logical qubits. Its code distance is <span class="math notranslate nohighlight">\(d=3\)</span>, meaning that it will correct up to
+$<span class="math notranslate nohighlight">\(t = \lfloor 3 - 1 /2 \rfloor = 1\)</span>$
+errors.</p>
+<section id="code-construction">
+<h3>Code Construction<a class="headerlink" href="#code-construction" title="Link to this heading"></a></h3>
+<p><strong>CSS codes:</strong></p>
+<p>The class of Calderbank-Shor-Steane (CSS) codes provides a simple recipe of constructing quantum error correcting codes from classical <em>linear</em> codes.
+In a linear <span class="math notranslate nohighlight">\([n,k]\)</span>-code <span class="math notranslate nohighlight">\(C\)</span>, the code space is defined by the kernel of a parity check matrix <span class="math notranslate nohighlight">\(H \in \mathbb{Z}_2^{n - k \times n}\)</span>.</p>
+<p>Meaning that for a code word <span class="math notranslate nohighlight">\(x \in \mathbb{Z}_2^n\)</span>, we must have:</p>
+<div class="math notranslate nohighlight">
+\[Hx = 0.\]</div>
+<p>Since we have to protect our quantum state from Pauli-<span class="math notranslate nohighlight">\(X\)</span> and Pauli-<span class="math notranslate nohighlight">\(Z\)</span> errors, CSS codes combine two classical linear codes <span class="math notranslate nohighlight">\(C_1\)</span> and <span class="math notranslate nohighlight">\(C_2\)</span>. The respective parity check matrices <span class="math notranslate nohighlight">\(H_1\)</span> and <span class="math notranslate nohighlight">\(H_2\)</span> define the <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> stabilizers. To emphasize this fact, we’ll denote the matrices as <span class="math notranslate nohighlight">\(H_X\)</span> and <span class="math notranslate nohighlight">\(H_Z\)</span>.</p>
+<p>The rows of the parity check matrices define the stabilizer.</p>
+<blockquote>
+<div><p><strong>Example:</strong> If the <span class="math notranslate nohighlight">\(i\)</span>-th row of <span class="math notranslate nohighlight">\(H_X\)</span> is given as <span class="math notranslate nohighlight">\(1001\)</span> then the corresponding stabilizer is <span class="math notranslate nohighlight">\(X_1X_4 = X_1 \otimes I_2 \otimes I_3 \otimes X_4\)</span>.</p>
+</div></blockquote>
+<p>Since all stabilizers from the same parity check matrix necessarily commute, we need to make sure that rows from <span class="math notranslate nohighlight">\(H_X\)</span> and <span class="math notranslate nohighlight">\(H_Z\)</span> commute. This is ensured if the number of qubits targeted by both stabilizer types is even for each possible pair of stabilizers.</p>
+<blockquote>
+<div><p><strong>Example:</strong> <span class="math notranslate nohighlight">\(X_1X_2X_5X_6\)</span> and <span class="math notranslate nohighlight">\(Z_1Z_2Z_3Z_4\)</span> commute as they both target qubits 1 and 2 which is an even number of qubits.</p>
+</div></blockquote>
+<p><strong>Parity Check Matrix:</strong></p>
+<p>For the Steane code, we have <span class="math notranslate nohighlight">\(H_X = H_Z = H\)</span> with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}H = \begin{bmatrix}1 &amp; 1 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1\end{bmatrix}\end{split}\]</div>
+<p><strong>Stabilizers:</strong></p>
+<p>We can now define the generators of the stabilizer group corresponding to the Steane code based on <span class="math notranslate nohighlight">\(H\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[S_X = \langle X_1X_2X_3X_4, X_2X_3X_5X_6, X_3X_4X_6X_7 \rangle\]</div>
+<div class="math notranslate nohighlight">
+\[S_Z = \langle Z_1Z_2Z_3Z_4, Z_2Z_3Z_5Z_6, Z_3Z_4Z_6Z_7 \rangle\]</div>
+</section>
+<section id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Link to this heading"></a></h3>
+<p>Given the stabilizers, write down a valid code state <span class="math notranslate nohighlight">\(|\psi \rangle = | \psi_1\rangle \otimes | \psi_2\rangle \otimes | \psi_3\rangle \otimes | \psi_4\rangle \otimes | \psi_5\rangle \otimes | \psi_6\rangle \otimes | \psi_7\rangle  \)</span> of the Steane code.</p>
+<p>As a reminder, a valid code state is the simultaneous Eigenstate of all stabilizers such that:
+$<span class="math notranslate nohighlight">\(S|\psi\rangle = |\psi\rangle \;\;\; \forall S \in S_X \cup S_Z\)</span>$</p>
+<blockquote>
+<div><p><strong>Tip:</strong> Any stabilizer can be decomposed into a product of generators. This means that only generators have to be considered when checking the stabilizing property.</p>
+</div></blockquote>
+</section>
+<section id="visualizing-the-steane-code">
+<h3>Visualizing the Steane Code<a class="headerlink" href="#visualizing-the-steane-code" title="Link to this heading"></a></h3>
+<p>To think about the properties of quantum error correcting codes it is often beneficial to visualize them. In the picture below, the vertices represent the physical qubits. Each coloured face defines an <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span>-type stabilizer.</p>
+<p><img alt="Steane Code Plaquettes" src="../../_images/steane-code-stabilizers.png" /></p>
+<p>Putting the stabilizers together we get triangle with three faces also called <em>plaquettes</em> in the literature.</p>
+<p><img alt="Steane Code Lattice" src="../../_images/steane-code-lattice.png" /></p>
+<p>Source: <a class="reference external" href="https://arthurpesah.me/blog/2023-01-31-stabilizer-formalism-1/">Arthur Pesah’s blog post on the stabilizer formalism</a>.</p>
+</section>
+<section id="excursion-stim-and-stabilizer-formalism">
+<h3>Excursion: Stim and Stabilizer formalism<a class="headerlink" href="#excursion-stim-and-stabilizer-formalism" title="Link to this heading"></a></h3>
+<p>To implement the Steane Code, we’ll use Stim, a stabilizer simulator developed by Google, which is used for quantum error corection research.</p>
+<p>We’ll introduce the 3 most important objects, which are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PauliString</span></code>: Representation of a Pauli string such as <span class="math notranslate nohighlight">\(X_1X_4\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Tableau</span></code>: A table holding the current stabilizers of a circuit.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Circuit</span></code>: Representation of quantum circuit similar to Qiskit.</p></li>
+</ul>
+<section id="pauli-strings">
+<h4>Pauli Strings<a class="headerlink" href="#pauli-strings" title="Link to this heading"></a></h4>
+<p>A Pauli string is an <span class="math notranslate nohighlight">\(n\)</span>-qubit operator formed by taking the tensor product of single-qubit Pauli operators:</p>
+<div class="math notranslate nohighlight">
+\[P = P_1 \otimes P_2 \otimes \cdots \otimes P_n, \quad \text{where } P_i \in \{I, X, Z, Y\}\]</div>
+<p>For example, a two-qubit Pauli string might be <span class="math notranslate nohighlight">\(P = X \otimes Y\)</span>, often written as <span class="math notranslate nohighlight">\(XY\)</span>.</p>
+<blockquote>
+<div><p><strong>Note:</strong> We usually omit the identity gates, by adding indices. For example, for <span class="math notranslate nohighlight">\(P = X \otimes I \otimes Y\)</span> is written as <span class="math notranslate nohighlight">\(X_1Y_3\)</span>.</p>
+</div></blockquote>
+<p><strong>Efficient Encoding of Pauli Strings in Software:</strong></p>
+<p>Stim is designed to allow the simulation of very large stabilizer codes, so an efficient representation on a computer is crucial.
+There are 4 different single-qubit Pauli operators, so 2 bits are required to represent them. Stim uses the following encoding:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+enc(I) &amp;= 00 \\
+enc(X) &amp;= 10 \\
+enc(Z) &amp;= 01 \\
+enc(Y) &amp;= 11
+\end{align*}
+\end{split}\]</div>
+<p>This encoding is chosen to reflect the algebraic properties of Pauli operators, also called a <a class="reference external" href="https://en.wikipedia.org/wiki/Group_homomorphism"><strong>group homomorphism</strong></a>: <span class="math notranslate nohighlight">\(enc : (G_1,\cdot) \rightarrow (\mathbb{Z}_2^2,\oplus)\)</span>.</p>
+<p>The first bit indicates the presence of an <span class="math notranslate nohighlight">\(X\)</span> operation, while the second bit indicates a <span class="math notranslate nohighlight">\(Z\)</span> operation. The <span class="math notranslate nohighlight">\(Y\)</span> operator, can be decomposed into <span class="math notranslate nohighlight">\(X \cdot Z\)</span> and has therefore both bits set to 1.</p>
+<p>This enables multiplication of Pauli operators through simple bitwise operations. For two Pauli operators <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, their product (up to a global phase) is computed by:</p>
+<div class="math notranslate nohighlight">
+\[enc(A \cdot B) = enc(A) \oplus enc(B)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\oplus\)</span> represents bitwise XOR. For example:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+enc(X \cdot Y) &amp;= enc(X) \oplus enc(Y) \\
+&amp;= 10 \oplus 11 \\
+&amp;= 01 \\
+&amp;= enc(Z)
+\end{align*}
+\end{split}\]</div>
+<p>This matches the algebraic relation <span class="math notranslate nohighlight">\(XY = iZ\)</span> (ignoring the phase factor <span class="math notranslate nohighlight">\(i\)</span>).</p>
+<p>Let’s explore Stim’s <a class="reference external" href="https://github.com/quantumlib/Stim/blob/main/doc/python_api_reference_vDev.md#stim.PauliString"><code class="docutils literal notranslate"><span class="pre">PauliString</span></code></a> API:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stim</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">PauliString</span><span class="p">(</span><span class="s2">&quot;+XX&quot;</span><span class="p">)</span>
+<span class="n">zz</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">PauliString</span><span class="p">(</span><span class="s2">&quot;+ZZ&quot;</span><span class="p">)</span>
+
+<span class="c1"># Pauli strings can be multiplied</span>
+<span class="n">mul_res</span> <span class="o">=</span> <span class="n">xx</span> <span class="o">*</span> <span class="n">zz</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Multiplication: XX * ZZ = &quot;</span><span class="p">,</span> <span class="n">mul_res</span><span class="p">)</span>
+
+<span class="c1"># Pauli strings can be concatenated</span>
+<span class="n">add_res</span> <span class="o">=</span> <span class="n">xx</span> <span class="o">+</span> <span class="n">zz</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Addition: XX + ZZ = &quot;</span><span class="p">,</span> <span class="n">add_res</span><span class="p">)</span>
+
+<span class="c1"># We can check if 2 Pauli strings commute</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;XX and ZZ commute: &quot;</span><span class="p">,</span> <span class="n">xx</span><span class="o">.</span><span class="n">commutes</span><span class="p">(</span><span class="n">zz</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tableau">
+<h4>Tableau<a class="headerlink" href="#tableau" title="Link to this heading"></a></h4>
+<p>A tableau is the foundation of efficient simulation of stabilizer circuits. That is circuits, only composed of Clifford gates, mapping Pauli operators to other Pauli operators.</p>
+<blockquote>
+<div><p><strong>Reminder:</strong> a Clifford operator <span class="math notranslate nohighlight">\(C\)</span>, applied to a product of Pauli’s <span class="math notranslate nohighlight">\(P\)</span>, maps it to <span class="math notranslate nohighlight">\(CPC^{\dagger}\)</span> which is again a Pauli product.</p>
+</div></blockquote>
+<p>During execution of a quantum circuit consisting only of Clifford gates, we only need to update the stabilizer generator Pauli strings by applying the update rule above. With our efficient encoding, this can be done very fast.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a Tableau simulator</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">TableauSimulator</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prepare GHZ state</span>
+<span class="n">simulator</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">simulator</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">simulator</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">simulator</span><span class="o">.</span><span class="n">measure_many</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>While it is important to understand how the Tableau works, Stim’s Tableau is heavily optimized which increases it’s complexity. A nice introduction on Tableau simulation is given by Aaronson and Gottesman in <a class="reference external" href="https://arxiv.org/pdf/quant-ph/0406196">“Improved Simulation of Stabilizer Circuits”</a>.</p>
+<p>For now, we are happy that we can apply gates to the Tableau and obtain correct measurements.</p>
+</section>
+<section id="circuit">
+<h4>Circuit<a class="headerlink" href="#circuit" title="Link to this heading"></a></h4>
+<p>Stim allows us to also define quantum circuits with a API like Qiskit or Cirq. Below we create the same 3 qubit circuit preparing a GHZ state.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can print the circuit using the <code class="docutils literal notranslate"><span class="pre">diagram</span></code> method of <code class="docutils literal notranslate"><span class="pre">stim.Circuit</span></code>.</p>
+<p>There are different options to print the circuit:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">timeline-text</span></code>: ASCII diagram</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timeline-svg</span></code>: SVG image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timeline-svg-html</span></code>: Resizable SVG image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timeline-3d-html</span></code>: A 3d model, in GLTF format embedded in HTML</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timeslice-svg</span></code>: Prints circuit between “TICK” operations (more on that later)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;timeline-text&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can sample from the circuit by compiling a sampler</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">compile_sampler</span><span class="p">()</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">shots</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected roughly half of our measurements are <span class="math notranslate nohighlight">\(00\)</span> and the other half is <span class="math notranslate nohighlight">\(11\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also execute the circuit with a Tableau simulator:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reset all qubits</span>
+<span class="n">simulator</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">simulator</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># All measurements are stored in the measurement record of the Tableau simulator</span>
+<span class="n">simulator</span><span class="o">.</span><span class="n">current_measurement_record</span><span class="p">()[</span><span class="o">-</span><span class="mi">3</span><span class="p">::]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="logical-operators-of-the-steane-code">
+<h3>Logical Operators of the Steane Code<a class="headerlink" href="#logical-operators-of-the-steane-code" title="Link to this heading"></a></h3>
+<p>The Steane code has exactly 6 stabilizer generators, imposing independent constraints on the logical qubit state:
+$<span class="math notranslate nohighlight">\(S|\psi\rangle = |\psi\rangle \;\;\; \forall S \in S_X \cup S_Z\)</span>$</p>
+<p>Intuitively, this means that for <span class="math notranslate nohighlight">\(7\)</span> qubits we have <strong>1 degree of freedom</strong> left, meaning that the Steane code encodes a single logical qubit.</p>
+<blockquote>
+<div><p>It can be <a class="reference external" href="https://arthurpesah.me/blog/2023-03-16-stabilizer-formalism-2/">shown</a>, that for <span class="math notranslate nohighlight">\(m\)</span> stabilizers and <span class="math notranslate nohighlight">\(n\)</span> qubits, the number of logical qubits is <span class="math notranslate nohighlight">\(k = n - m\)</span>.</p>
+</div></blockquote>
+<p>Assuming, that we have found a logical operator <span class="math notranslate nohighlight">\(O_L\)</span>, then applying it to the logical qubit should result in another valid code state.
+We can express this condition as:</p>
+<div class="math notranslate nohighlight">
+\[O_L\ket{\psi} = O_LS\ket{\psi} = \ket{\psi}\]</div>
+<p>Therefore <span class="math notranslate nohighlight">\(O_LS\)</span> must be a stabilizer and the following must hold</p>
+<div class="math notranslate nohighlight">
+\[O_LSO_L^{\dagger} = \hat{S} \in S_X \cup S_Z\]</div>
+<p>As a reminder, the stabilizer generators for the Steane code are
+$<span class="math notranslate nohighlight">\(S_X = \langle X_1X_2X_3X_4, X_2X_3X_5X_6, X_3X_4X_6X_7 \rangle\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(S_Z = \langle Z_1Z_2Z_3Z_4, Z_2Z_3Z_5Z_6, Z_3Z_4Z_6Z_7 \rangle\)</span>$</p>
+<p>We can see that the operators</p>
+<div class="math notranslate nohighlight">
+\[X_L = X_5X_6X_7 \;\;\;\; Z_L = Z_5Z_6Z_7\]</div>
+<p>satisfy the conditions above. We have found logical <span class="math notranslate nohighlight">\(X_L\)</span> and <span class="math notranslate nohighlight">\(Z_L\)</span> operators!</p>
+<blockquote>
+<div><p><strong>Note:</strong> Although it is custom to denote the Pauli string containing Pauli-<span class="math notranslate nohighlight">\(Z\)</span> as <span class="math notranslate nohighlight">\(Z_L\)</span>, the naming is completely arbitrary. We only care about the algebraic properties of the operators.</p>
+</div></blockquote>
+<section id="exercise-2">
+<h4>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading"></a></h4>
+<p><strong>(a)</strong> Verify in Stim, that the logical operators map the set of generators to itself and that <span class="math notranslate nohighlight">\(X_L\)</span> and <span class="math notranslate nohighlight">\(Z_L\)</span> anti-commute.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stim</span> <span class="kn">import</span> <span class="n">PauliString</span>
+
+<span class="n">steane_stabilizer</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">PauliString</span><span class="p">(</span><span class="s2">&quot;XXXXIII&quot;</span><span class="p">),</span>
+  <span class="n">PauliString</span><span class="p">(</span><span class="s2">&quot;IXXIXXI&quot;</span><span class="p">),</span>
+  <span class="n">PauliString</span><span class="p">(</span><span class="s2">&quot;IIIXXXX&quot;</span><span class="p">),</span>
+  <span class="n">PauliString</span><span class="p">(</span><span class="s2">&quot;ZZZZIII&quot;</span><span class="p">),</span>
+  <span class="n">PauliString</span><span class="p">(</span><span class="s2">&quot;IZZIZZI&quot;</span><span class="p">),</span>
+  <span class="n">PauliString</span><span class="p">(</span><span class="s2">&quot;IIIZZZZ&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">log_x</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># TODO</span>
+<span class="n">log_z</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># TODO</span>
+
+<span class="c1"># Conjugate the stabilizers one by one with the logical observables and compare the lists</span>
+<span class="n">conj_log_x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">conj_log_z</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">conj_log_x</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">conj_log_z</span><span class="p">)</span>
+
+<span class="c1"># Logical operators anti-commute</span>
+<span class="c1"># TODO</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>(b)</strong> Applying a stabilizer to a logical qubit does not change its state. This means that logical observables form equivalence classes modulus the stabilizers. Use Stim to find equivalent logical observables</p>
+<p><img alt="Steane Logical Co-Sets" src="../../_images/steane-code-logical-cosets.png" /></p>
+<p>Source: <a class="reference external" href="https://arthurpesah.me/blog/2023-01-31-stabilizer-formalism-1/">Arthur Pesah’s blog post on the stabilizer formalism</a>.</p>
+<p><strong>(c) - Pen &amp; Paper</strong>
+The Steane code is a CSS code, meaning that logical Clifford gates can be performed <em>transversally</em>. Verify that <span class="math notranslate nohighlight">\(H_L = H^{\otimes 7}\)</span> is a logical operator. Then show that it correspond to a logical Hadamard based on how it acts on <span class="math notranslate nohighlight">\(X_L\)</span> and <span class="math notranslate nohighlight">\(Z_L\)</span>.</p>
+<blockquote>
+<div><p><strong>Note:</strong> In the same manner it can be shown that <span class="math notranslate nohighlight">\(S_L = S^{\otimes 7}\)</span> implement the logical <span class="math notranslate nohighlight">\(S_L\)</span> operator.</p>
+</div></blockquote>
+</section>
+</section>
+</section>
+<section id="quantum-computing-with-logical-qubits">
+<h2>Quantum Computing with Logical Qubits<a class="headerlink" href="#quantum-computing-with-logical-qubits" title="Link to this heading"></a></h2>
+<section id="state-initialization">
+<h3>State Initialization<a class="headerlink" href="#state-initialization" title="Link to this heading"></a></h3>
+<p>Quantum circuits usually expect their qubits to be initialized in state <span class="math notranslate nohighlight">\(\ket{0}\)</span>. Unfortunately, <span class="math notranslate nohighlight">\(\ket{0000000}\)</span> is not a valid code state.</p>
+<blockquote>
+<div><p><strong>Question</strong>: Which stabilizers do not stabilize this state?</p>
+</div></blockquote>
+<p>Therefore, an important, but usually costly, part of QEC is the logical qubit initialization. A naive approach is to prepare the physical qubits in state <span class="math notranslate nohighlight">\(\ket{0}\)</span> and measure all stabilizers.</p>
+<blockquote>
+<div><p><strong>Question:</strong> How many entangling gates are needed to measure all stabilizers of the Steane code naively in sequence?</p>
+</div></blockquote>
+<p>To allow for fault-tolerant preparation of the logical qubit, avoiding spreading of errors due to entangling gates, various efficient schemes have been developed.</p>
+<p>In the following we provide code for a scheme proposed by <a class="reference external" href="https://www.nature.com/articles/srep19578">Goto</a>.</p>
+<p>The scheme requires 8 CNOT gates to prepare the state, followed by a measurement of <span class="math notranslate nohighlight">\(Z_L\)</span> via 3 CNOT gates using an ancilla qubit. If the measured ancilla is in the state <span class="math notranslate nohighlight">\(|0\rangle\)</span> then we succesfully prepared the state <span class="math notranslate nohighlight">\(|0\rangle_L\)</span>, otherwise we reset all qubits and repeat the procedure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">encoding_circuit</span><span class="p">(</span><span class="n">log_qb_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Encoding scheme proposed by Goto 2015: https://www.nature.com/articles/srep19578</span>
+<span class="sd">  To prepare the logical Steane qubit in state |0&gt;_L.</span>
+<span class="sd">  </span>
+<span class="sd">  The qubit index allows shifting the indices so that we can prepare multiple logical qubits</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+  <span class="c1"># shift registers to target logical qubit with given index</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">log_qb_idx</span> <span class="o">*</span> <span class="mi">8</span>
+  
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="mi">4</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">6</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">5</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">3</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">5</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">3</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  
+  <span class="c1"># Entangle with ancilla qubit and measure logical Pauli-Z</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">7</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">7</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="mi">7</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">7</span><span class="o">+</span><span class="n">s</span><span class="p">])</span>
+
+  <span class="k">return</span> <span class="n">c</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The encoding circuit can be visualized in Stim by printing the <code class="docutils literal notranslate"><span class="pre">diagram</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">encoding_circuit</span><span class="p">()</span>
+<span class="n">c</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;timeline-svg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Given the encoding scheme, we should verify if it actually prepares a state with the correct stabilizers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">to_tableau</span><span class="p">(</span><span class="n">ignore_measurement</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stabilizers&quot;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">to_stabilizers</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that the state prepared by the circuit is stabilized by
+$<span class="math notranslate nohighlight">\(X_1X_2X_3X_4,\;\;X_2X_3X_5X_6,\;\;X_3X_4X_6X_7\)</span>$</p>
+<p>What about the Pauli-<span class="math notranslate nohighlight">\(Z\)</span> stabilizers?</p>
+<p>The <a class="reference external" href="https://www.nature.com/articles/srep19578">Goto scheme</a>, prepares the <span class="math notranslate nohighlight">\(|0\rangle_L\)</span> state by measuring only the <span class="math notranslate nohighlight">\(Z\)</span>-stabilizers. Since arbitrary Pauli-<span class="math notranslate nohighlight">\(Z\)</span> errors are in this case equivalent to no errors or single-qubit <span class="math notranslate nohighlight">\(Z\)</span> errors which can be corrected by the Steane code.</p>
+<p>As a final sanity check, we can sample shots from the circuit and measure <span class="math notranslate nohighlight">\(Z_L\)</span>. In the absence of noise, we should prepare the state <span class="math notranslate nohighlight">\(|0\rangle_L\)</span> with 100% success rate.</p>
+<p>To avoid code repetition, let’s first define a method that takes a circuit, samples from it, and returns the measurements</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">measure_logical_qubits</span><span class="p">(</span><span class="n">log_qubit_indices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">:</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+  
+  <span class="k">for</span> <span class="n">log_qubit_index</span> <span class="ow">in</span> <span class="n">log_qubit_indices</span><span class="p">:</span>
+    <span class="c1"># shift index</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">log_qubit_index</span> <span class="o">*</span> <span class="mi">8</span>
+    <span class="c1"># final measurement</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span> <span class="o">+</span> <span class="n">s</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">c</span>
+
+<span class="k">def</span> <span class="nf">sample_from_circuit</span><span class="p">(</span><span class="n">c</span><span class="p">:</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">,</span> <span class="n">shots</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+  <span class="c1"># compile a sampler and sample 10 shots</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">compile_sampler</span><span class="p">()</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+  
+  <span class="k">return</span> <span class="n">r</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="exercise-3">
+<h4>Exercise 3<a class="headerlink" href="#exercise-3" title="Link to this heading"></a></h4>
+<p>Given the helper function above, complete the circuit above to correctly compute the logical <span class="math notranslate nohighlight">\(Z_L\)</span> measurement result given the measurements of the physical qubits.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+<span class="c1"># prepare |0&gt;_L</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">encoding_circuit</span><span class="p">()</span>
+<span class="c1"># append final measurement</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">measure_logical_qubits</span><span class="p">()</span>
+<span class="c1"># sample from circuit</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">sample_from_circuit</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># compute Z_L observable from measurement</span>
+<span class="n">logical_measurement_output</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># TODO</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note, that the first column of <code class="docutils literal notranslate"><span class="pre">r</span></code> corresponds to the ancilla qubit measurement and not the first qubit!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logical measurement outcome: &quot;</span><span class="p">,</span> <span class="n">logical_measurement_output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As there is no noise, the ancilla should always be measured in state <span class="math notranslate nohighlight">\(|0\rangle\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ancilla qubit measurement outcome: &quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="different-basis-state-preparation">
+<h3>Different Basis State Preparation<a class="headerlink" href="#different-basis-state-preparation" title="Link to this heading"></a></h3>
+<p>We can prepare the state <span class="math notranslate nohighlight">\(| 0 \rangle_L\)</span> with the method above. Next, we’ll want to prepare the logical qubit in different basis states</p>
+<div class="math notranslate nohighlight">
+\[ \{ |0\rangle_L, |1\rangle_L, |+\rangle_L, |-\rangle_L, |+i\rangle_L, |-i\rangle_L \} \]</div>
+<p>This can easily be done by using the logical gates <span class="math notranslate nohighlight">\(X_L, Z_L, S_L\)</span>, and <span class="math notranslate nohighlight">\(H_L\)</span>, that we identified in the previous section.</p>
+<section id="exercise-4">
+<h4>Exercise 4<a class="headerlink" href="#exercise-4" title="Link to this heading"></a></h4>
+<p>Complete the lines marked with <code class="docutils literal notranslate"><span class="pre">TODO</span></code> in the function below (Always add the index shift <code class="docutils literal notranslate"><span class="pre">s</span></code> to prepare for operations on multiple logical qubits!)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">log_qb_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Supported logical gates:</span>
+<span class="sd">        - &quot;Z&quot;: Logical Z gate</span>
+<span class="sd">        - &quot;X&quot;: Logical X gate</span>
+<span class="sd">        - &quot;H&quot;: Logical Hadamard gate</span>
+<span class="sd">        - &quot;S&quot;: Logical S (phase) gate</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        c (stim.Circuit): The stim Circuit object to append the logical gate to</span>
+<span class="sd">        gate (str): The name of the logical gate to apply. Must be one of: &quot;Z&quot;, &quot;X&quot;, &quot;H&quot;, &quot;S&quot;</span>
+<span class="sd">        log_qb_idx (int, optional): Index of the logical qubit to operate on. Used to offset the</span>
+<span class="sd">            physical qubit indices when working with multiple logical qubits. Defaults to 0.</span>
+<span class="sd">            Each logical qubit uses 8 physical qubits (7 data + 1 ancilla).</span>
+<span class="sd">            </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        stim.Circuit: The modified circuit with the logical gate appended</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+  <span class="c1"># shift registers to target logical qubit with given index</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">log_qb_idx</span> <span class="o">*</span> <span class="mi">8</span>
+  
+  <span class="k">match</span> <span class="n">gate</span><span class="p">:</span>
+    <span class="k">case</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span>
+      <span class="c1"># TODO</span>
+      <span class="k">pass</span>
+    <span class="k">case</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span>
+      <span class="c1"># TODO</span>
+      <span class="k">pass</span>
+    <span class="k">case</span> <span class="s2">&quot;H&quot;</span><span class="p">:</span>
+      <span class="c1"># TODO</span>
+      <span class="k">pass</span>
+    <span class="k">case</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+      <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span> <span class="o">+</span> <span class="n">s</span><span class="p">)</span>
+    <span class="k">case</span> <span class="s2">&quot;S_DAG&quot;</span><span class="p">:</span>
+      <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;S_DAG&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span> <span class="o">+</span> <span class="n">s</span><span class="p">)</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Logical gate name &#39;</span><span class="si">{logical_gate}</span><span class="s2">&#39; undefined&quot;</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">c</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We define a helper function to prepare the logical qubit in the Eigenstate of a given Stabilizer</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prepare_stab_eigenstate</span><span class="p">(</span><span class="n">stabilizer</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Generates a circuit preparing the Eigenstate of a given singe-qubit stabilizer&quot;&quot;&quot;</span>
+  
+  <span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+  
+  <span class="k">match</span> <span class="n">stabilizer</span><span class="p">:</span>
+    <span class="k">case</span> <span class="s2">&quot;+Z&quot;</span><span class="p">:</span> <span class="c1"># |0&gt;</span>
+      <span class="k">pass</span>
+    <span class="k">case</span> <span class="s2">&quot;-Z&quot;</span><span class="p">:</span> <span class="c1"># |1&gt;</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="s2">&quot;+X&quot;</span><span class="p">:</span> <span class="c1"># |+&gt;</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;H&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="s2">&quot;-X&quot;</span><span class="p">:</span> <span class="c1"># |-&gt;</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;H&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="s2">&quot;+Y&quot;</span><span class="p">:</span> <span class="c1"># |+i&gt;</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;H&quot;</span><span class="p">)</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;S&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="s2">&quot;-Y&quot;</span><span class="p">:</span> <span class="c1"># |-i&gt;</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;H&quot;</span><span class="p">)</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;S&quot;</span><span class="p">)</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown stabilizer </span><span class="si">{</span><span class="n">stabilizer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+  <span class="k">return</span> <span class="n">c</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s test the state preparation for our logical qubit when measuring in the <span class="math notranslate nohighlight">\(Z_L\)</span> basis</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+<span class="c1"># prepare |0&gt;_L</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">encoding_circuit</span><span class="p">()</span>
+<span class="c1"># apply a bit-flip</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="c1"># append final measurement</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">measure_logical_qubits</span><span class="p">()</span>
+<span class="c1"># sample from circuit</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">sample_from_circuit</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">logical_measurement_output</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">7</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logical bit-flip measurement outcome: &quot;</span><span class="p">,</span> <span class="n">logical_measurement_output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+<span class="c1"># prepare |0&gt;_L</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">encoding_circuit</span><span class="p">()</span>
+<span class="c1"># apply a logical Hadamard gate</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">prepare_stab_eigenstate</span><span class="p">(</span><span class="s2">&quot;-Z&quot;</span><span class="p">)</span>
+<span class="c1"># append final measurement</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">measure_logical_qubits</span><span class="p">()</span>
+<span class="c1"># sample from circuit</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">sample_from_circuit</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># compute Z_L observable from measurement</span>
+<span class="n">logical_measurement_output</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">7</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logical Hadamard measurement outcome: &quot;</span><span class="p">,</span> <span class="n">logical_measurement_output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+<span class="c1"># prepare |0&gt;_L</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">encoding_circuit</span><span class="p">()</span>
+<span class="c1"># apply a logical X by using logical HZH construction</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;H&quot;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;H&quot;</span><span class="p">)</span>
+<span class="c1"># append final measurement</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">measure_logical_qubits</span><span class="p">()</span>
+<span class="c1"># sample from circuit</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">sample_from_circuit</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># compute Z_L observable from measurement</span>
+<span class="n">logical_measurement_output</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">7</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logical bit-flip measurement outcome: &quot;</span><span class="p">,</span> <span class="n">logical_measurement_output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on the results above, we can see that logical operators works as expected and that we prepare any state that we interested in.</p>
+</section>
+</section>
+<section id="measuring-in-different-basis">
+<h3>Measuring in different Basis<a class="headerlink" href="#measuring-in-different-basis" title="Link to this heading"></a></h3>
+<p>To measure a qubit in a different basis we usually apply single-qubit rotations before the measurement in the <span class="math notranslate nohighlight">\(Z\)</span>-basis.</p>
+<p>For example, if we want to measure in the <span class="math notranslate nohighlight">\(X\)</span>-basis we need to apply a Hadamard gate before the measurement since</p>
+<div class="math notranslate nohighlight">
+\[\langle \psi | H Z H | \psi \rangle = \langle \psi | X | \psi \rangle \]</div>
+<section id="exercise-5">
+<h4>Exercise 5<a class="headerlink" href="#exercise-5" title="Link to this heading"></a></h4>
+<p>Complete the lines marked with <code class="docutils literal notranslate"><span class="pre">TODO</span></code> in the function below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rotate_to_measurement_basis</span><span class="p">(</span><span class="n">meas_basis</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Appends single-qubit rotations to a circuit to prepare measurement in specified basis&quot;&quot;&quot;</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+  
+  <span class="k">match</span> <span class="n">meas_basis</span><span class="p">:</span>
+    <span class="k">case</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span>
+      <span class="k">pass</span>
+    <span class="k">case</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span>
+      <span class="c1"># TODO</span>
+      <span class="k">pass</span>
+    <span class="k">case</span> <span class="s2">&quot;Y&quot;</span><span class="p">:</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;S_DAG&quot;</span><span class="p">)</span>
+      <span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;H&quot;</span><span class="p">)</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Specified target basis not known&quot;</span><span class="p">)</span>
+    
+  <span class="k">return</span> <span class="n">c</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+<span class="c1"># prepare |0&gt;_L</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">encoding_circuit</span><span class="p">()</span>
+<span class="c1"># rotate to X-basis</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">rotate_to_measurement_basis</span><span class="p">(</span><span class="n">meas_basis</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="c1"># append final measurement</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">measure_logical_qubits</span><span class="p">()</span>
+<span class="c1"># sample from circuit</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">sample_from_circuit</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># compute Z_L observable from measurement</span>
+<span class="n">logical_measurement_output</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">7</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logical bit-flip measurement outcome: &quot;</span><span class="p">,</span> <span class="n">logical_measurement_output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="transversal-gates">
+<h3>Transversal gates<a class="headerlink" href="#transversal-gates" title="Link to this heading"></a></h3>
+<p>We have now a good understanding of how to manipulate a single logical qubit. To leverage quantum advantage in the future, we will also need to be able to entangle our logical qubits.</p>
+<p>In this section we are going to implement a logical CNOT gate. Then, we’ll put everything together to prepare a logical GHZ state using 14 + 2 physical qubits:
+$<span class="math notranslate nohighlight">\(\ket{GHZ}_L = \frac{1}{\sqrt{2}}\left(\ket{00}_L + \ket{11}_L\right)\)</span>$</p>
+<p>In a first step, we prepare the state <span class="math notranslate nohighlight">\(|0\rangle_L \otimes |0\rangle_L\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># prepare |0&gt;_L x |0&gt;_L</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">encoding_circuit</span><span class="p">(</span><span class="n">log_qb_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">encoding_circuit</span><span class="p">(</span><span class="n">log_qb_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s2">&quot;timeline-svg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="logical-cnot-implementation">
+<h4>Logical CNOT Implementation<a class="headerlink" href="#logical-cnot-implementation" title="Link to this heading"></a></h4>
+<p>As shown in the lecture, CSS codes allow for transversal implementation of logical entangling gates such as the logical CNOT gate.
+In the Steane code the logical transversal CNOT gate is simply the pairwise CNOT between physical qubits at the same index of their respective logical qubit.</p>
+<p>Let’s write a method that implements the logical CNOT:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">logical_cnot</span><span class="p">(</span><span class="n">ctrl_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Implement a transversal CNOT by applying CNOT between physical qubits of the logical qubits</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">ctrl_idx</span> <span class="o">==</span> <span class="n">target_idx</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Control index cannot be equal target index&quot;</span><span class="p">)</span>
+  
+  <span class="n">offset_ctrl</span> <span class="o">=</span> <span class="n">ctrl_idx</span> <span class="o">*</span> <span class="mi">8</span>
+  <span class="n">offset_target</span> <span class="o">=</span> <span class="n">target_idx</span> <span class="o">*</span> <span class="mi">8</span>
+  
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">offset_ctrl</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">offset_target</span><span class="p">])</span>
+  
+  <span class="k">return</span> <span class="n">c</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Before applying the logical CNOT, we flip the control logical qubit to be able to test our gate</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">+=</span> <span class="n">logical_cnot</span><span class="p">(</span><span class="n">ctrl_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">+=</span> <span class="n">measure_logical_qubits</span><span class="p">(</span><span class="n">log_qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">c</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s2">&quot;timeline-svg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">sample_from_circuit</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">logical_measurement_output_qb1</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">logical_measurement_output_qb2</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">6</span> <span class="o">+</span> <span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">7</span> <span class="o">+</span> <span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">8</span> <span class="o">+</span> <span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">logical_measurement_output_qb1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">logical_measurement_output_qb2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="logical-bell-state">
+<h3>Logical Bell State<a class="headerlink" href="#logical-bell-state" title="Link to this heading"></a></h3>
+<p>Now, we have all tools to implement a logical Bell state!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># prepare |0&gt;_L x |0&gt;_L</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">encoding_circuit</span><span class="p">(</span><span class="n">log_qb_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">encoding_circuit</span><span class="p">(</span><span class="n">log_qb_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Apply Hadamard to first qubit</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">logical_single_qubit_gate</span><span class="p">(</span><span class="n">gate</span><span class="o">=</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="n">log_qb_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># Apply logical CNOT</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">logical_cnot</span><span class="p">(</span><span class="n">ctrl_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Add final measurements</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">measure_logical_qubits</span><span class="p">(</span><span class="n">log_qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optionally display the circuit</span>
+<span class="n">c</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s2">&quot;timeline-svg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sample and extract states</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">sample_from_circuit</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">logical_measurement_output_qb1</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">logical_measurement_output_qb2</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">6</span> <span class="o">+</span> <span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">7</span> <span class="o">+</span> <span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">8</span> <span class="o">+</span> <span class="mi">7</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">logical_measurement_output_qb1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">logical_measurement_output_qb2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="optional-simulating-the-steane-code-on-noisy-hardware-quantinuum-experiment">
+<h2>Optional: Simulating the Steane Code on noisy Hardware: Quantinuum Experiment<a class="headerlink" href="#optional-simulating-the-steane-code-on-noisy-hardware-quantinuum-experiment" title="Link to this heading"></a></h2>
+<p>The Steane code has been realized in various experiments:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.science.org/doi/10.1126/science.1253742">Quantum computations on a topologically encoded qubit</a>, 2014, Nigg et al.</p></li>
+<li><p><a class="reference external" href="https://journals.aps.org/prx/abstract/10.1103/PhysRevX.11.041058">Realization of Real-Time Fault-Tolerant Quantum Error Correction</a>, 2021</p></li>
+<li><p><a class="reference external" href="https://arxiv.org/html/2404.02280v1">Demonstration of logical qubits and repeated error correction with better-than-physical error rates</a>, 2024</p></li>
+</ul>
+<p>In the following, we provide code to simulate parts of the experiment by Quantinuum in 2021, where they implemented a single logical qubit on their ion-trap device and applied multiple rounds of error correction to it.</p>
+<p>This will hopefully give you a better understanding of how rounds of quantum error correction are actually implemented and how errors are handled. Please refer to the paper to learn more about the details of the experiment. Happy exploring!</p>
+<section id="introducing-errors">
+<h3>Introducing Errors<a class="headerlink" href="#introducing-errors" title="Link to this heading"></a></h3>
+<section id="quantinuum-error-parameters">
+<h4>Quantinuum error parameters<a class="headerlink" href="#quantinuum-error-parameters" title="Link to this heading"></a></h4>
+<p>In their experiment, Quantinuum measured various error sources for their ion-trap device.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>Error Channel</p></th>
+<th class="head"><p>Probability</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Initilization</p></td>
+<td><p>Bit flip</p></td>
+<td><p><span class="math notranslate nohighlight">\(1.66 \cdot 10^{-6}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Measurement</p></td>
+<td><p>Bit flip</p></td>
+<td><p><span class="math notranslate nohighlight">\(2.4 \cdot  10^{-3}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Single-qubit gate</p></td>
+<td><p>Depolarizing</p></td>
+<td><p><span class="math notranslate nohighlight">\(7 \cdot 10^{-5}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Two-qubit gate</p></td>
+<td><p>Depolarizing</p></td>
+<td><p><span class="math notranslate nohighlight">\(3.1 \cdot 10^{-3}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> We excluded non-Pauli channels, such as leakage, as they cannot be handled by Stim.</p>
+<p>Below, we define a helper function that allows us to inject the noise defined in the paper into our circuits:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NoiseModel</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Applies noise to quantum circuits.</span>
+<span class="sd">   </span>
+<span class="sd">   Adds depolarizing noise after 1 and 2-qubit gates, measurement errors,</span>
+<span class="sd">   and initialization errors based on typical superconducting qubit parameters.</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+  
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">init_error</span> <span class="o">=</span> <span class="mf">1.66</span> <span class="o">*</span> <span class="mf">1e-6</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">meas_error</span> <span class="o">=</span> <span class="mf">2.4</span> <span class="o">*</span> <span class="mf">1e-3</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">depolarize1</span> <span class="o">=</span> <span class="mi">7</span> <span class="o">*</span> <span class="mf">1e-5</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">depolarize2</span> <span class="o">=</span> <span class="mf">3.1</span> <span class="o">*</span> <span class="mf">1e-3</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">c</span>
+    
+    <span class="n">cn</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;CX&quot;</span><span class="p">:</span>
+        <span class="n">cn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;S_DAG&quot;</span><span class="p">]:</span>
+          <span class="n">cn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;DEPOLARIZE1&quot;</span><span class="p">,</span> <span class="n">op</span><span class="o">.</span><span class="n">targets_copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">depolarize1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
+          <span class="n">cn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;X_ERROR&quot;</span><span class="p">,</span> <span class="n">op</span><span class="o">.</span><span class="n">targets_copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">meas_error</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span>
+          <span class="n">cn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;X_ERROR&quot;</span><span class="p">,</span> <span class="n">op</span><span class="o">.</span><span class="n">targets_copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_error</span><span class="p">)</span>
+      
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">targets_copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">control</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">cn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CX&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">control</span><span class="p">,</span> <span class="n">target</span><span class="p">])</span>
+            <span class="n">cn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;DEPOLARIZE2&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">control</span><span class="p">,</span> <span class="n">target</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">depolarize2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cn</span>
+        
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">noise</span> <span class="o">=</span> <span class="n">NoiseModel</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="faulty-logical-state-preparation">
+<h3>Faulty logical state preparation<a class="headerlink" href="#faulty-logical-state-preparation" title="Link to this heading"></a></h3>
+<p>To test our noise model, we apply it to the Goto scheme. We expect to see some state preparation failures.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+<span class="c1"># prepare |0&gt;_L</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">noise</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">encoding_circuit</span><span class="p">())</span>
+<span class="c1"># append final measurement</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">measure_logical_qubits</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s2">&quot;timeline-svg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_shots</span> <span class="o">=</span> <span class="mi">100_000</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">sample_from_circuit</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">num_shots</span><span class="p">)</span>
+
+<span class="c1"># compute Z_L observable from measurement</span>
+<span class="n">logical_measurement_output</span> <span class="o">=</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[:,</span><span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Measure how often the ancilla qubit is measured in state |0&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Success rate: &quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">r</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">num_shots</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="syndrome-extraction">
+<h3>Syndrome extraction<a class="headerlink" href="#syndrome-extraction" title="Link to this heading"></a></h3>
+<p>After succesful state preparation, the logical qubit is idling and the physical qubits will accumulate errors. This will cuase the logical qubit to decohere if we don’t measure the stabilizers, effectively <strong>digitizing the noise</strong>, and tracking the changes in stabilizer measurements!</p>
+<p>Below we first provide a function to measure all stabilizers of the code in a sequence.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">measure_all_syndromes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Appends a circuit that measures all 6 stabilizers of the [[7,1,3]]-Steane code&quot;&quot;&quot;</span>
+  
+  <span class="c1"># indices for X-/Z-stabilizers</span>
+  <span class="n">syndrome_qubits</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="c1"># 1st plaquette</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="c1"># 2nd plaquette</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>  <span class="c1"># 3rd plaquette</span>
+  <span class="p">]</span>
+  <span class="c1"># indices for ancilla qubits</span>
+  <span class="n">ancilla_qubits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
+  
+  <span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+  <span class="c1"># measure X-stabilizers</span>
+  <span class="k">for</span> <span class="n">ancilla</span><span class="p">,</span> <span class="n">data_qubits</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ancilla_qubits</span><span class="p">,</span> <span class="n">syndrome_qubits</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_qubits</span><span class="p">:</span>
+      <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">data</span><span class="p">,</span> <span class="n">ancilla</span><span class="p">])</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">ancilla</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="n">ancilla</span><span class="p">)</span>
+    
+  <span class="c1"># measure Z-stabilizers</span>
+  <span class="k">for</span> <span class="n">ancilla</span><span class="p">,</span> <span class="n">data_qubits</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ancilla_qubits</span><span class="p">,</span> <span class="n">syndrome_qubits</span><span class="p">):</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="n">ancilla</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_qubits</span><span class="p">:</span>
+      <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">ancilla</span><span class="p">,</span> <span class="n">data</span><span class="p">])</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="n">ancilla</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">ancilla</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="n">ancilla</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">c</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+<span class="n">c</span> <span class="o">+=</span> <span class="n">measure_all_syndromes</span><span class="p">()</span>
+<span class="n">c</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;timeline-svg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This approach for syndrome extraction is problematic as it is clearly not fault-tolerant. For example, consider a <span class="math notranslate nohighlight">\(Z\)</span> error on one of the ancilla qubits. A single error can spread to 4 physical qubits during a single stabilizer measurement!</p>
+<p><strong>Can we do better?</strong></p>
+<p>A first approach could be to group the entangling gates, so that we measure the stabilizers in parallel. We can measure at most 3 stabilizers in parallel. This also reduces the time the physical qubits spent idling.</p>
+<p>Furthermore, we need to consider the spreading of errors from the ancillas, so called <strong>hook errors</strong>. Since the Steane code is a distance <span class="math notranslate nohighlight">\(d=3\)</span> code, we can at most correct a single error and detect two errors.</p>
+<p>A simple approach to detect hook errors is to add additional “flag” qubits, which measure parity checks on subsets of ancillas. In the following, we define circuits where the ancillas act themselves as flags for hook errors without the need for additional ancillas (Syndrome qubits reciprocally flag each other).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">measure_flagged_syndromes_xzz</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Extracts flagged syndrome measurements for stabilizers 1, 5, 6</span>
+<span class="sd">  </span>
+<span class="sd">  1: XXXXIII  (Z errors on first plaquette)</span>
+<span class="sd">  5: IZZIZZI  (X errors on second plaquette)</span>
+<span class="sd">  6: IIZZIZZ  (X errors on third plaquette)</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+  <span class="c1"># correlate</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+  <span class="c1">#correlate</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+  <span class="c1"># measure ancillas and reset them</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">c</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xzz</span> <span class="o">=</span> <span class="n">measure_flagged_syndromes_xzz</span><span class="p">()</span>
+<span class="n">xzz</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;timeline-svg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">measure_flagged_syndromes_zxx</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Extracts flagged syndrome measurements for stabilizers 2, 3, 4</span>
+<span class="sd">  </span>
+<span class="sd">  2: ZZZZIII  (X errors on first plaquette)</span>
+<span class="sd">  3: IXXIXXI  (Z errors on second plaquette)</span>
+<span class="sd">  4: IIXXIXX  (Z errors on third plaquette)</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">()</span>
+  
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+  <span class="c1"># correlate</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+  <span class="c1">#correlate</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CNOT&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+
+  <span class="c1"># measure ancillas and reset them</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">c</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>An example of hook errors with flags is shown in the picture below, taken from the Quantinuum paper:</p>
+<p><img alt="Steane Hook Errors" src="../../_images/quantinuum-steane-hook-errors.png" /></p>
+</section>
+<section id="full-qec-cycle">
+<h3>Full QEC cycle<a class="headerlink" href="#full-qec-cycle" title="Link to this heading"></a></h3>
+<p>We are nearly ready to run our full QEC cycle. We can now come up with a protocol to reliably correct a single physical qubit error. Our flagged syndrome circuits can detect hook errors. To differentiate them from heigher weight Pauli errors, we combine flagged and unflagged syndrome extraction.</p>
+<p>If the flagged syndrome circuits do not indicate an error, than we are done and the next QEC cycle starts. Otherwise, we know that an error occurred, but we need to measure the complete set of stabilizers to identify whether a hook error occurred.</p>
+<p>This combination of conditional syndrome extraction is also known as <strong>adaptive syndrome extraction</strong> and can reduce average QEC cycle time significantly.</p>
+<p>The adaptive QEC cycle is depicted in the picture below:</p>
+<p><img alt="" src="../../_images/qec_cycle_with_flagged_syndromes.png" /></p>
+<p>Unfortunately, Stim does not support conditional circuit execution, which means that we need to drive the <code class="docutils literal notranslate"><span class="pre">TableauSimulator</span></code> manually.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a logger allowing us to print the progress of the execution of the QEC experiment</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-decoder">
+<h3>The Decoder<a class="headerlink" href="#the-decoder" title="Link to this heading"></a></h3>
+<p>The decoder is a simple two-stage <strong>Lookup Table Decoder (LUT)</strong>. This means that for each syndrome pattern there is a fixed rule on how to update the <strong>Pauli Frame</strong>, which indicates whether the logical qubit has been flipped or not.</p>
+<p>The first stage is used to decode the unflagged syndromes and the second stage decodes the flagged syndromes.</p>
+<p><span class="math notranslate nohighlight">\(X\)</span>/<span class="math notranslate nohighlight">\(Z\)</span>-type errors are handled separately, but since the stabilizers have the same structure we can use the same LUT decoder.</p>
+<blockquote>
+<div><p><strong>Note:</strong> We don’t provide the syndromes directly to the decoder but only whether the syndromes changed between QEC cycle rounds.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">unflagged_decoder</span><span class="p">(</span><span class="n">syndromes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Given X-/Z-type stabilizer measurements. The syndromes are used to infer whether a logical error has occurred</span>
+<span class="sd">  </span>
+<span class="sd">  This is exactly the case, when there is a change in syndromes for the 2nd/3rd stabilizer</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">bad_syndrome_patterns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+
+  <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">bad_syndrome_patterns</span> <span class="o">==</span> <span class="n">syndromes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)):</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Unflagged decoder: Logical error detected!&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">flagged_decoder</span><span class="p">(</span><span class="n">syndromes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">flagged_syndromes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Handle hook errors.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  
+  <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">flagged_syndromes</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">syndromes</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="mi">1</span>
+  <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">flagged_syndromes</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">syndromes</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="mi">1</span>
+  <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">flagged_syndromes</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">syndromes</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="mi">1</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">decoder</span><span class="p">(</span><span class="n">syndromes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">flagged_syndromes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+  
+  <span class="n">pf</span> <span class="o">=</span> <span class="n">unflagged_decoder</span><span class="p">(</span><span class="n">syndromes</span><span class="p">)</span>
+  <span class="n">pf_flag</span> <span class="o">=</span> <span class="n">flagged_decoder</span><span class="p">(</span><span class="n">syndromes</span><span class="p">,</span> <span class="n">flagged_syndromes</span><span class="p">)</span>
+  
+  <span class="k">return</span> <span class="n">pf</span><span class="p">,</span> <span class="n">pf_flag</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">qec_cycle</span><span class="p">(</span><span class="n">simulator</span><span class="p">:</span> <span class="n">stim</span><span class="o">.</span><span class="n">TableauSimulator</span><span class="p">,</span> <span class="n">x_syndromes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">z_syndromes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">pauli_frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">m_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">noise</span><span class="p">:</span> <span class="n">NoiseModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Run a full QEC cycle for the [[7,1,3]]-Steane code by driving the Tableau simulator manually&quot;&quot;&quot;</span>
+  
+  <span class="c1"># track the delta of previous and current syndrome measurement</span>
+  <span class="n">flag_diff_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># track delta of X-stabilizers</span>
+  <span class="n">flag_diff_z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># track delta of Z-stabilizers</span>
+  
+  <span class="c1"># first flagged syndrome extraction</span>
+  <span class="n">simulator</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">measure_flagged_syndromes_xzz</span><span class="p">()))</span>
+  <span class="c1"># measure first X-stabilizer, and second/third Z-stabilizer</span>
+  <span class="n">fx0</span><span class="p">,</span> <span class="n">fz1</span><span class="p">,</span> <span class="n">fz2</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">current_measurement_record</span><span class="p">()[</span><span class="n">m_idx</span><span class="p">:</span><span class="n">m_idx</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+  <span class="c1"># update syndrome delta</span>
+  <span class="n">flag_diff_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">fx0</span> <span class="o">^</span> <span class="n">x_syndromes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">flag_diff_z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">fz1</span> <span class="o">^</span> <span class="n">z_syndromes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">flag_diff_z</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">fz2</span> <span class="o">^</span> <span class="n">z_syndromes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+  <span class="c1"># shift measurement index</span>
+  <span class="n">m_idx</span> <span class="o">+=</span> <span class="mi">3</span>
+  <span class="c1"># print delta for debugging</span>
+  <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Delta after 1st flagged measurement (XZZ): X </span><span class="si">{</span><span class="n">flag_diff_x</span><span class="si">}</span><span class="s2">, Z </span><span class="si">{</span><span class="n">flag_diff_z</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="c1"># if no syndrome changed continue with second round of flagged syndrome measurements</span>
+  <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">flag_diff_x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">flag_diff_z</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="c1"># second flagged syndrome extraction</span>
+    <span class="n">simulator</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">measure_flagged_syndromes_zxx</span><span class="p">()))</span>
+    <span class="c1"># measure first Z-stabilizer, and second/third X-stabilizer</span>
+    <span class="n">fz0</span><span class="p">,</span> <span class="n">fx1</span><span class="p">,</span> <span class="n">fx2</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">current_measurement_record</span><span class="p">()[</span><span class="n">m_idx</span><span class="p">:</span><span class="n">m_idx</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+    <span class="c1"># update syndrome delta</span>
+    <span class="n">flag_diff_z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">fz0</span> <span class="o">^</span> <span class="n">z_syndromes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">flag_diff_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">fx1</span> <span class="o">^</span> <span class="n">x_syndromes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">flag_diff_x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">fx2</span> <span class="o">^</span> <span class="n">x_syndromes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="c1"># shift measurement index</span>
+    <span class="n">m_idx</span> <span class="o">+=</span> <span class="mi">3</span>
+    <span class="c1"># print delta for debugging</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Delta after 2nd flagged measurement (ZXX): X </span><span class="si">{</span><span class="n">flag_diff_x</span><span class="si">}</span><span class="s2">, Z </span><span class="si">{</span><span class="n">flag_diff_z</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="c1"># re-measure all syndromes if flagged syndrome extraction indicates changes in syndromes</span>
+  <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">flag_diff_z</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">flag_diff_x</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># run full syndrome extraction</span>
+    <span class="n">simulator</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">measure_all_syndromes</span><span class="p">()))</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">current_measurement_record</span><span class="p">()[</span><span class="n">m_idx</span><span class="p">:</span><span class="n">m_idx</span><span class="o">+</span><span class="mi">7</span><span class="p">]</span>
+    <span class="c1"># update syndromes</span>
+    <span class="n">current_z_syndromes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># First 3 measurements Z-stabilizers </span>
+    <span class="n">current_x_syndromes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">::],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># Final 3 measurements X-stabilizers</span>
+    <span class="c1"># compute delta</span>
+    <span class="n">diff_x_syndromes</span> <span class="o">=</span> <span class="n">x_syndromes</span> <span class="o">^</span> <span class="n">current_x_syndromes</span>
+    <span class="n">diff_z_syndromes</span> <span class="o">=</span> <span class="n">z_syndromes</span> <span class="o">^</span> <span class="n">current_z_syndromes</span>
+    <span class="c1"># shift measurement index</span>
+    <span class="n">m_idx</span> <span class="o">+=</span> <span class="mi">6</span>
+    <span class="c1"># print new syndrome measurements</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Delta after unflagged measurement: X </span><span class="si">{</span><span class="n">diff_x_syndromes</span><span class="si">}</span><span class="s2">, Z </span><span class="si">{</span><span class="n">diff_z_syndromes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># call decoder to get updated pauli frame</span>
+    <span class="n">pf_x</span><span class="p">,</span> <span class="n">pf_flag_x</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">(</span><span class="n">diff_x_syndromes</span><span class="p">,</span> <span class="n">flag_diff_x</span><span class="p">)</span>
+    <span class="n">pf_z</span><span class="p">,</span> <span class="n">pf_flag_z</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">(</span><span class="n">diff_z_syndromes</span><span class="p">,</span> <span class="n">flag_diff_z</span><span class="p">)</span>
+    
+    <span class="c1"># update pauli frame</span>
+    <span class="n">pauli_frame</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">pauli_frame</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">pf_x</span> <span class="o">^</span> <span class="n">pf_flag_x</span>
+    <span class="n">pauli_frame</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pauli_frame</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">pf_z</span> <span class="o">^</span> <span class="n">pf_flag_z</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pauli frame: Z: </span><span class="si">{</span><span class="n">pauli_frame</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, X: </span><span class="si">{</span><span class="n">pauli_frame</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># update syndromes</span>
+    <span class="n">x_syndromes</span> <span class="o">=</span> <span class="n">current_x_syndromes</span>
+    <span class="n">z_syndromes</span> <span class="o">=</span> <span class="n">current_z_syndromes</span>
+  
+  <span class="k">return</span> <span class="n">simulator</span><span class="p">,</span> <span class="n">x_syndromes</span><span class="p">,</span> <span class="n">z_syndromes</span><span class="p">,</span> <span class="n">pauli_frame</span><span class="p">,</span> <span class="n">m_idx</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the final round of quantum error correction, we measure all physical qubits simultaneously in the <span class="math notranslate nohighlight">\(Z\)</span>-basis.</p>
+<p>Given the measurement results, we compute the syndrome measurements as well as the logical observable by classically XORing the bits.</p>
+<p>Depending on the chosen measurement basis, we need to modify the syndromes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">destructive_logical_measurement</span><span class="p">(</span><span class="n">simulator</span><span class="p">:</span> <span class="n">stim</span><span class="o">.</span><span class="n">TableauSimulator</span><span class="p">,</span> <span class="n">meas_basis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x_syndromes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">z_syndromes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">pauli_frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">m_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">noise</span><span class="p">:</span> <span class="n">NoiseModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Perform final destructive measurement where all physical qubits are measured.</span>
+<span class="sd">  </span>
+<span class="sd">  Returns a single bit, corresponding to the logical qubit measurement in the specified measurement basis.</span>
+<span class="sd">  A final set of syndromes can be computed depending on the measurement basis.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  
+  <span class="c1"># Measure all seven physical qubits of our logical qubit destructively</span>
+  <span class="n">simulator</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">measure_logical_qubits</span><span class="p">()))</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">current_measurement_record</span><span class="p">()[</span><span class="n">m_idx</span><span class="p">:</span><span class="n">m_idx</span><span class="o">+</span><span class="mi">7</span><span class="p">]</span>
+  
+  <span class="c1"># Compute the logical observable</span>
+  <span class="n">log_obs</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+  
+  <span class="c1"># Compute syndromes</span>
+  <span class="n">s1</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>  <span class="c1"># First plaquette</span>
+  <span class="n">s2</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># Second plaquette</span>
+  <span class="n">s3</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">r</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>  <span class="c1"># Third plaquette</span>
+  <span class="n">syndromes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+  <span class="k">match</span> <span class="n">meas_basis</span><span class="p">:</span>
+    <span class="k">case</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span>
+      <span class="n">syndrome_diff</span> <span class="o">=</span> <span class="n">syndromes</span> <span class="o">^</span> <span class="n">x_syndromes</span>
+    <span class="k">case</span> <span class="s2">&quot;Y&quot;</span><span class="p">:</span>
+      <span class="n">syndrome_diff</span> <span class="o">=</span> <span class="n">syndromes</span> <span class="o">^</span> <span class="n">x_syndromes</span>
+      <span class="n">syndrome_diff</span> <span class="o">=</span> <span class="n">syndromes</span> <span class="o">^</span> <span class="n">z_syndromes</span>
+    <span class="k">case</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span>
+      <span class="n">syndrome_diff</span> <span class="o">=</span> <span class="n">syndromes</span> <span class="o">^</span> <span class="n">z_syndromes</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown measurement basis </span><span class="si">{</span><span class="n">meas_basis</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+
+  <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Delta final round: </span><span class="si">{</span><span class="n">syndrome_diff</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  
+  <span class="c1"># Get final corrections from the unflagged decoder</span>
+  <span class="n">final_correction</span> <span class="o">=</span> <span class="n">unflagged_decoder</span><span class="p">(</span><span class="n">syndrome_diff</span><span class="p">)</span>
+  
+  <span class="c1"># Update the logical obs</span>
+  <span class="n">log_obs</span> <span class="o">=</span> <span class="n">log_obs</span> <span class="o">^</span> <span class="n">final_correction</span>
+  
+  <span class="c1"># Finally, apply correction based on measurement basis</span>
+  <span class="k">match</span> <span class="n">meas_basis</span><span class="p">:</span>
+    <span class="k">case</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span>
+      <span class="n">log_obs</span> <span class="o">=</span> <span class="n">log_obs</span> <span class="o">^</span> <span class="n">pauli_frame</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">case</span> <span class="s2">&quot;Y&quot;</span><span class="p">:</span>
+      <span class="n">log_obs</span> <span class="o">=</span> <span class="n">log_obs</span> <span class="o">^</span> <span class="n">pauli_frame</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">pauli_frame</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;log : </span><span class="si">%s</span><span class="s2">, pf: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">log_obs</span><span class="p">,</span> <span class="n">pauli_frame</span><span class="p">)</span>
+    <span class="k">case</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span>
+      <span class="n">log_obs</span> <span class="o">=</span> <span class="n">log_obs</span> <span class="o">^</span> <span class="n">pauli_frame</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+      
+  <span class="k">return</span> <span class="n">log_obs</span>
+   
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">expected_result</span><span class="p">(</span><span class="n">measure_output</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stabilizer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">meas_basis</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Evaluate if measurement corresponds to the expected measurement result for a given stabilizer and measurement basis.&quot;&quot;&quot;</span>
+
+  <span class="n">pauli_measurement</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">PauliString</span><span class="p">(</span><span class="n">meas_basis</span><span class="p">)</span>
+  <span class="n">pauli_stabilizer</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">PauliString</span><span class="p">(</span><span class="n">stabilizer</span><span class="p">)</span> 
+  <span class="n">commute</span> <span class="o">=</span> <span class="n">pauli_stabilizer</span><span class="o">.</span><span class="n">commutes</span><span class="p">(</span><span class="n">pauli_measurement</span><span class="p">)</span>
+  
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">commute</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Anti-commuting stabilzers, measurement is random&quot;</span><span class="p">)</span>
+  
+  <span class="n">sign</span> <span class="o">=</span> <span class="p">(</span><span class="n">pauli_measurement</span> <span class="o">*</span> <span class="n">pauli_stabilizer</span><span class="p">)</span><span class="o">.</span><span class="n">sign</span>
+  
+  <span class="k">if</span> <span class="n">sign</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="n">measure_output</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">==</span> <span class="n">measure_output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can put everything together and run the whole QEC cycle!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">steane_code_exp</span><span class="p">(</span><span class="n">initial_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;+Z&quot;</span><span class="p">,</span> <span class="n">meas_basis</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="n">num_cycles</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">shots</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">noise</span> <span class="o">=</span> <span class="n">NoiseModel</span><span class="p">()):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Runs an error correction experiment for the Steane [[7,1,3]]-code.</span>
+<span class="sd">  </span>
+<span class="sd">  The quantum state is represented by the state of the stim TableauSimulator.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shots</span><span class="p">):</span>
+    <span class="n">simulator</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">TableauSimulator</span><span class="p">()</span>
+    
+    <span class="n">m_idx</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># shift measurement index</span>
+    
+    <span class="c1"># state preparation (3 attempts)</span>
+    <span class="c1"># prepare the logical |0&gt;_L state and verify with ancilla</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+      <span class="n">simulator</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">encoding_circuit</span><span class="p">()))</span>
+      <span class="n">state_prep_ancilla</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">current_measurement_record</span><span class="p">()[</span><span class="n">m_idx</span><span class="p">]</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;State preparation ancilla: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">state_prep_ancilla</span><span class="p">))</span>
+      <span class="n">m_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">state_prep_ancilla</span><span class="p">:</span>
+        <span class="k">break</span>
+      
+    <span class="c1"># apply single qubit gate to prepare correct state</span>
+    <span class="n">simulator</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">prepare_stab_eigenstate</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)))</span>
+    
+    <span class="c1"># run QEC cycles</span>
+    <span class="n">x_syndromes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">z_syndromes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># Pauli frame tracks which logical correction to apply</span>
+    <span class="c1"># Pauli Frame = [Apply X_L?, Apply Z_L?] </span>
+    <span class="n">pauli_frame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_cycles</span><span class="p">):</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--- QEC cycle </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">simulator</span><span class="p">,</span> <span class="n">x_syndromes</span><span class="p">,</span> <span class="n">z_syndromes</span><span class="p">,</span> <span class="n">pauli_frame</span><span class="p">,</span> <span class="n">m_idx</span> <span class="o">=</span> <span class="n">qec_cycle</span><span class="p">(</span><span class="n">simulator</span><span class="p">,</span> <span class="n">x_syndromes</span><span class="p">,</span> <span class="n">z_syndromes</span><span class="p">,</span> <span class="n">pauli_frame</span><span class="p">,</span> <span class="n">m_idx</span><span class="p">,</span> <span class="n">noise</span><span class="p">)</span>
+
+    <span class="c1"># Rotate to correct logical measurement basis</span>
+    <span class="n">simulator</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">rotate_to_measurement_basis</span><span class="p">(</span><span class="n">meas_basis</span><span class="o">=</span><span class="n">meas_basis</span><span class="p">)))</span>
+    
+    <span class="c1"># Perform final destructive logical measurement</span>
+    <span class="n">final_measurement</span> <span class="o">=</span> <span class="n">destructive_logical_measurement</span><span class="p">(</span><span class="n">simulator</span><span class="p">,</span> <span class="n">meas_basis</span><span class="p">,</span> <span class="n">x_syndromes</span><span class="p">,</span> <span class="n">z_syndromes</span><span class="p">,</span> <span class="n">pauli_frame</span><span class="p">,</span> <span class="n">m_idx</span><span class="p">,</span> <span class="n">noise</span><span class="p">)</span>
+    
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final measurement: </span><span class="si">{</span><span class="n">final_measurement</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="n">success</span> <span class="o">=</span> <span class="n">expected_result</span><span class="p">(</span><span class="n">final_measurement</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">,</span> <span class="n">meas_basis</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Success: </span><span class="si">{</span><span class="n">success</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+    
+  <span class="k">return</span> <span class="n">results</span>
+  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment to follow QEC cycle execution</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="n">noise</span> <span class="o">=</span> <span class="n">NoiseModel</span><span class="p">()</span>
+<span class="n">noise</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">steane_code_exp</span><span class="p">(</span><span class="n">num_cycles</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">initial_state</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;+Y&quot;</span><span class="p">,</span> <span class="n">meas_basis</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="n">noise</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="simulating-logical-error-rates-for-steane-code-for-each-basis">
+<h3>Simulating Logical Error Rates for Steane Code for each Basis<a class="headerlink" href="#simulating-logical-error-rates-for-steane-code-for-each-basis" title="Link to this heading"></a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shots</span> <span class="o">=</span> <span class="mi">2048</span>
+<span class="n">cycles_sweep</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">basis_sweep</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">]</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">NoiseModel</span><span class="p">()</span>
+<span class="n">noise</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">basis</span> <span class="ow">in</span> <span class="n">basis_sweep</span><span class="p">:</span>
+  <span class="n">cycle_results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">cycles</span> <span class="ow">in</span> <span class="n">cycles_sweep</span><span class="p">:</span>
+    <span class="n">exp_results</span> <span class="o">=</span> <span class="n">steane_code_exp</span><span class="p">(</span><span class="n">num_cycles</span><span class="o">=</span><span class="n">cycles</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">,</span> <span class="n">initial_state</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;+</span><span class="si">{</span><span class="n">basis</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">meas_basis</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">basis</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="n">noise</span><span class="p">)</span>
+    <span class="n">cycle_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">exp_results</span><span class="p">)</span><span class="o">/</span><span class="n">shots</span><span class="p">)</span>
+  <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cycle_results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Steane Code Logical Error Rate vs. QEC cycles&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;QEC Cycles&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Logical Error Rate&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">basis</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basis_sweep</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cycles_sweep</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span> <span class="n">label</span><span class="o">=</span><span class="n">basis</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Basis&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Decoding_excercise/" class="btn btn-neutral float-left" title="Tutorial - MAP Decoding Exercise" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../surface_code_threshold/" class="btn btn-neutral float-right" title="Tutorial - Estimating the Surface Code Threshold" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

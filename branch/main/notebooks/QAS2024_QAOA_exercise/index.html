@@ -1,0 +1,870 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial - Variational Quantum Algorithms &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Introduction to Quantum Error Correction" href="../../qec/" />
+    <link rel="prev" title="Introduction to variational quantum algorithms: VQE and QAOA" href="../../qaoa_vqe_intro/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial - Variational Quantum Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#exercise-1-max-4-cut">Exercise 1: Max 4-Cut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercise-2-max-3-cut-using-the-full-hilbert-space">Exercise 2: Max 3-Cut using the full Hilbert space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercise-3-max-3-cut-using-subspaces">Exercise 3: Max 3-Cut using subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../css_code_steane/">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_code_threshold/">Tutorial - Estimating the Surface Code Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../option_pricing_tutorial/">Tutorial - Pricing a European call option using quantum computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../flight_scheduling_optimization_qaoa/">Tutorial - Solving Flight Scheduling Optimization using QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../matsci_on_qc/README/">Quantum Computing for Materials Science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial - Variational Quantum Algorithms</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/notebooks/QAS2024_QAOA_exercise.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-variational-quantum-algorithms">
+<h1>Tutorial - Variational Quantum Algorithms<a class="headerlink" href="#tutorial-variational-quantum-algorithms" title="Link to this heading"></a></h1>
+<section id="exercise-1-max-4-cut">
+<h2>Exercise 1: Max 4-Cut<a class="headerlink" href="#exercise-1-max-4-cut" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><u>Problem Definition</u></p></li>
+</ol>
+<p>The Max 4-Cut problem is defined on a graph <span class="math notranslate nohighlight">\( G = (V, E) \)</span>, with a corresponding problem Hamiltonian given by:</p>
+<div class="math notranslate nohighlight">
+\[
+H_P = \sum_{e \in E} w_{e} H_{e},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( w_e \)</span> represents the weight of edge <span class="math notranslate nohighlight">\( e \in E\)</span>, and <span class="math notranslate nohighlight">\( H_e \)</span> is the Hamiltonian associated with that edge.</p>
+<ol class="arabic simple" start="2">
+<li><p><u>Generic Graph Problem</u></p></li>
+</ol>
+<p>In this exercise, the class <code class="docutils literal notranslate"><span class="pre">GraphProblem</span></code> from the <code class="docutils literal notranslate"><span class="pre">qaoa.problems</span></code> module is used to define the problem. The class requires two inputs:</p>
+<ol class="arabic simple">
+<li><p>A networkx graph <span class="math notranslate nohighlight">\(G\)</span>,</p></li>
+<li><p>The number of qubits per vertex/node.</p></li>
+</ol>
+<p>The <code class="docutils literal notranslate"><span class="pre">GraphProblem</span></code> class includes a method to create a quantum circuit for implementing the phase separating Hamiltonian <span class="math notranslate nohighlight">\(e^{-i\theta H_P}\)</span>.</p>
+<ol class="arabic simple" start="3">
+<li><p><u>Specific problem implementation</u></p></li>
+</ol>
+<p>However, <code class="docutils literal notranslate"><span class="pre">GraphProblem</span></code> relies on an abstract method, <code class="docutils literal notranslate"><span class="pre">create_edge_circuit</span></code>, which must be implemented to define the phase separating Hamiltonian <span class="math notranslate nohighlight">\( H_e \)</span> for an edge.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">qaoa.problems</span> <span class="kn">import</span> <span class="n">GraphProblem</span>
+
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">PhaseGate</span>
+
+<span class="k">class</span> <span class="nc">Max4Cut</span><span class="p">(</span><span class="n">GraphProblem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">G</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        
+        <span class="n">N_qubits_per_node</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">N_qubits_per_node</span><span class="p">)</span>
+
+        <span class="c1"># each color is associated with a bitstring combination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;color1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;00&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;color2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;01&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;color3&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;10&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;color4&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;11&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="c1"># Create a dictionary to map each index to its corresponding set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bitstring_to_color</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">indices</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bitstring_to_color</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+
+    <span class="k">def</span> <span class="nf">create_edge_circuit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">N_qubits_per_node</span><span class="p">)</span>
+
+        <span class="s2">&quot; ---------------------&quot;</span>
+        <span class="s2">&quot; implement the circuit&quot;</span>
+        <span class="s2">&quot; ---------------------&quot;</span>
+        
+        <span class="k">return</span> <span class="n">qc</span>
+    <span class="k">def</span> <span class="nf">create_edge_circuit_fixed_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Show the circuit for one edge</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="o">=</span> <span class="n">Max4Cut</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">})]))</span>
+<span class="n">test</span><span class="o">.</span><span class="n">create_edge_circuit</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Graph contains nodes with one or zero edges. These can be removed to reduce the size of the problem.
+</pre></div>
+</div>
+<img alt="../../_images/8176e52d8674154be6dd10dec3742ef900dd05bcbe676c1c1b4e1bd152003530.png" src="../../_images/8176e52d8674154be6dd10dec3742ef900dd05bcbe676c1c1b4e1bd152003530.png" />
+</div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p><u>Graph instance</u></p></li>
+</ol>
+<p>Let’s start by defining a Graph with 10 nodes</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1"># Create a graph with 8 nodes</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="c1"># Add nodes</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+<span class="c1"># Add edges (example connections)</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+
+<span class="c1"># Draw the graph</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">circular_layout</span><span class="p">(</span><span class="n">G</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6212f42aa3cefc0fc1c9e15f021a78d6087f425761e72e65ddc85edfdb9e16e4.png" src="../../_images/6212f42aa3cefc0fc1c9e15f021a78d6087f425761e72e65ddc85edfdb9e16e4.png" />
+</div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p><u>Problem instance</u></p></li>
+</ol>
+<p>Now we can instantiate a Max4Cut problem with the graph and create and draw the resulting circuit for the phase separating Hamiltonian. Observe that there is one circuit per edge in the graph.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max4cut</span> <span class="o">=</span> <span class="n">Max4Cut</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="n">max4cut</span><span class="o">.</span><span class="n">create_circuit</span><span class="p">()</span>
+<span class="n">max4cut</span><span class="o">.</span><span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/88f4f0a7737ef47119119fcc77750811c8502313ff9b4079c02ae91e80735b1b.png" src="../../_images/88f4f0a7737ef47119119fcc77750811c8502313ff9b4079c02ae91e80735b1b.png" />
+</div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p><u>QAOA instance</u></p></li>
+</ol>
+<p>We create a QAOA instance using</p>
+<ul class="simple">
+<li><p>as initial state we use the <span class="math notranslate nohighlight">\(\ket{+}\)</span> state,</p></li>
+<li><p>as mixing operator the <span class="math notranslate nohighlight">\(X\)</span>-mixer, and</p></li>
+<li><p>as phase separation operator our newly created max4cut instance.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qaoa</span> <span class="kn">import</span> <span class="n">QAOA</span>
+<span class="kn">from</span> <span class="nn">qaoa.initialstates</span> <span class="kn">import</span> <span class="n">Plus</span>
+<span class="kn">from</span> <span class="nn">qaoa.mixers</span> <span class="kn">import</span> <span class="n">X</span>
+<span class="kn">from</span> <span class="nn">qiskit_algorithms.optimizers</span> <span class="kn">import</span> <span class="n">COBYLA</span>
+
+<span class="n">settings</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;maxiter&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;tol&quot;</span><span class="p">:</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="s2">&quot;rhobeg&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="p">[</span><span class="n">COBYLA</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
+
+<span class="n">qaoa_k4</span> <span class="o">=</span> <span class="n">QAOA</span><span class="p">(</span><span class="n">initialstate</span><span class="o">=</span><span class="n">Plus</span><span class="p">(),</span> <span class="n">problem</span><span class="o">=</span><span class="n">max4cut</span><span class="p">,</span> <span class="n">mixer</span><span class="o">=</span><span class="n">X</span><span class="p">(),</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p><u>Run QAOA</u></p></li>
+</ol>
+<ul class="simple">
+<li><p>Sample the cost landscape and plot it.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+<span class="k">def</span> <span class="nf">plot_E</span><span class="p">(</span><span class="n">qaoa_instance</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">angles</span> <span class="o">=</span> <span class="n">qaoa_instance</span><span class="o">.</span><span class="n">landscape_p1_angles</span>
+    <span class="n">dgamma</span> <span class="o">=</span> <span class="p">(</span><span class="n">qaoa_instance</span><span class="o">.</span><span class="n">gamma_grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">qaoa_instance</span><span class="o">.</span><span class="n">gamma_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">dbeta</span> <span class="o">=</span> <span class="p">(</span><span class="n">qaoa_instance</span><span class="o">.</span><span class="n">gamma_grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">qaoa_instance</span><span class="o">.</span><span class="n">gamma_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">extent</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">angles</span><span class="p">[</span><span class="s2">&quot;gamma&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">dgamma</span><span class="p">,</span>
+        <span class="n">angles</span><span class="p">[</span><span class="s2">&quot;gamma&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">dgamma</span><span class="p">,</span>
+        <span class="n">angles</span><span class="p">[</span><span class="s2">&quot;beta&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">dbeta</span><span class="p">,</span>
+        <span class="n">angles</span><span class="p">[</span><span class="s2">&quot;beta&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">dbeta</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">__plot_landscape</span><span class="p">(</span><span class="n">qaoa_instance</span><span class="o">.</span><span class="n">exp_landscape</span><span class="p">(),</span> <span class="n">extent</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">__plot_landscape</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">extent</span><span class="p">,</span> <span class="n">fig</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">fig</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\gamma$&quot;</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\beta$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Expectation value&quot;</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">)</span>
+    <span class="n">divider</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">cax</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">&quot;5%&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">)</span>
+
+<span class="n">qaoa_k4</span><span class="o">.</span><span class="n">sample_cost_landscape</span><span class="p">(</span> <span class="n">angles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="p">]}</span> <span class="p">)</span>
+<span class="n">plot_E</span><span class="p">(</span><span class="n">qaoa_k4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-12-02 13:36:14 [info     ] Calculating energy landscape for depth p=1... file=qaoa.qaoa func=sample_cost_landscape
+2024-12-02 13:36:15 [info     ] Executing sample_cost_landscape file=qaoa.qaoa func=sample_cost_landscape
+2024-12-02 13:36:15 [info     ] parameters: 2                  file=qaoa.qaoa func=sample_cost_landscape
+2024-12-02 13:36:15 [info     ] Done execute                   file=qaoa.qaoa func=sample_cost_landscape
+2024-12-02 13:36:22 [info     ] Done measurement               file=qaoa.qaoa func=sample_cost_landscape
+2024-12-02 13:36:22 [info     ] Calculating Energy landscape done file=qaoa.qaoa func=sample_cost_landscape
+</pre></div>
+</div>
+<img alt="../../_images/497ae922c8987da97ad49dc3713743f6844bd401188170f0660c9c36958798ba.png" src="../../_images/497ae922c8987da97ad49dc3713743f6844bd401188170f0660c9c36958798ba.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Use a local optimizer to find the optimum for <span class="math notranslate nohighlight">\(p=1\)</span>. We converge quickly to the local optimum.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qaoa_k4</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">angles</span> <span class="o">=</span> <span class="n">qaoa_k4</span><span class="o">.</span><span class="n">optimization_results</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">angles</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">)):</span>
+    <span class="n">gamma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">angles</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">beta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">angles</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="s2">&quot;x-k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gamma</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;wo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gamma</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;or&quot;</span><span class="p">)</span>
+<span class="n">plot_E</span><span class="p">(</span><span class="n">qaoa_k4</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-12-02 13:36:23 [info     ] cost(depth 1 = -10.727539062500002 file=qaoa.qaoa func=optimize
+</pre></div>
+</div>
+<img alt="../../_images/e6b2ace5fc5537384b9ea4f39c28358219dd0764a193e10837455046471dc874.png" src="../../_images/e6b2ace5fc5537384b9ea4f39c28358219dd0764a193e10837455046471dc874.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Run QAOA up to depth <span class="math notranslate nohighlight">\(p=5\)</span>. We can see how the approximation ratio increases with <span class="math notranslate nohighlight">\(p\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">maxdepth</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">qaoa_k4</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="n">maxdepth</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">qaoa_k4</span><span class="o">.</span><span class="n">get_Exp</span><span class="p">()))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">maxval</span><span class="o">=</span><span class="mi">12</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">qaoa_k4</span><span class="o">.</span><span class="n">get_Exp</span><span class="p">())</span> <span class="o">/</span> <span class="n">maxval</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;depth&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Approx. ratio&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;QAOA Max 4-Cut&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-12-02 13:36:25 [info     ] cost(depth 2 = -11.204101562499991 file=qaoa.qaoa func=optimize
+2024-12-02 13:36:29 [info     ] cost(depth 3 = -11.468749999999988 file=qaoa.qaoa func=optimize
+2024-12-02 13:36:34 [info     ] cost(depth 4 = -11.54296875    file=qaoa.qaoa func=optimize
+2024-12-02 13:36:39 [info     ] cost(depth 5 = -11.604492187500007 file=qaoa.qaoa func=optimize
+</pre></div>
+</div>
+<img alt="../../_images/dba7e8258f9d89fc64bfd3f3c3b91bf70d63d67c7afa4f65295018de08dfbf27.png" src="../../_images/dba7e8258f9d89fc64bfd3f3c3b91bf70d63d67c7afa4f65295018de08dfbf27.png" />
+</div>
+</div>
+</section>
+<section id="exercise-2-max-3-cut-using-the-full-hilbert-space">
+<h2>Exercise 2: Max 3-Cut using the full Hilbert space<a class="headerlink" href="#exercise-2-max-3-cut-using-the-full-hilbert-space" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><u>Find the circuit with pen and paper</u></p></li>
+</ol>
+<p>Given <span class="math notranslate nohighlight">\(\operatorname{clr}^3_{&lt; 3}\)</span> we now want to devide the states into the following sets (containing power of two states),</p>
+<ul class="simple">
+<li><p>set one consist of <span class="math notranslate nohighlight">\(\ket{1011}, \ket{1110}\)</span>, and</p></li>
+<li><p>set two consists of <span class="math notranslate nohighlight">\(\ket{0000}, \ket{0101}, \ket{1010}, \ket{1111}, \)</span>.</p></li>
+</ul>
+<p>Apply Theorem 1 from <a class="reference internal" href="#1"><span class="xref myst">[1]</span></a> and work out what the circuit for an edge should look like, using pen and paper.</p>
+<p>Are there any gates that cancel?</p>
+<ol class="arabic simple" start="2">
+<li><p><u>Specific problem implementation</ul></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Max3CutFullH</span><span class="p">(</span><span class="n">GraphProblem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">G</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="n">N_qubits_per_node</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">N_qubits_per_node</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;color1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;00&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;color2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;01&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;color3&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;10&quot;</span><span class="p">,</span> <span class="s2">&quot;11&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="c1"># Create a dictionary to map each index to its corresponding set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bitstring_to_color</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">indices</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bitstring_to_color</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+
+    <span class="k">def</span> <span class="nf">create_edge_circuit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">N_qubits_per_node</span><span class="p">)</span>
+        
+        <span class="s2">&quot; ---------------------&quot;</span>
+        <span class="s2">&quot; implement the circuit&quot;</span>
+        <span class="s2">&quot; ---------------------&quot;</span>
+        
+        <span class="k">return</span> <span class="n">qc</span>
+
+    <span class="k">def</span> <span class="nf">create_edge_circuit_fixed_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="o">=</span> <span class="n">Max3CutFullH</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">})]))</span>
+<span class="n">test</span><span class="o">.</span><span class="n">create_edge_circuit</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Graph contains nodes with one or zero edges. These can be removed to reduce the size of the problem.
+</pre></div>
+</div>
+<img alt="../../_images/7926e6bcb4749685955e8bc35fafed7bddf4deb6ba4bf46f7455e7123da89ad1.png" src="../../_images/7926e6bcb4749685955e8bc35fafed7bddf4deb6ba4bf46f7455e7123da89ad1.png" />
+</div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><u>Run QAOA</u></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qaoa_k3_fullH</span> <span class="o">=</span> <span class="n">QAOA</span><span class="p">(</span><span class="n">initialstate</span><span class="o">=</span><span class="n">Plus</span><span class="p">(),</span> <span class="n">problem</span><span class="o">=</span><span class="n">Max3CutFullH</span><span class="p">(</span><span class="n">G</span><span class="p">),</span> <span class="n">mixer</span><span class="o">=</span><span class="n">X</span><span class="p">(),</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qaoa_k3_fullH</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="p">]}</span> <span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">angles</span> <span class="o">=</span> <span class="n">qaoa_k3_fullH</span><span class="o">.</span><span class="n">optimization_results</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">angles</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">)):</span>
+    <span class="n">gamma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">angles</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">beta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">angles</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="s2">&quot;x-k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gamma</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;wo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gamma</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;or&quot;</span><span class="p">)</span>
+<span class="n">plot_E</span><span class="p">(</span><span class="n">qaoa_k3_fullH</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-12-02 13:36:39 [info     ] Calculating energy landscape for depth p=1... file=qaoa.qaoa func=sample_cost_landscape
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">IndexError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">18</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">qaoa_k3_fullH</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">]}</span> <span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">gamma</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="nn">File c:\Users\rubenb\OneDrive - SINTEF\Desktop\test_qas\.venv\Lib\site-packages\qaoa\qaoa.py:451,</span> in <span class="ni">QAOA.optimize</span><span class="nt">(self, depth, angles)</span>
+<span class="g g-Whitespace">    </span><span class="mi">449</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_depth</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">450</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Exp_sampled_p1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">451</span>         <span class="bp">self</span><span class="o">.</span><span class="n">sample_cost_landscape</span><span class="p">(</span><span class="n">angles</span><span class="o">=</span><span class="n">angles</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">452</span>     <span class="n">ind_Emin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">453</span>         <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Exp_sampled_p1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">Exp_sampled_p1</span><span class="o">.</span><span class="n">shape</span>
+<span class="g g-Whitespace">    </span><span class="mi">454</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">455</span>     <span class="n">angles0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">456</span>         <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma_grid</span><span class="p">[</span><span class="n">ind_Emin</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta_grid</span><span class="p">[</span><span class="n">ind_Emin</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+<span class="g g-Whitespace">    </span><span class="mi">457</span>     <span class="p">)</span>
+
+<span class="nn">File c:\Users\rubenb\OneDrive - SINTEF\Desktop\test_qas\.venv\Lib\site-packages\qaoa\qaoa.py:352,</span> in <span class="ni">QAOA.sample_cost_landscape</span><span class="nt">(self, angles)</span>
+<span class="g g-Whitespace">    </span><span class="mi">350</span>     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done measurement&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">351</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">352</span>     <span class="bp">self</span><span class="o">.</span><span class="n">createParameterizedCircuit</span><span class="p">(</span><span class="n">depth</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">353</span>     <span class="n">gamma</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">angles</span><span class="p">[</span><span class="s2">&quot;beta&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">angles</span><span class="p">[</span><span class="s2">&quot;gamma&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">354</span>     <span class="n">beta</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">angles</span><span class="p">[</span><span class="s2">&quot;beta&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">angles</span><span class="p">[</span><span class="s2">&quot;gamma&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="nn">File c:\Users\rubenb\OneDrive - SINTEF\Desktop\test_qas\.venv\Lib\site-packages\qaoa\qaoa.py:248,</span> in <span class="ni">QAOA.createParameterizedCircuit</span><span class="nt">(self, depth)</span>
+<span class="g g-Whitespace">    </span><span class="mi">245</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span>     <span class="bp">self</span><span class="o">.</span><span class="n">gamma_params</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s2">&quot;gamma_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">247</span>     <span class="n">tmp_circuit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">circuit</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span>
+<span class="ne">--&gt; </span><span class="mi">248</span>         <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">circuit</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma_params</span><span class="p">[</span><span class="n">d</span><span class="p">]},</span>
+<span class="g g-Whitespace">    </span><span class="mi">249</span>         <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">251</span>     <span class="bp">self</span><span class="o">.</span><span class="n">parameterized_circuit</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">tmp_circuit</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">253</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">usebarrier</span><span class="p">:</span>
+
+<span class="nn">File c:\Users\rubenb\OneDrive - SINTEF\Desktop\test_qas\.venv\Lib\site-packages\qiskit\circuit\parametertable.py:241,</span> in <span class="ni">ParameterView.__getitem__</span><span class="nt">(self, index)</span>
+<span class="g g-Whitespace">    </span><span class="mi">239</span> <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">240</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Get items.&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">241</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+<span class="ne">IndexError</span>: list index out of range
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">maxdepth</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">qaoa_k3_fullH</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="n">maxdepth</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">qaoa_k3_fullH</span><span class="o">.</span><span class="n">get_Exp</span><span class="p">()))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">maxval</span><span class="o">=</span><span class="mi">12</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">qaoa_k3_fullH</span><span class="o">.</span><span class="n">get_Exp</span><span class="p">())</span> <span class="o">/</span> <span class="n">maxval</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;depth&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Approx. ratio&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;QAOA Max 3-Cut using the full Hilber space&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-3-max-3-cut-using-subspaces">
+<h2>Exercise 3: Max 3-Cut using subspaces<a class="headerlink" href="#exercise-3-max-3-cut-using-subspaces" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><u>Show that the Grover mixer is valid using pen and paper</u></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+U_m(\beta) = e^{-i\beta \ket{F}\bra{F}}, \quad \text{where } U_S \ket{0} = \ket{F} := \frac{1}{\sqrt{|B|}} \sum_{x \in B} \ket{x}
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p><u>Create circuit for Grover mixer</u></p></li>
+</ol>
+<p>Using the package <code class="docutils literal notranslate"><span class="pre">qaoa</span></code> create a Grover mixer for <span class="math notranslate nohighlight">\(\ket{ltk3} = \frac{\ket{00} + \ket{01} + \ket{11}}{\sqrt{3}}\)</span>. For this we import the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qaoa.initialstates</span> <span class="kn">import</span> <span class="n">LessThanK</span>
+
+<span class="n">ltk3</span> <span class="o">=</span> <span class="n">LessThanK</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ltk3</span><span class="o">.</span><span class="n">create_circuit</span><span class="p">()</span>
+<span class="n">ltk3</span><span class="o">.</span><span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create a circuit for <span class="math notranslate nohighlight">\(\ket{ltk3}^{\otimes 3}\)</span>. For this we can use the Tensor class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qaoa.initialstates</span> <span class="kn">import</span> <span class="n">Tensor</span>
+
+<span class="n">numNodes</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">phi0</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">ltk3</span><span class="p">,</span> <span class="n">numNodes</span><span class="p">)</span>
+<span class="n">phi0</span><span class="o">.</span><span class="n">create_circuit</span><span class="p">()</span>
+<span class="n">phi0</span><span class="o">.</span><span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>create the Grover mixer for <span class="math notranslate nohighlight">\(\ket{ltk3}^{\otimes 3}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qaoa.mixers</span> <span class="kn">import</span> <span class="n">Grover</span>
+<span class="n">grover</span> <span class="o">=</span>
+<span class="s2">&quot; ---------------------&quot;</span>
+<span class="s2">&quot; define the Grover mixer&quot;</span>
+<span class="s2">&quot; ---------------------&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><u>Numerically test that the Grover mixer is valid</u></p></li>
+</ol>
+<p>Show that we have a valid mixer by plotting the overlap <span class="math notranslate nohighlight">\(\bra{z_1} U_M(\beta) \ket{z_2}\)</span> depending on <span class="math notranslate nohighlight">\(\beta\)</span>:</p>
+<ul class="simple">
+<li><p>Pick two feasible computational basis states <span class="math notranslate nohighlight">\(\ket{z_1} \neq \ket{z_2}\)</span> and see that the overlap is nonzero for some values of <span class="math notranslate nohighlight">\(\beta\)</span></p></li>
+<li><p>Pick a feasible and an infeasible state, and show that the overlap is always zero</p></li>
+</ul>
+<p>Let’s start by importing the necessary things, before we can do some plots.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">pl</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">qiskit_aer</span> <span class="kn">import</span> <span class="n">Aer</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QuantumCircuit</span><span class="p">,</span>
+    <span class="n">QuantumRegister</span><span class="p">,</span>
+    <span class="n">ClassicalRegister</span><span class="p">,</span>
+    <span class="n">transpile</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">backend</span><span class="o">=</span><span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;qasm_simulator&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">overlap</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">betavalues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">shots</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span>
+<span class="k">for</span> <span class="n">beta</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">betavalues</span><span class="p">):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">numNodes</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">ClassicalRegister</span><span class="p">(</span><span class="n">numNodes</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+        <span class="s2">&quot; ---------------------&quot;</span>
+        <span class="s2">&quot; implement a circuit for &lt;z_1|&quot;</span>
+        <span class="s2">&quot; ---------------------&quot;</span>
+    <span class="n">circuit</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+    <span class="n">circuit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grover</span><span class="o">.</span><span class="n">circuit</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+    <span class="n">circuit</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+    <span class="n">circuit</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+    
+    <span class="c1"># Assign float values to the parameters</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">circuit</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+    <span class="n">parameter_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">beta</span><span class="p">]</span>
+    <span class="n">bound_circuit</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">parameter_values</span><span class="p">)))</span>
+
+    
+    <span class="c1"># Run the job</span>
+    <span class="n">job</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bound_circuit</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+    <span class="n">overlap</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot; ---------------------&quot;</span>
+        <span class="s2">&quot; choose string for |z_2&gt;&quot;</span>
+        <span class="s2">&quot; ---------------------&quot;</span>
+        <span class="p">,</span><span class="mf">0.</span><span class="p">)</span><span class="o">/</span><span class="n">shots</span><span class="p">)</span>
+    
+<span class="c1"># bound_circuit.draw(&#39;mpl&#39;)</span>
+
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">betavalues</span><span class="p">,</span> <span class="n">overlap</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p><u>Problem class </u></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Max3Cut</span><span class="p">(</span><span class="n">GraphProblem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">G</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        
+        <span class="n">N_qubits_per_node</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">N_qubits_per_node</span><span class="p">)</span>
+
+        <span class="c1"># each color is associated with a bitstring combination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;color1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;00&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;color2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;01&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;color3&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;10&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="c1"># Create a dictionary to map each index to its corresponding set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bitstring_to_color</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">indices</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bitstring_to_color</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+
+    <span class="k">def</span> <span class="nf">create_edge_circuit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">N_qubits_per_node</span><span class="p">)</span>
+
+        <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">x</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+        <span class="n">phase_gate</span> <span class="o">=</span> <span class="n">PhaseGate</span><span class="p">(</span><span class="o">-</span><span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">control</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phase_gate</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">x</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="n">qc</span>
+
+        
+    <span class="k">def</span> <span class="nf">create_edge_circuit_fixed_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="c1"># we will not use this function, so we can skip it</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p><u>Initial state class</u></p></li>
+</ol>
+<p>To run QAOA we need to implement the <code class="docutils literal notranslate"><span class="pre">InitialState</span></code> class that creates a Tensor of <span class="math notranslate nohighlight">\(\ket{ltk3}\)</span> state, which can be done just as above</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qaoa.initialstates</span> <span class="kn">import</span> <span class="n">InitialState</span>
+<span class="k">class</span> <span class="nc">Max3CutInitialState</span><span class="p">(</span><span class="n">InitialState</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">create_circuit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="n">numQubitsPerNode</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_V</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N_qubits</span><span class="o">/</span><span class="n">numQubitsPerNode</span><span class="p">)</span>
+        
+        <span class="n">tg</span> <span class="o">=</span> 
+        
+        <span class="s2">&quot; ---------------------&quot;</span>
+        <span class="s2">&quot; define the initial state&quot;</span>
+        <span class="s2">&quot; ---------------------&quot;</span>
+        
+        <span class="n">tg</span><span class="o">.</span><span class="n">create_circuit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span> <span class="o">=</span> <span class="n">tg</span><span class="o">.</span><span class="n">circuit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p><u>Mixer class</u></p></li>
+</ol>
+<p>We also need to implement the <code class="docutils literal notranslate"><span class="pre">Mixer</span></code> class that creates a Tensor of Grover mixer, which can be done just as above</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qaoa.mixers</span> <span class="kn">import</span> <span class="n">Mixer</span>
+<span class="k">class</span> <span class="nc">Max3CutGrover</span><span class="p">(</span><span class="n">Mixer</span><span class="p">):</span>
+        
+    <span class="k">def</span> <span class="nf">create_circuit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="n">numQubitsPerNode</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_V</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N_qubits</span><span class="o">/</span><span class="n">numQubitsPerNode</span><span class="p">)</span>
+        
+        <span class="n">gm</span> <span class="o">=</span> 
+        
+        <span class="s2">&quot; ---------------------&quot;</span>
+        <span class="s2">&quot; define the Box Grover mixer&quot;</span>
+        <span class="s2">&quot; ---------------------&quot;</span>
+        
+        <span class="n">gm</span><span class="o">.</span><span class="n">create_circuit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span> <span class="o">=</span> <span class="n">gm</span><span class="o">.</span><span class="n">circuit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p><u>Run QAOA</u></p></li>
+</ol>
+<p>create an instance of QAOA and plot the resulting landscape</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qaoa_k3_subH</span> <span class="o">=</span> <span class="n">QAOA</span><span class="p">(</span>
+    <span class="n">initialstate</span><span class="o">=</span><span class="n">Max3CutInitialState</span><span class="p">(),</span>
+    <span class="n">problem</span><span class="o">=</span><span class="n">Max4Cut</span><span class="p">(</span><span class="n">G</span><span class="p">),</span>
+    <span class="n">mixer</span><span class="o">=</span><span class="n">Max3CutGrover</span><span class="p">(),</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">)</span>
+
+<span class="n">qaoa_k3_subH</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="p">]}</span> <span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">angles</span> <span class="o">=</span> <span class="n">qaoa_k3_subH</span><span class="o">.</span><span class="n">optimization_results</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">angles</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">)):</span>
+    <span class="n">gamma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">angles</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">beta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">angles</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="s2">&quot;x-k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gamma</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;wo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gamma</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;or&quot;</span><span class="p">)</span>
+<span class="n">plot_E</span><span class="p">(</span><span class="n">qaoa_k3_subH</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p><u>Comparison for MAX 3-CUT</u></p></li>
+</ol>
+<p>Compare the convergence for the method using the full Hilbert space and the subspace encoding up to d</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">maxdepth</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">qaoa_k3_subH</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="n">maxdepth</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">qaoa_k3_subH</span><span class="o">.</span><span class="n">get_Exp</span><span class="p">()))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">maxval</span><span class="o">=</span><span class="mi">12</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">qaoa_k3_fullH</span><span class="o">.</span><span class="n">get_Exp</span><span class="p">())</span> <span class="o">/</span> <span class="n">maxval</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;full H&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">qaoa_k3_subH</span><span class="o">.</span><span class="n">get_Exp</span><span class="p">())</span> <span class="o">/</span> <span class="n">maxval</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;sub H&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;depth&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Approx. ratio&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;QAOA Max 3-Cut comparison&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For more info you can look into the following reference.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p><a id="1">[1]</a>
+Fuchs, Franz G., Ruben P. Bassa, and Frida Lien.
+“Encodings of the weighted MAX k-CUT on qubit systems.”
+Preprint arXiv 2024.
+<a class="reference external" href="https://doi.org/10.48550/arXiv.2411.08594">arXiv:2411.08594</a></p>
+<p><a id="2">[2]</a>
+Fuchs, Franz G., Ruben P. Bassa.
+“LX-mixers for QAOA: Optimal mixers restricted to subspaces and the stabilizer formalism.”
+Quantum 8 (2024): 1535.
+<a class="reference external" href="https://doi.org/10.22331/q-2024-11-25-1535">10.22331/q-2024-11-25-1535</a></p>
+<p><a id="3">[3]</a>
+Bärtschi, Andreas, and Stephan Eidenbenz.
+“Grover mixers for QAOA: Shifting complexity from mixer design to state preparation.”
+In 2020 IEEE International Conference on Quantum Computing and Engineering (QCE), pp. 72-82. IEEE, 2020.
+<a class="reference external" href="https://doi.org/10.1109/QCE49297.2020.00020">10.1109/QCE49297.2020.00020</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../qaoa_vqe_intro/" class="btn btn-neutral float-left" title="Introduction to variational quantum algorithms: VQE and QAOA" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../qec/" class="btn btn-neutral float-right" title="Introduction to Quantum Error Correction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

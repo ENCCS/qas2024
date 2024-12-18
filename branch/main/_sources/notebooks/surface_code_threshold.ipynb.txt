@@ -1,0 +1,958 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Tutorial - Estimating the Surface Code Threshold\n",
+    "\n",
+    "In this notebook, we will estimate the threshold of the Surface Code, for a simple phenomenological circuit-noise model."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Python Dependencies\n",
+    "\n",
+    "To run the Jupyter Notebook locally, you'll need the following dependencies:\n",
+    "\n",
+    "```bash\n",
+    "stim~=1.14\n",
+    "numpy~=1.0  # require for PyMatching\n",
+    "scipy\n",
+    "pymatching\n",
+    "matplotlib\n",
+    "```\n",
+    "\n",
+    "If not already installed in your environmnet you can install them with\n",
+    "\n",
+    "```bash\n",
+    "pip install stim~=1.14 numpy~=1.0 scipy pymatching matplotlib\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## The Surface Code\n",
+    "\n",
+    "As discussed in the lecture, the Surface Code is a stabilizer code with code distance $d$, $d^2$ data qubits, and $d^2-1$ syndrome measurement qubits, embedded in a 2D-plane. \n",
+    "\n",
+    "The stabilizers of the code have weight 4 (interior) or 2 (boundary) depending on their location on the surface. In the picture below, a distance $d=5$ Surface Code is shown. The red squares depict the $X$-type stabilizers, and the blue squares depict the $Z$-type stabilizers.\n",
+    "\n",
+    "![Surface Code](../img/surface-code.svg)\n",
+    "\n",
+    "**Source:** https://errorcorrectionzoo.org/c/rotated_surface\n",
+    "\n",
+    "To measure the syndromes, the code requires only local operation between neighboring qubits since each syndrome qubit measures only its neighboring data qubits.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Surface Code Circuit in Stim"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We will use the stabilizer simulator [`Stim`](https://github.com/quantumlib/Stim) to simulate the circuit code execution and the circuit noise.\n",
+    "\n",
+    "Stim allows us to load a set of pre-defined quantum circuits for well-known quantum error correction codes such as the Surface Code.\n",
+    "\n",
+    "We'll start by generating a distance $d=3$ Surface Code quantum circuits with 3 rounds of syndrome measurements. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import stim\n",
+    "\n",
+    "circuit = stim.Circuit.generated(\n",
+    "  \"surface_code:rotated_memory_x\", \n",
+    "  rounds=2, \n",
+    "  distance=3)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "circuit.diagram('timeline-svg')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For $d=3$, we expect the circuit to have 9 data qubits and 8 ancilla qubits to measure the stabilizers, so a total of 15 qubits. The cirucit generated above contains a few idle wires (corresponding to unused qubits).\n",
+    "\n",
+    "A better way to see which qubits are actually utilized is to print a **timeslice diagram** of the circuit. A timeslice diagram depicts the parts of the circuit executed between two `TICK` operations.\n",
+    "\n",
+    "`stim` automatically injects `TICK` operations so that we can easily follow the code circuit execution. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "circuit.diagram('timeslice-svg')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can see that in each round of syndrome measurement, 4 blocks of parallel CNOT gates are applied. In each block, 6 CNOTs are executed - 4 for the stabilizers in the interior of the surface and 2 for the stabilizers at the boundary measuring 2 data qubits.\n",
+    "\n",
+    "**Note:** The CNOT gates are executed in a specific order to avoid **hook errors**, which would spread low-weight Pauli errors, to higher weight Pauli errors, making fault-tolerant operations impossible!\n",
+    "\n",
+    "After each round, the ancillas are measured, extracting the stabilizer Eigenvalues, followed by a reset operation to re-use them for the next round of error detection."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Circuit Metadata\n",
+    "\n",
+    "In the circuit above, we can see two other annotations, besides the `TICK` operation, which do not correspond to quantum gates operating on the qubits.\n",
+    "\n",
+    "The first 16 instructions of the circuit use the `QUBIT_COORDS(x, y) qubit_index` annotation to provide Stim information about the qubit's location in space. This information is utilized by various tools to visualize the circuit execution such as the `timeslice` visualizer."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "circuit[0:17]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The second annotiation is the `DETECTOR` annotation which is discussed in the next section."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Detectors\n",
+    "\n",
+    "We can see that Stim appended to the end of each QEC cycle a bunch of `DETECTOR` statements.\n",
+    "\n",
+    "A detector is a parity check, based on a set of measurements in the **measurement record** denoted as `rec`. Under noiseless execution, the **parity of the detector should never change**.\n",
+    "\n",
+    "The latest measurement in the measurement recored is accessible through `rec[-1]`.\n",
+    "\n",
+    "Each `DETECTOR` can be assigned a location in space-time via a triplet of coordinates ($x,y,z$), which can later be used to display a space-time graph.\n",
+    "\n",
+    "If we print the instructions for the first QEC cycle, we see that 4 detectors have been added. Those are used for the $Z$-type stabilizer parity checks, detecting Pauli-$X$ errors."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Instructions for the first QEC cycle\n",
+    "circuit[17:37]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "What about the $X$-type stabilizers? \n",
+    "\n",
+    "Since at the beginning of the circuit we prepared our qubits in the $\\ket{1}$ state, they are already Eigenvectors of all $Z$-type stabilizers resulting in a deterministic measurement ($Z$-type stabilizers have an even amount of Pauli-$Z$ operators cancelling out the phase-flip of $-1$ for single physical qubits). \n",
+    "\n",
+    "**Example:** $ZZZZ\\ket{1}\\ket{1}\\ket{1}\\ket{1} = (-1)^4 \\ket{1}\\ket{1}\\ket{1}\\ket{1} = \\ket{1}\\ket{1}\\ket{1}\\ket{1}$\n",
+    "\n",
+    "For the $X$-type stabilizers, we require an initial measurement round projecting them randomly onto one of the 2 Eigenspaces $+1$/$-1$. Subsequent measurements, in the absence of noise, should always yield the same Eigenvalues when measuring the stabilizers."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Therefore, we can add additional `DETECTOR` statements for the $X$-type stabilizers after the second round of measurements as shown below:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "circuit[37:60]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In the second round, we bitwise XOR the measurement results of the first round, with the measurements of the second round.\n",
+    "This way, `DETECTOR` events inform the decoder about changes in the syndromes in the presence of noise.\n",
+    "\n",
+    "**Note:** The `SHIFT_COORDS` instruction can be used to shift the $z$-index (time) by 1, which allows us to to reuse the same detector coordinates in every QEC cycle."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Final Measurement Round\n",
+    "\n",
+    "At the end of the circuit, all physical data qubits are measured destructively in the $X$-basis, and detectors computing $Z$-type stabilizer parities are defined.\n",
+    "\n",
+    "Finally, we define the logical observable measurement as the parity of physical qubits $1$, $8$, and $15$, corresponding to a logical $X_L$ measurement."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "circuit[60::]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Detectors in the Absence of Noise\n",
+    "\n",
+    "Without any noise in the circuit, our detectors and the logical observable should always measure the same parities. \n",
+    "\n",
+    "We can put this to the test by, compiling a `sampler` which will simulate the circuit and collect detector events."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Define a detector sampler\n",
+    "sampler = circuit.compile_detector_sampler()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Sample detection events and logical observable\n",
+    "shots = 10\n",
+    "\n",
+    "detection_events, observable_flips = sampler.sample(shots, separate_observables=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Below we can see that the detection events never change parity "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(detection_events)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The same applies to the observable"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(observable_flips)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Noisy Surface Code Circuits\n",
+    "\n",
+    "Now, that we understand how the Surface Code circuit looks like and how detectors behave, we can explore what happens when noise is added to the mix.\n",
+    "\n",
+    "Stim doesn't support a noise model, like the ones Qiskit or Cirq support, but we can easily generate the same Surface Code circuit with noisy gates injected.  "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "noisy_circuit = stim.Circuit.generated(\n",
+    "  \"surface_code:rotated_memory_x\", \n",
+    "  rounds=2, \n",
+    "  distance=3,\n",
+    "  after_clifford_depolarization=0.001,\n",
+    "  after_reset_flip_probability=0.001,\n",
+    "  before_measure_flip_probability=0.001,\n",
+    "  before_round_data_depolarization=0.001)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The cirucit contains now noise operations, simulating qubit reset, measurement and gate errors. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "noisy_circuit.diagram('timeline-svg')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "With the noise, we observe for the first time logical errors after measuring the logical observable"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "\n",
+    "shots = 10_000\n",
+    "\n",
+    "sampler = noisy_circuit.compile_detector_sampler()\n",
+    "detection_events, observable_flips = sampler.sample(shots, separate_observables=True)\n",
+    "\n",
+    "print(f\"Success rate after 1 QEC cycle: {(1 - (np.sum(observable_flips) / shots)) * 100} %\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We also observe detection events in the measured data, indicating the presence of errors:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "detection_events[0:10]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## The Detector Error Model (DEM)\n",
+    "\n",
+    "Our goal is to decode the Surface Code. In this section, we introduce a useful abstraction, called the **detector error model (DEM)** which we will use for decoding.\n",
+    "\n",
+    "Given a set of measurement parities, defined through detectors and logical observables in the circuit, the detector error model informs the decoder with which probability any of the checks fails due to an error."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For our noisy Surface Code circuit, we can compile a detector model and print the DEM model representation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dem = noisy_circuit.detector_error_model()\n",
+    "print(repr(dem))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The first instruction\n",
+    "\n",
+    "```\n",
+    "error(0.00193118) D0 D2\n",
+    "```\n",
+    "\n",
+    "tells us, that there is some error mechanism in our circuit, that occurs with probability $0.00193118$ and that will flip the parities of both detectors `D0` and `D2`, defined as\n",
+    "\n",
+    "```\n",
+    "detector(2, 0, 0) D0\n",
+    "detector(4, 2, 0) D2\n",
+    "```\n",
+    "\n",
+    "in our Surface Code circuit. As a reminder: Detectors are directly associated with stabilizer measurements. This means, that the error probability tells us with which probability a stabilizer measurement will fail given the circuit-level noise model."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Example: DEM for Repetition Code\n",
+    "\n",
+    "Since our noisy Surface Code has many source of errors, retracing the source of error probabilities in the DEM is not a simple task. \n",
+    "\n",
+    "Instead, let's continue our analysis for the $X$-flip repetition code:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "repetition_circuit = stim.Circuit(\"\"\"\n",
+    "    X_ERROR(0.1) 0 1 2\n",
+    "    CNOT 0 3 1 3 1 4 2 4 \n",
+    "    MR 3 4\n",
+    "    DETECTOR(0,0,0) rec[-1]\n",
+    "    DETECTOR(0,0,0) rec[-2]\n",
+    "  \"\"\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "repetition_circuit.diagram('timeline-svg')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The corresponding DEM has the following form"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dem = repetition_circuit.detector_error_model()\n",
+    "print(repr(dem))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Unsurprisingly, there are three possible errors affecting our detectors. Since both detectors measure the second qubit they will be flipped with probability $0.1$:\n",
+    "\n",
+    "```\n",
+    "error(0.1) D0 D1\n",
+    "```\n",
+    "\n",
+    "Adding Pauli-$Z$ errors to our circuit does not affect the DEM as the repetition code cannot detect them: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "repetition_circuit = stim.Circuit(\"\"\"\n",
+    "    X_ERROR(0.1) 0 1 2\n",
+    "    Z_ERROR(0.1) 0 1 2\n",
+    "    CNOT 0 3 1 3 1 4 2 4 \n",
+    "    MR 3 4\n",
+    "    DETECTOR(0,0,0) rec[-1]\n",
+    "    DETECTOR(0,0,0) rec[-2]\n",
+    "  \"\"\")\n",
+    "\n",
+    "dem = repetition_circuit.detector_error_model()\n",
+    "print(repr(dem))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Replacing the Pauli-$X$ and Pauli-$Z$ errors by depolarizing noise, results in the following DEM:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "repetition_circuit = stim.Circuit(\"\"\"\n",
+    "    DEPOLARIZE1(0.1) 0 1 2\n",
+    "    CNOT 0 3 1 3 1 4 2 4 \n",
+    "    MR 3 4\n",
+    "    DETECTOR(0,0,0) rec[-1]\n",
+    "    DETECTOR(0,0,0) rec[-2]\n",
+    "  \"\"\")\n",
+    "\n",
+    "dem = repetition_circuit.detector_error_model()\n",
+    "print(repr(dem))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For depolarizing noise with probability $p$, Stim applies a given Pauli gate with  probability:\n",
+    "\n",
+    "- $I$: $(1-p)$\n",
+    "- $X$: $\\frac{p}{3}$\n",
+    "- $Y$: $\\frac{p}{3}$\n",
+    "- $Z$: $\\frac{p}{3}$\n",
+    "\n",
+    "Therefore, we have a probability of $\\frac{2p}{3}$ that our detectors are flipped as we only need to take into account Pauli-$X$ and Pauli-$Y$ errors. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### DEM model and the Tanner Graph"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The detector errror model represents a weighted graph, where the nodes are parity checks and the weights represent independent error probabilities affecting the checks.\n",
+    "\n",
+    "This representation is very natural for decoders operating on a Tanner graph such as the **Minimum-Weight Perfect Matching** decoder introduced in the lecture."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "To further emphasize the relationship, we can visualize the DEM of a larger repetition code using Stim:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "circuit = stim.Circuit.generated(\n",
+    "    \"repetition_code:memory\",\n",
+    "    rounds=25,\n",
+    "    distance=9,\n",
+    "    before_round_data_depolarization=0.04,\n",
+    "    before_measure_flip_probability=0.01)\n",
+    "\n",
+    "circuit.diagram('timeline-svg')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dem = circuit.detector_error_model()\n",
+    "dem.diagram('matchgraph-svg')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The matching graph is a 2D space-time graph. The $x$-axis represents space and the $y$-axis time.\n",
+    "\n",
+    "At each time step, we count 8 vertices, representing the 8 detectors. Furthermore, we have two invisible boundary nodes, for matching errors on the outer qubits, which are only measured by a single detector."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For analyzing the Surface Code DEM, it is usually simpler to print the graph in 3D\n",
+    "\n",
+    "**Exercise 1:** Test different error mechanisms and see how they affect the connectivity in the DEM graph."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "noisy_circuit = stim.Circuit.generated(\n",
+    "  \"surface_code:rotated_memory_x\", \n",
+    "  rounds=25, \n",
+    "  distance=3,\n",
+    "  # before_round_data_depolarization=0.001,\n",
+    "  after_reset_flip_probability=0.001,\n",
+    "  before_measure_flip_probability=0.001)\n",
+    "\n",
+    "dem = noisy_circuit.detector_error_model()\n",
+    "dem.diagram('matchgraph-3d')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### DEM model for Decoder Research and Reproducibility"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Besides being a powerful abstraction, a DEM model is also very useful for sharing noise models.\n",
+    "\n",
+    "\n",
+    "DEM model errors can be measured on a real device and loaded into Stim, making Stim a powerful tool for evaluating decoders even without access to actual hardware.\n",
+    "\n",
+    "DEM models for Google's recent paper: [*Quantum Error Correction Below the Surface Code Threshold*](https://arxiv.org/html/2408.13687v1#S11) can be found on [Zenodo](https://zenodo.org/records/13273331)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Decoding Errors: Minimum-Weight Perfect Matching"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Given a DEM model, it is straightforward to feed the graph and detector events to a minimum-weight perfect matching decoder. \n",
+    "\n",
+    "In this tutorial, we are going to use a MWPM implementation called [`PyMatching`](https://arxiv.org/abs/2105.13082), developed by Oscar Higgots.\n",
+    "\n",
+    "We'll begin by instantiating a noisy repetition circuit in Stim:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Instantiate noisy repetition code\n",
+    "noisy_repetition_circuit = stim.Circuit.generated(\n",
+    "    \"repetition_code:memory\",\n",
+    "    rounds=25,\n",
+    "    distance=9,\n",
+    "    before_round_data_depolarization=0.04,\n",
+    "    before_measure_flip_probability=0.01)\n",
+    "\n",
+    "# Instantiate a sampler to sample detector events \n",
+    "sampler = circuit.compile_detector_sampler()\n",
+    "\n",
+    "# Sample detection events and observable flips\n",
+    "num_shots = 10_000\n",
+    "detection_events, observable_flips = sampler.sample(num_shots, separate_observables=True)\n",
+    "\n",
+    "print(f\"Success rate after 25 QEC cycles: {(1 - (np.sum(observable_flips) / num_shots)) * 100} %\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Next, we import `PyMatching` and use its bindings to construct a graph from our DEM and return predictions given detection events."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pymatching\n",
+    "\n",
+    "# generate DEM for noisy circuit\n",
+    "detector_error_model = noisy_repetition_circuit.detector_error_model(decompose_errors=True)\n",
+    "\n",
+    "# Istantiate MWPM decoder\n",
+    "matcher = pymatching.Matching.from_detector_error_model(detector_error_model)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can print some metadata about the decoder"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(\"Number of detectors:\", matcher.num_detectors)\n",
+    "print(\"Number of nodes:\", matcher.num_nodes)\n",
+    "print(\"Number of edges: \", matcher.num_edges)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now, we are ready to decode our sampled data!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "predictions = matcher.decode_batch(detection_events)\n",
+    "# print(predictions)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Finally, we need to count the decoding mistakes "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Count the mistakes.\n",
+    "num_errors = 0\n",
+    "for shot in range(shots):\n",
+    "    actual_for_shot = observable_flips[shot]\n",
+    "    predicted_for_shot = predictions[shot]\n",
+    "    if not np.array_equal(actual_for_shot, predicted_for_shot):\n",
+    "        num_errors += 1\n",
+    "\n",
+    "print(f\"Number of errors for {num_shots} shots: {num_errors}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Estimating the Repetition Code Threshold"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In order to calculate the threshold of a code for a fixed noise model and decoder, we need to evaluate the decoder at different code distances $d$ and noise-levels $p$.\n",
+    "\n",
+    "We start by writing a function that automates the steps we performed above:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def count_logical_errors(circuit: stim.Circuit, num_shots: int) -> int:\n",
+    "    # Sample the circuit.\n",
+    "    sampler = circuit.compile_detector_sampler()\n",
+    "    detection_events, observable_flips = sampler.sample(num_shots, separate_observables=True)\n",
+    "\n",
+    "    # Configure a decoder using the circuit.\n",
+    "    detector_error_model = circuit.detector_error_model(decompose_errors=True)\n",
+    "    matcher = pymatching.Matching.from_detector_error_model(detector_error_model)\n",
+    "\n",
+    "    # Run the decoder.\n",
+    "    predictions = matcher.decode_batch(detection_events)\n",
+    "\n",
+    "    # Count the mistakes.\n",
+    "    num_errors = 0\n",
+    "    for shot in range(num_shots):\n",
+    "        actual_for_shot = observable_flips[shot]\n",
+    "        predicted_for_shot = predictions[shot]\n",
+    "        if not np.array_equal(actual_for_shot, predicted_for_shot):\n",
+    "            num_errors += 1\n",
+    "    return num_errors"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The function returns the number of logical errors for `num_shots`. From that, we can compute the **logical error rate (LER)** per shot needed for our threshold evaluation.\n",
+    "\n",
+    "Next, let's run our threshold estimation for our repetition code:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "results = []\n",
+    "num_shots = 10_000\n",
+    "for d in [3, 5, 7]:\n",
+    "    print(\"--- Code distance:\", d)\n",
+    "    xs = []\n",
+    "    ys = []\n",
+    "    for noise in [0.1, 0.2, 0.3, 0.4, 0.5]:\n",
+    "        circuit = stim.Circuit.generated(\n",
+    "            \"repetition_code:memory\",\n",
+    "            rounds=d * 3,\n",
+    "            distance=d,\n",
+    "            before_round_data_depolarization=noise)\n",
+    "        num_errors_sampled = count_logical_errors(circuit, num_shots)\n",
+    "        print(f\"Decoding errors at noise level {noise}: {num_errors_sampled}\")\n",
+    "        xs.append(noise)\n",
+    "        ys.append(num_errors_sampled / num_shots)\n",
+    "    results.append((d, [xs, ys]))\n",
+    "    plt.plot(xs, ys, label=\"d=\" + str(d))\n",
+    "plt.loglog()\n",
+    "plt.xlabel(\"physical error rate\")\n",
+    "plt.ylabel(\"logical error rate per shot\")\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The results look very promising. Based on our simulation, the threshold for the repetition code is around $p=0.4$!\n",
+    "\n",
+    "For physical noise levels $\\le p$ we observe a significant decrease of the LER, consistent with the threshold theorem.\n",
+    "\n",
+    "Unfortunately, the repetition code is not as good as the graph might indicate!\n",
+    "\n",
+    "There are several problems with our result:\n",
+    "- The repetition code doesn't consider $Z$-type errors\n",
+    "- We didn't introduce any reset or measurement errors\n",
+    "- Our noise model is missing important error processes such as for example *leakage*, where the qubit escapes its computational subspace and leaks to higher energy states such as $\\ket{2}, \\ket{3}, ...$.\n",
+    "\n",
+    "Nevertheless, we were able to estimate the code threshold with a few lines of code, demonstrating the usefulness of Stim :-)\n",
+    "\n",
+    "Next, we are going to evaluate the Surface Code under a slightly more realistic noise model to get an idea of the threshold value of a *real* quantum code. \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Exercise: Estimating the Threshold of the Surface Code"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Exercise 2:** Re-use the code for the repetition code to evaluate the Surface Code threshold. This time introduce reset and measurement errors as well depolarizing errors before the QEC cycles.\n",
+    "\n",
+    "**Tip 1:** The threshold for the Surface Code is significantly lower than the one for the repetition code. Use a noise range between $[0.002, 0.009]$ to find the threshold.\n",
+    "\n",
+    "**Tip 2:** Observe the number of shots needed to sample a logical error and adjust the number of shots accordingly "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Exercise 3:** The error suppression factor $\\Lambda = \\frac{\\varepsilon_d}{\\varepsilon_{d+2}}$ is an important metric to see if our code effectively suppresses the error. \n",
+    "\n",
+    " The LER is denoted as $\\varepsilon_d$, at a fixed code distance $d$ and physical error rate $p$.\n",
+    "\n",
+    " Calculate $\\Lambda$ at $p=2 \\times 10^{-3}$ and compare it to the theoretical estimate $p_{thr}/p$. \n",
+    "\n",
+    "**Tip:** You can use the `results` list object for your calculations."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### References\n",
+    "\n",
+    "To learn more about Stim:\n",
+    "- Read the [`Getting Started Tutorial`](https://github.com/quantumlib/Stim/blob/main/doc/getting_started.ipynb) which forms the basis for this notebook.\n",
+    "- Check out the paper [`Stim: A fast stabilizer circuit simulator`](https://quantum-journal.org/papers/q-2021-07-06-497/) to learn about Stim's internals and how it is leveraging [SIMD instructions](https://www.intel.com/content/www/us/en/support/articles/000005779/processors.html) to squeeze the maximum performance out of our CPUs.\n",
+    "\n",
+    "To learn more about the Surface Code:\n",
+    "- [Paper](https://arxiv.org/abs/1208.0928) introducing the surface code and logical gates by Fowler et al.\n",
+    "- Google's Surface Code experiment: [`Quantum error correction below the surface code threshold`](https://arxiv.org/html/2408.13687v1#S11) contains a lot of details about different noise simulation techniques and other decoder types.\n",
+    "\n",
+    "To learn more about QEC codes, visit the QEC Zoo: https://errorcorrectionzoo.org/ !"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

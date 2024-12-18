@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CP2K Input Configuration &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/QAS2024_QAOA_exercise/">Tutorial - Variational Quantum Algorithms</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/css_code_steane/">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/surface_code_threshold/">Tutorial - Estimating the Surface Code Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/option_pricing_tutorial/">Tutorial - Pricing a European call option using quantum computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/flight_scheduling_optimization_qaoa/">Tutorial - Solving Flight Scheduling Optimization using QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README/">Quantum Computing for Materials Science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">CP2K Input Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/matsci_on_qc/1_hybrid_quantum_classical_calculations/supercell_calculation/Al111_active_space.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="cp2k-input-configuration">
+<h1>CP2K Input Configuration<a class="headerlink" href="#cp2k-input-configuration" title="Link to this heading"></a></h1>
+<p>This file contains the CP2K input configuration for the hybrid quantum-classical calculation of an Al(111) surface with active space embedding.</p>
+<section id="full-implementation">
+<h2>Full Implementation<a class="headerlink" href="#full-implementation" title="Link to this heading"></a></h2>
+<div class="highlight-content:Al111_active_space.inp notranslate"><div class="highlight"><pre><span></span>&amp;GLOBAL
+  PROJECT Al111_4x4_active_space_adsorbate
+  PRINT_LEVEL MEDIUM
+  RUN_TYPE ENERGY
+&amp;END GLOBAL
+
+&amp;FORCE_EVAL
+  METHOD QUICKSTEP
+  &amp;DFT
+    BASIS_SET_FILE_NAME BASIS_MOLOPT
+    POTENTIAL_FILE_NAME POTENTIAL
+    &amp;QS
+      METHOD GPW
+      EPS_DEFAULT 1.0E-10
+      EXTRAPOLATION ASPC
+      EXTRAPOLATION_ORDER 3
+    &amp;END QS
+    &amp;POISSON
+      PERIODIC XYZ
+    &amp;END POISSON
+    &amp;MGRID
+      CUTOFF 500
+      REL_CUTOFF 60
+      NGRIDS 5
+    &amp;END MGRID
+    &amp;SCF
+      SCF_GUESS MOPAC
+      EPS_SCF 1.0E-6
+      MAX_SCF 500
+      ADDED_MOS 100
+      &amp;DIAGONALIZATION
+        ALGORITHM STANDARD
+        EPS_ADAPT 0.01
+      &amp;END DIAGONALIZATION
+      &amp;MIXING
+        METHOD BROYDEN_MIXING
+        ALPHA 0.1
+        BETA 1.5
+        NBROYDEN 8
+      &amp;END MIXING
+      &amp;SMEAR
+        METHOD FERMI_DIRAC
+        ELECTRONIC_TEMPERATURE [K] 1000
+      &amp;END SMEAR
+      &amp;OUTER_SCF
+        MAX_SCF 50
+        EPS_SCF 1.0E-6
+      &amp;END OUTER_SCF
+      &amp;PRINT
+        &amp;RESTART ON
+        &amp;END
+      &amp;END PRINT
+      IGNORE_CONVERGENCE_FAILURE
+    &amp;END SCF
+    &amp;XC
+      &amp;XC_FUNCTIONAL PBE
+      &amp;END XC_FUNCTIONAL
+      &amp;VDW_POTENTIAL
+        DISPERSION_FUNCTIONAL PAIR_POTENTIAL
+        &amp;PAIR_POTENTIAL
+          TYPE DFTD3
+          PARAMETER_FILE_NAME dftd3.dat
+          REFERENCE_FUNCTIONAL PBE
+        &amp;END PAIR_POTENTIAL
+      &amp;END VDW_POTENTIAL
+    &amp;END XC
+    &amp;PRINT
+      &amp;MO
+        ENERGIES TRUE
+        OCCUPATION_NUMBERS TRUE
+        &amp;EACH
+          QS_SCF 0
+        &amp;END
+      &amp;END
+    &amp;END PRINT
+    &amp;ACTIVE_SPACE
+      ACTIVE_ELECTRONS 2
+      ACTIVE_ORBITALS 5
+      SCF_EMBEDDING TRUE
+      EPS_ITER 1E-6
+      MAX_ITER 100
+      AS_SOLVER QISKIT
+      ORBITAL_SELECTION CANONICAL
+      &amp;ERI
+        METHOD FULL_GPW
+        PERIODICITY 1 1 1
+        OPERATOR &lt;1/r&gt;
+      &amp;END ERI
+      &amp;ERI_GPW
+        CUTOFF 500
+        REL_CUTOFF 60
+      &amp;END ERI_GPW
+      &amp;FCIDUMP ON
+      &amp;END FCIDUMP
+    &amp;END ACTIVE_SPACE
+  &amp;END DFT
+  &amp;SUBSYS
+    &amp;CELL
+      A 11.45512985522207 0.00000000000000 0.0000000000
+      B 5.727564927611035 9.92043345827187 0.0000000000
+      C 0.000000000000000 0.00000000000000 40.000000000
+      PERIODIC XYZ
+    &amp;END CELL
+    &amp;TOPOLOGY
+      COORD_FILE_NAME al_slab_with_triazole_4x4x6_v10.0.xyz
+      COORD_FILE_FORMAT xyz
+    &amp;END TOPOLOGY
+    &amp;KIND Al
+      BASIS_SET DZVP-MOLOPT-SR-GTH
+      POTENTIAL GTH-PBE-q3
+    &amp;END KIND
+    &amp;KIND C
+      BASIS_SET DZVP-MOLOPT-GTH
+      POTENTIAL GTH-PBE-q4
+    &amp;END KIND
+    &amp;KIND N
+      BASIS_SET DZVP-MOLOPT-GTH
+      POTENTIAL GTH-PBE-q5
+    &amp;END KIND
+    &amp;KIND H
+      BASIS_SET DZVP-MOLOPT-GTH
+      POTENTIAL GTH-PBE-q1
+    &amp;END KIND            
+  &amp;END SUBSYS
+&amp;END FORCE_EVAL
+</pre></div>
+</div>
+</section>
+<section id="key-components">
+<h2>Key Components<a class="headerlink" href="#key-components" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Global Settings</strong>: Project name and calculation type configuration</p></li>
+<li><p><strong>DFT Settings</strong>: Basis sets, functionals, and convergence parameters</p></li>
+<li><p><strong>Active Space Configuration</strong>: Settings for quantum-classical embedding</p></li>
+<li><p><strong>System Structure</strong>: Cell parameters and atomic species definitions</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

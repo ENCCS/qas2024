@@ -1,0 +1,1044 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial - Solving Flight Scheduling Optimization using QAOA &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Quantum walks on quantum computers" href="../../qwalks/" />
+    <link rel="prev" title="QSIP - Quantum Sweden Innovation Platform" href="../../qsip/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../QAS2024_QAOA_exercise/">Tutorial - Variational Quantum Algorithms</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../css_code_steane/">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_code_threshold/">Tutorial - Estimating the Surface Code Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../option_pricing_tutorial/">Tutorial - Pricing a European call option using quantum computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial - Solving Flight Scheduling Optimization using QAOA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-tail-assignment-problem">The Tail-Assignment Problem</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#why-is-it-hard">Why Is It Hard?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mathematical-formulation">Mathematical Formulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simplified-problem-for-this-tutorial">Simplified Problem for This Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connection-to-the-exact-cover-problem">Connection to the Exact Cover Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-you-ll-learn-in-this-tutorial">What You’ll Learn in This Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-a-problem-instance">Loading a problem instance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-map-the-optimization-problem-to-a-hamiltonian">Step 1: Map the Optimization Problem to a Hamiltonian</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#map-optimization-problem-to-qubo-form">Map Optimization Problem to QUBO Form</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-1-transforming-constraints-into-a-cost-function">Step 1.1: Transforming Constraints into a Cost Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-3-constructing-the-q-matrix">Step 1.3: Constructing the <span class="math notranslate nohighlight">\(Q\)</span>-Matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-reformulate-qubo-to-hamiltonian">Step 2: Reformulate QUBO to Hamiltonian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hamiltonian-quantum-circuit">Hamiltonian → quantum circuit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-optimize-circuits-for-quantum-hardware-execution">Step 2. Optimize circuits for quantum hardware execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3-execute-using-qiskit-primitives">Step 3. Execute using Qiskit primitives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-1-define-circuit-with-initial-parameters">Step 3.1: Define circuit with initial parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-2-run-optimizer">Step 3.2 Run optimizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-3-run-circuit-once-more-using-optimal-parameters">Step 3.3: Run circuit once more using optimal parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#step-4-post-process-return-result-in-classical-format">Step 4. Post-process, return result in classical format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-1-filter-solutions">Step 4.1: Filter Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-2-count-occurences">Step 4.2 Count Occurences</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#extra-running-a-smaller-problem-on-actual-quantum-computer">(Extra): Running a smaller problem on actual quantum computer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-qaoa-on-the-helmi-quantum-computer">Running QAOA on the HELMI quantum computer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../matsci_on_qc/README/">Quantum Computing for Materials Science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial - Solving Flight Scheduling Optimization using QAOA</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/notebooks/flight_scheduling_optimization_qaoa.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-solving-flight-scheduling-optimization-using-qaoa">
+<h1>Tutorial - Solving Flight Scheduling Optimization using QAOA<a class="headerlink" href="#tutorial-solving-flight-scheduling-optimization-using-qaoa" title="Link to this heading"></a></h1>
+<p>Quantum computing has introduced a new approach for solving complex optimization problems. Notably, the <strong>Quantum Approximate Optimization Algorithm (QAOA)</strong> – a hybrid (quantum-classical) – has emerged as a promising candidate.
+In this tutorial, we will see how QAOA can be applied to solve a real-world optimization problem, specifically, the tail-assignment problem – with <strong>Qiskit</strong>.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<p>Before starting this tutorial, be sure you have the following installed:</p>
+<ul class="simple">
+<li><p>Qiskit SDK v1.0 or later, with visualization support ( <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">'qiskit[visualization]'</span></code> )</p></li>
+<li><p>Qiskit Runtime v0.22 or later (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">qiskit-ibm-runtime</span></code>)</p></li>
+<li><p>Qiskit AER v0.15.0 or later (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">qiskit-aer</span></code>)</p></li>
+</ul>
+</section>
+<section id="the-tail-assignment-problem">
+<h2>The Tail-Assignment Problem<a class="headerlink" href="#the-tail-assignment-problem" title="Link to this heading"></a></h2>
+<p>The tail-assignment problem is a complex combinatorial optimization challenge arising in the airline industry, specifically in aircraft scheduling tasks. The objective is to assign a specific aircraft (identified by its tail number), also called a <em>route</em>, to a sequence of flights while:</p>
+<ol class="arabic simple">
+<li><p><strong>Satisfying operational constraints</strong> (e.g., maintenance schedules, turnaround times, crew availability).</p></li>
+<li><p><strong>Minimizing operational costs</strong> (e.g., fuel usage, delay penalties).</p></li>
+</ol>
+<section id="why-is-it-hard">
+<h3>Why Is It Hard?<a class="headerlink" href="#why-is-it-hard" title="Link to this heading"></a></h3>
+<p>The tail-assignment problem is classified as <strong>NP-hard</strong>. This means that as the number of flights and aircraft increases, finding an optimal solution becomes computationally infeasible for traditional algorithms due to exponential growth in complexity. A common classical approach to this problem is <strong>column generation</strong>, which breaks the problem into smaller subproblems to make it manageable.</p>
+</section>
+<section id="mathematical-formulation">
+<h3>Mathematical Formulation<a class="headerlink" href="#mathematical-formulation" title="Link to this heading"></a></h3>
+<p>The tail-assignment problem can be formulated as the following integer linear program:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b4e5c66b-c441-4dc5-b194-e9750bf78aa6">
+<span class="eqno">(1)<a class="headerlink" href="#equation-b4e5c66b-c441-4dc5-b194-e9750bf78aa6" title="Permalink to this equation"></a></span>\[\begin{equation}
+    \min\sum_{r\in R}c_rx_r,
+\end{equation}\]</div>
+<p>Such that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-29ee6466-3b56-43b2-9f3d-c7cdd9e6eb33">
+<span class="eqno">(2)<a class="headerlink" href="#equation-29ee6466-3b56-43b2-9f3d-c7cdd9e6eb33" title="Permalink to this equation"></a></span>\[\begin{align}
+    \sum_{r\in R}A_{fr}x_r =1,\quad &amp;\forall f\in F,\\
+    x_r\in\{0,1\},\quad &amp;\forall r\in R,
+\end{align}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(R\)</span>: The set of all possible routes (sequences of flights assigned to an aircraft).</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_r\)</span>: The cost associated with route <span class="math notranslate nohighlight">\(r\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(F\)</span>: The set of all activities (e.g., individual flights or sequences of flights).</p></li>
+<li><p><span class="math notranslate nohighlight">\(A_{fr}\)</span>: A binary indicator; <span class="math notranslate nohighlight">\(A_{fr} = 1\)</span> if activity <span class="math notranslate nohighlight">\(f\)</span> is part of route <span class="math notranslate nohighlight">\(r\)</span>, and <span class="math notranslate nohighlight">\(0\)</span> otherwise.</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_r\)</span>: A binary decision variable; <span class="math notranslate nohighlight">\(x_r = 1\)</span> if route <span class="math notranslate nohighlight">\(r\)</span> is chosen in the solution, and <span class="math notranslate nohighlight">\(0\)</span> otherwise.</p></li>
+</ul>
+</section>
+<section id="simplified-problem-for-this-tutorial">
+<h3>Simplified Problem for This Tutorial<a class="headerlink" href="#simplified-problem-for-this-tutorial" title="Link to this heading"></a></h3>
+<p>For this tutorial, we focus on a simplified version of the problem where:</p>
+<ol class="arabic simple">
+<li><p><strong>Only one feasible solution exists per instance.</strong> This eliminates the need to minimize costs (<span class="math notranslate nohighlight">\(c_r\)</span>) since it becomes irrelevant when there is a unique solution.</p></li>
+<li><p>The problem reduces to solving the constraints:
+\begin{equation}
+\sum_{r\in R}A_{fr}x_r =1,\quad \forall f\in F,
+\end{equation}
+which can be expressed compactly in matrix form as:
+\begin{equation}
+A\vec{x}=\vec{1}
+\end{equation}</p></li>
+</ol>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A\)</span>: The constraint matrix.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{x}\)</span>: A vector of binary decision variables.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{1}\)</span>: A vector of ones (length equal to the number of flights).</p></li>
+</ul>
+</section>
+<section id="connection-to-the-exact-cover-problem">
+<h3>Connection to the Exact Cover Problem<a class="headerlink" href="#connection-to-the-exact-cover-problem" title="Link to this heading"></a></h3>
+<p>This simplified tail-assignment problem is equivalent to the well-known <a class="reference external" href="https://en.wikipedia.org/wiki/Exact_cover">Exact Cover problem</a>. In Exact Cover, the goal is to select a subset of sets such that every element in the universal set is covered exactly once.</p>
+<p><strong>Visual Example:</strong></p>
+<div align="center">
+    <img src="https://raw.githubusercontent.com/Wikstahl/autumn-school-qas2024/refs/heads/main/images/exact_cover.jpg" width="500">
+</div>
+<p><strong>Figure Caption:</strong> The Exact Cover problem requires selecting a subset of vertices from <span class="math notranslate nohighlight">\(R\)</span> such that exactly one edge connects each vertex in <span class="math notranslate nohighlight">\(F\)</span>. In the example above, the subset <span class="math notranslate nohighlight">\(\{r_1, r_4\}\)</span> forms an exact cover.</p>
+</section>
+<section id="what-you-ll-learn-in-this-tutorial">
+<h3>What You’ll Learn in This Tutorial<a class="headerlink" href="#what-you-ll-learn-in-this-tutorial" title="Link to this heading"></a></h3>
+<p>In this tutorial, we will use the <strong>Quantum Approximate Optimization Algorithm (QAOA)</strong> to solve the simplified tail-assignment problem. We’ll explore:</p>
+<ol class="arabic simple">
+<li><p>How to represent the problem as a quadratic unconstrained binary optimization (QUBO) problem.</p></li>
+<li><p>Mapping the problem to a quantum Hamiltonian.</p></li>
+<li><p>Solving the problem step-by-step using QAOA.</p></li>
+</ol>
+</section>
+<section id="loading-a-problem-instance">
+<h3>Loading a problem instance<a class="headerlink" href="#loading-a-problem-instance" title="Link to this heading"></a></h3>
+<p>To begin solving the tail-assignment problem, we need a specific problem instance. In this tutorial, the problem is represented as a constraint matrix <span class="math notranslate nohighlight">\(A\)</span>, where:</p>
+<ul class="simple">
+<li><p>Each row corresponds to a flight or activity.</p></li>
+<li><p>Each column represents a potential route.</p></li>
+<li><p>The entry <span class="math notranslate nohighlight">\(A_{fr}\)</span> is <span class="math notranslate nohighlight">\(1\)</span> if flight <span class="math notranslate nohighlight">\(f\)</span> is included in route <span class="math notranslate nohighlight">\(r\)</span>, and <span class="math notranslate nohighlight">\(0\)</span> otherwise.</p></li>
+</ul>
+<p>By loading the matrix <span class="math notranslate nohighlight">\(A\)</span>, we define the structure of the problem and the constraints that must be satisfied. This matrix serves as the foundation for constructing the optimization model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/Wikstahl/autumn-school-qas2024/refs/heads/main/data/&quot;</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;instance_8.csv&quot;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="c1"># load problem data</span>
+<span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of flights equals </span><span class="si">{</span><span class="n">num_rows</span><span class="si">}</span><span class="s2">, and number of routes equals </span><span class="si">{</span><span class="n">num_cols</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of flights equals 77, and number of routes equals 8.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="step-1-map-the-optimization-problem-to-a-hamiltonian">
+<h2>Step 1: Map the Optimization Problem to a Hamiltonian<a class="headerlink" href="#step-1-map-the-optimization-problem-to-a-hamiltonian" title="Link to this heading"></a></h2>
+<p>The first step in solving the problem with QAOA is to map the classical optimization problem into quantum circuits and operators. This involves three main steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Reformulate the problem using QUBO notation:</strong>
+Transform the problem into the form of a <strong>Quadratic Unconstrained Binary Optimization (QUBO)</strong>. This step reformulates the the problem as a cost function that then makes it easy to map it to a Hamiltonian.</p></li>
+<li><p><strong>Express the problem as a Hamiltonian:</strong><br />
+Represent the QUBO problem as a Hamiltonian. The goal is to construct a Hamiltonian where the ground state (the lowest energy state) corresponds to the optimal solution of the classical problem.</p></li>
+<li><p><strong>Design a quantum circuit:</strong> Create a parameterized quantum circuit that creates quantum states representing candidate solutions to the problem. The parameters of this circuit are iteratively adjusted to find states that minimize the Hamiltonian.</p></li>
+</ol>
+<p>By sampling from the quantum states produced by the parametrized quantum circuit (Ansatz), you can evaluate candidate solutions using the cost function encoded in the Hamiltonian.</p>
+<p><strong>Note:</strong> The process combines quantum and classical computation, as the quantum circuit proposes solutions, and a classical optimizer adjusts the circuit’s parameters based on feedback from the cost evaluation.</p>
+<section id="map-optimization-problem-to-qubo-form">
+<h3>Map Optimization Problem to QUBO Form<a class="headerlink" href="#map-optimization-problem-to-qubo-form" title="Link to this heading"></a></h3>
+<p>The first step in mapping the tail-assignment problem is to express it in <strong>Quadratic Unconstrained Binary Optimization (QUBO)</strong> form. This involves a notation change, where the optimization problem is represented as:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a1de837b-2495-40b2-baf3-6d57855e8ef2">
+<span class="eqno">(3)<a class="headerlink" href="#equation-a1de837b-2495-40b2-baf3-6d57855e8ef2" title="Permalink to this equation"></a></span>\[\begin{equation}
+    f(\vec{x}) = \min_{\vec{x} \in \{0, 1\}^n} \vec{x}^T Q \vec{x},
+\end{equation}\]</div>
+<p>Here:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x)\)</span> is the <strong>cost function</strong> we aim to minimize.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q\)</span> is an <span class="math notranslate nohighlight">\(n \times n\)</span> matrix of real numbers.</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span> corresponds to the number of routes.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{x}\)</span> is the vector of binary decision variables introduced earlier.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{x}^T\)</span> is the transpose of <span class="math notranslate nohighlight">\(\vec{x}\)</span>.</p></li>
+</ul>
+<p>Our next task is to map the tail-assignment problem into QUBO form.</p>
+<section id="step-1-1-transforming-constraints-into-a-cost-function">
+<h4>Step 1.1: Transforming Constraints into a Cost Function<a class="headerlink" href="#step-1-1-transforming-constraints-into-a-cost-function" title="Link to this heading"></a></h4>
+<p>The tail-assignment problem is defined by the constraint <span class="math notranslate nohighlight">\(A\vec{x} = \vec{1}\)</span>. To transform this into a QUBO cost function, we subtract <span class="math notranslate nohighlight">\(\vec{1}\)</span> from the right-hand side and square (via inner product) the expression:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d471555f-8b36-4bf4-9684-1411554244b6">
+<span class="eqno">(4)<a class="headerlink" href="#equation-d471555f-8b36-4bf4-9684-1411554244b6" title="Permalink to this equation"></a></span>\[\begin{equation}
+    (A\vec{x} - \vec{1})^2 = 0
+\end{equation}\]</div>
+<p>This ensures that the cost function evaluates to zero if and only if there exists a binary vector <span class="math notranslate nohighlight">\(\vec{x}\)</span> that satisfy the equation. Thus, the problem can now be expressed as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-11632aab-7578-4bd0-8b55-a56e47999d7b">
+<span class="eqno">(5)<a class="headerlink" href="#equation-11632aab-7578-4bd0-8b55-a56e47999d7b" title="Permalink to this equation"></a></span>\[\begin{equation}
+    f(\vec{x}) = \min_{\vec{x} \in \{0, 1\}^n} (A\vec{x} - \vec{1})^2
+\end{equation}\]</div>
+<p>Next we expanding the square of the cost function. Doing this we get:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ed7405ba-2fc3-4de9-bb0b-87bb339e6be4">
+<span class="eqno">(6)<a class="headerlink" href="#equation-ed7405ba-2fc3-4de9-bb0b-87bb339e6be4" title="Permalink to this equation"></a></span>\[\begin{equation}
+    (A\vec{x} - \vec{1})^2 = \vec{x}^T A^T A \vec{x} - 2 \vec{1}^T \vec{x} A + \vec{1}^T \vec{1}
+\end{equation}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\vec{1}^T \vec{1}\)</span> is a constant scalar, it does not affect the optimization and can be ignored. This leaves us with two terms:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\vec{x}^T A^T A \vec{x}\)</span>: This term is already in the desired QUBO form.</p></li>
+<li><p><span class="math notranslate nohighlight">\(-2 \vec{1}^T \vec{x} A\)</span>: This is a linear term, which will contribute to the diagonal of the <span class="math notranslate nohighlight">\(Q\)</span>-matrix.</p></li>
+</ul>
+<p>To incorporate the linear term into the <span class="math notranslate nohighlight">\(Q\)</span>-matrix, we note that:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d6660d38-bf68-49fc-9536-79edb92804fd">
+<span class="eqno">(7)<a class="headerlink" href="#equation-d6660d38-bf68-49fc-9536-79edb92804fd" title="Permalink to this equation"></a></span>\[\begin{equation}
+    \vec{x}^T Q \vec{x} = \sum_{i,j} Q_{ij} x_i x_j = \sum_{i=j} Q_{ii} x_i + \sum_{i \neq j} Q_{ij} x_i x_j,
+\end{equation}\]</div>
+<p>where diagonal term is simpy <span class="math notranslate nohighlight">\(\sum_{i} Q_{ii} x_i\)</span>, since <span class="math notranslate nohighlight">\(x_ix_i=x_i\)</span>.</p>
+<p>Thus, the linear term <span class="math notranslate nohighlight">\(-2 \vec{x}^T A^T \vec{1}\)</span> contributes to the diagonal elements of <span class="math notranslate nohighlight">\(Q\)</span>. Specifically:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-576a6aa7-de11-4c64-9e70-ae2bbf03c11f">
+<span class="eqno">(8)<a class="headerlink" href="#equation-576a6aa7-de11-4c64-9e70-ae2bbf03c11f" title="Permalink to this equation"></a></span>\[\begin{equation}
+    -2 \vec{x}^T A^T \vec{1} = -2 \sum_{i,j} x_j A_{ji} 
+\end{equation}\]</div>
+<p>This can be written as:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-cd1ea41f-c53f-470d-b518-7a70744ddfd4">
+<span class="eqno">(9)<a class="headerlink" href="#equation-cd1ea41f-c53f-470d-b518-7a70744ddfd4" title="Permalink to this equation"></a></span>\[\begin{equation}
+    -2 \vec{x}^T \mathrm{diag}(A^T\vec{1}) \vec{x},
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathrm{diag}(A^T\vec{1})\)</span> is a diagonal matrix with diagonal elements:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e0860a3f-8548-4a22-a69f-38fc6dbaa37c">
+<span class="eqno">(10)<a class="headerlink" href="#equation-e0860a3f-8548-4a22-a69f-38fc6dbaa37c" title="Permalink to this equation"></a></span>\[\begin{equation}
+    \mathrm{diag}(A^T\vec{1})_j = \sum_{i} A_{ji}.
+\end{equation}\]</div>
+</section>
+<section id="step-1-3-constructing-the-q-matrix">
+<h4>Step 1.3: Constructing the <span class="math notranslate nohighlight">\(Q\)</span>-Matrix<a class="headerlink" href="#step-1-3-constructing-the-q-matrix" title="Link to this heading"></a></h4>
+<p>Combining these results, the <span class="math notranslate nohighlight">\(Q\)</span>-matrix is given by:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2343f6d5-f7f9-4cae-89b4-d9c153ef7f19">
+<span class="eqno">(11)<a class="headerlink" href="#equation-2343f6d5-f7f9-4cae-89b4-d9c153ef7f19" title="Permalink to this equation"></a></span>\[\begin{equation}
+Q = A^T A - 2 \mathrm{diag}(A^T\vec{1}).
+\end{equation}\]</div>
+<p>This <span class="math notranslate nohighlight">\(Q\)</span>-matrix now fully represents the QUBO form of the tail-assignment problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">QUBO</span><span class="p">(</span><span class="n">A</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">num_rows</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">id_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">num_rows</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># create column vector with ones</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="nd">@A</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">((</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="nd">@id_vec</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">Q</span>
+    
+<span class="n">Q</span> <span class="o">=</span> <span class="n">QUBO</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-17.   2.   0.   0.   0.   3.   5.   3.]
+ [  2. -18.   3.   9.   4.   3.   5.   2.]
+ [  0.   3. -20.   0.   0.   3.   5.   0.]
+ [  0.   9.   0. -19.   0.   6.   7.   5.]
+ [  0.   4.   0.   0. -21.   6.   2.  12.]
+ [  3.   3.   3.   6.   6. -18.   3.   4.]
+ [  5.   5.   5.   7.   2.   3. -19.   1.]
+ [  3.   2.   0.   5.  12.   4.   1. -20.]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="step-2-reformulate-qubo-to-hamiltonian">
+<h3>Step 2: Reformulate QUBO to Hamiltonian<a class="headerlink" href="#step-2-reformulate-qubo-to-hamiltonian" title="Link to this heading"></a></h3>
+<p>You can reformulate the QUBO problem as a <strong>Hamiltonian</strong> (here, a matrix that respresents the energy of a system):</p>
+<div class="math notranslate nohighlight">
+\[
+H_C = \sum_{ij} Q_{ij} Z_i Z_j + \sum_i b_i Z_i.
+\]</div>
+<blockquote>
+<div><p><strong>Reformulation steps from the QAOA problem to the Hamiltonian</strong></p>
+<p>To demonstrate how the QAOA problem can be rewritten in this way, first replace the binary variables <span class="math notranslate nohighlight">\(x_i\)</span> to a new set of variables <span class="math notranslate nohighlight">\(z_i\in\{-1, 1\}\)</span> via</p>
+<div class="math notranslate nohighlight">
+\[ x_i = \frac{1-z_i}{2}. \]</div>
+<p>Here you can see that if <span class="math notranslate nohighlight">\(x_i\)</span> is <span class="math notranslate nohighlight">\(0\)</span>, then <span class="math notranslate nohighlight">\(z_i\)</span> must be <span class="math notranslate nohighlight">\(1\)</span>. When the <span class="math notranslate nohighlight">\(x_i\)</span>’s are substituted for the <span class="math notranslate nohighlight">\(z_i\)</span>’s in the optimization problem (<span class="math notranslate nohighlight">\(x^TQx\)</span>), an equivalent formulation can be obtained.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} x^TQx=\sum_{ij}Q_{ij}x_ix_j \\ =\frac{1}{4}\sum_{i,j}Q_{ij}(1-z_i)(1-z_j) \\=\frac{1}{4}\sum_{i,j}Q_{ij}z_iz_j-\frac{1}{4}\sum_{i,j}(Q_{ij}+Q_{ji})z_i + \frac{1}{4}\sum_{ij}Q_{ij}. \end{split}\]</div>
+<p>Now if we define <span class="math notranslate nohighlight">\(b_i=-\sum_{j}(Q_{ij}+Q_{ji})\)</span>, remove the constant <span class="math notranslate nohighlight">\(1/4\sum_{ij}Q_{ij}\)</span> term, we arrive at the two equivalent formulations of the same optimization problem.</p>
+<div class="math notranslate nohighlight">
+\[ \min_{x\in\{0,1\}^n} x^TQx\Longleftrightarrow \min_{z\in\{-1,1\}^n} \frac{1}{4}z^TQz + \frac{1}{4}b^Tz \]</div>
+<p>Here, <span class="math notranslate nohighlight">\(b\)</span> depends on <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+<p>Now, to obtain a quantum formulation of the problem, promote the <span class="math notranslate nohighlight">\(z_i\)</span> variables to a Pauli <span class="math notranslate nohighlight">\(Z\)</span> matrix, such as a <span class="math notranslate nohighlight">\(2\times 2\)</span> matrix of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} Z_i = \begin{pmatrix}1 &amp; 0 \\ 0 &amp; -1\end{pmatrix}. \end{split}\]</div>
+<p>When you substitute these matrices in the optimization problem above, you obtain the following Hamiltonian</p>
+<div class="math notranslate nohighlight">
+\[ H_C=\frac{1}{4}\sum_{ij}Q_{ij}Z_iZ_j + \frac{1}{4}\sum_i b_iZ_i. \]</div>
+<p><em>Also recall that the <span class="math notranslate nohighlight">\(Z\)</span> matrices are embedded in the quantum computer’s computational space, i.e., a Hilbert space of size <span class="math notranslate nohighlight">\(2^n\times 2^n\)</span>. Therefore, you should understand terms such as <span class="math notranslate nohighlight">\(Z_iZ_j\)</span> as the tensor product <span class="math notranslate nohighlight">\(Z_i\otimes Z_j\)</span> embedded in the <span class="math notranslate nohighlight">\(2^n\times 2^n\)</span> Hilbert space. For example, in a problem with five decision variables the term <span class="math notranslate nohighlight">\(Z_1Z_3\)</span> is understood to mean <span class="math notranslate nohighlight">\(I\otimes Z_3\otimes I\otimes Z_1\otimes I\)</span> where <span class="math notranslate nohighlight">\(I\)</span> is the <span class="math notranslate nohighlight">\(2\times 2\)</span> identity matrix.</em></p>
+</div></blockquote>
+<p>This Hamiltonian is called the <b>cost function Hamiltonian</b>. It has the property that its ground state corresponds to the solution that <b>minimizes the cost function <span class="math notranslate nohighlight">\(f(x)\)</span></b>.
+Therefore, to solve your optimization problem you now need to prepare the ground state of <span class="math notranslate nohighlight">\(H_C\)</span> (or a state with a high overlap with it) on the quantum computer. Then, sampling from this state will, with a high probability, yield the solution to <span class="math notranslate nohighlight">\(min~f(x)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">SparsePauliOp</span>
+
+<span class="k">def</span> <span class="nf">generate_pauli_terms</span><span class="p">(</span><span class="n">Q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Construct the cost Hamiltonian.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Q (ndarray): NxN symmetric matrix of coefficients for Z_i Z_j terms.</span>
+<span class="sd">        b (ndarray): N-dimensional array coefficients for Z_i terms.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pauli_list: List of (Pauli string, coefficient) pairs representing the Hamiltonian terms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="c1"># number of qubits</span>
+
+    <span class="n">pauli_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Two-qubit terms</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># Create a Pauli string with &quot;Z&quot; at positions i and j</span>
+                <span class="n">paulis</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;I&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span>
+                <span class="n">paulis</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">paulis</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span>
+                <span class="n">coeff</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span> <span class="c1"># multiply by a factor 2 since we are only summing the upper triangular of Q</span>
+                <span class="n">pauli_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paulis</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">coeff</span><span class="p">))</span>
+
+    <span class="c1"># Single-qubit terms</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> 
+            <span class="c1"># Create a Pauli string with &quot;Z&quot; at position i</span>
+            <span class="n">paulis</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;I&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span>
+            <span class="n">paulis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Z&quot;</span>
+            <span class="n">coeff</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span>
+            <span class="n">pauli_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paulis</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">coeff</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">pauli_list</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">+</span> <span class="n">Q</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">pauli_terms</span> <span class="o">=</span> <span class="n">generate_pauli_terms</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">cost_hamiltonian</span> <span class="o">=</span> <span class="n">SparsePauliOp</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="n">pauli_terms</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cost Function Hamiltonian:&quot;</span><span class="p">,</span> <span class="n">cost_hamiltonian</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cost Function Hamiltonian: SparsePauliOp([&#39;IIIIIIZZ&#39;, &#39;IIZIIIIZ&#39;, &#39;IZIIIIIZ&#39;, &#39;ZIIIIIIZ&#39;, &#39;IIIIIZZI&#39;, &#39;IIIIZIZI&#39;, &#39;IIIZIIZI&#39;, &#39;IIZIIIZI&#39;, &#39;IZIIIIZI&#39;, &#39;ZIIIIIZI&#39;, &#39;IIZIIZII&#39;, &#39;IZIIIZII&#39;, &#39;IIZIZIII&#39;, &#39;IZIIZIII&#39;, &#39;ZIIIZIII&#39;, &#39;IIZZIIII&#39;, &#39;IZIZIIII&#39;, &#39;ZIIZIIII&#39;, &#39;IZZIIIII&#39;, &#39;ZIZIIIII&#39;, &#39;ZZIIIIII&#39;, &#39;IIIIIIIZ&#39;, &#39;IIIIIIZI&#39;, &#39;IIIIIZII&#39;, &#39;IIIIZIII&#39;, &#39;IIIZIIII&#39;, &#39;IIZIIIII&#39;, &#39;IZIIIIII&#39;, &#39;ZIIIIIII&#39;],
+              coeffs=[ 1. +0.j,  1.5+0.j,  2.5+0.j,  1.5+0.j,  1.5+0.j,  4.5+0.j,  2. +0.j,
+  1.5+0.j,  2.5+0.j,  1. +0.j,  1.5+0.j,  2.5+0.j,  3. +0.j,  3.5+0.j,
+  2.5+0.j,  3. +0.j,  1. +0.j,  6. +0.j,  1.5+0.j,  2. +0.j,  0.5+0.j,
+  2. +0.j, -5. +0.j,  4.5+0.j, -4. +0.j, -1.5+0.j, -5. +0.j, -4.5+0.j,
+ -3.5+0.j])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="hamiltonian-quantum-circuit">
+<h3>Hamiltonian → quantum circuit<a class="headerlink" href="#hamiltonian-quantum-circuit" title="Link to this heading"></a></h3>
+<p>The Hamiltonian <span class="math notranslate nohighlight">\(H_C\)</span> contains the quantum definition of your problem. Now you can create a quantum circuit that will help <em>sample</em> good solutions from the quantum computer. The QAOA is inspired by quantum annealing and applies alternating layers of operators in the quantum circuit.</p>
+<p>The general idea is to start in the ground state of a known system, <span class="math notranslate nohighlight">\(H^{\otimes n}|0\rangle\)</span> above, and then steer the system into the ground state of the cost operator that you are interested in. This is done by applying the operators <span class="math notranslate nohighlight">\(\exp\{-i\gamma_k H_C\}\)</span> and <span class="math notranslate nohighlight">\(\exp\{-i\beta_k H_B\}\)</span> with angles <span class="math notranslate nohighlight">\(\gamma_1,...,\gamma_p\)</span> and <span class="math notranslate nohighlight">\(\beta_1,...,\beta_p~\)</span>.</p>
+<p>The quantum circuit that you generate is <strong>parametrized</strong> by <span class="math notranslate nohighlight">\(\gamma_i\)</span> and <span class="math notranslate nohighlight">\(\beta_i\)</span>, so you can try out different values of <span class="math notranslate nohighlight">\(\gamma_i\)</span> and <span class="math notranslate nohighlight">\(\beta_i\)</span> and sample from the resulting state.</p>
+<a class="reference internal image-reference" href="https://github.com/Wikstahl/autumn-school-qas2024/blob/main/images/qaoa_circuit.jpg?raw=true"><img alt="https://github.com/Wikstahl/autumn-school-qas2024/blob/main/images/qaoa_circuit.jpg?raw=true" src="https://github.com/Wikstahl/autumn-school-qas2024/blob/main/images/qaoa_circuit.jpg?raw=true" style="width: 800px;" />
+</a>
+<p>In this case, you will try an example with two QAOA layers that contains four parameters: <span class="math notranslate nohighlight">\(\gamma_1\)</span>, <span class="math notranslate nohighlight">\(\beta_1\)</span>, <span class="math notranslate nohighlight">\(\gamma_2\)</span>, <span class="math notranslate nohighlight">\(\beta_2\)</span>,.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">QAOAAnsatz</span>
+
+<span class="n">circuit</span> <span class="o">=</span> <span class="n">QAOAAnsatz</span><span class="p">(</span><span class="n">cost_operator</span><span class="o">=</span><span class="n">cost_hamiltonian</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/cac4ca0ddfb9403f690bc37c51dff9502c6b5a6f1e98105efdb28a412d793420.png" src="../../_images/cac4ca0ddfb9403f690bc37c51dff9502c6b5a6f1e98105efdb28a412d793420.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span><span class="o">.</span><span class="n">parameters</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ParameterView([ParameterVectorElement(β[0]), ParameterVectorElement(β[1]), ParameterVectorElement(γ[0]), ParameterVectorElement(γ[1])])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="step-2-optimize-circuits-for-quantum-hardware-execution">
+<h2>Step 2. Optimize circuits for quantum hardware execution<a class="headerlink" href="#step-2-optimize-circuits-for-quantum-hardware-execution" title="Link to this heading"></a></h2>
+<p>The circuit above contains a series of abstractions useful to think about quantum algorithms, but not possible to run on the hardware. To be able to run on a QPU, the circuit needs to undergo a series of operations that make up the <strong>transpilation</strong> or <strong>circuit optimization</strong> step of the pattern.</p>
+<p>Transpilation may involves several steps, such as:</p>
+<ul class="simple">
+<li><p><strong>Initial mapping</strong> of the qubits in the circuit (such as decision variables) to physical qubits on the device.</p></li>
+<li><p><strong>Unrolling</strong> of the instructions in the quantum circuit to the hardware-native instructions that the backend understands.</p></li>
+<li><p><strong>Routing</strong> of any qubits in the circuit that interact to physical qubits that are adjacent with one another.</p></li>
+<li><p><strong>Error suppression</strong> by adding single-qubit gates to suppress noise with dynamical decoupling.</p></li>
+</ul>
+<p>The following code transforms and optimizes the abstract circuit into a format that is ready for execution on the specified backend.
+For simplicity we will use a simulator backend, but this could easily be swapped out for a real quantum computing backend.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit_aer</span> <span class="kn">import</span> <span class="n">AerSimulator</span>
+<span class="kn">from</span> <span class="nn">qiskit_ibm_runtime</span> <span class="kn">import</span> <span class="n">QiskitRuntimeService</span>
+<span class="kn">from</span> <span class="nn">qiskit.transpiler.preset_passmanagers</span> <span class="kn">import</span> <span class="n">generate_preset_pass_manager</span>
+
+<span class="c1"># Choose backend (this can either be a simulator or a real qc backend.)</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="n">AerSimulator</span><span class="p">()</span>
+
+<span class="c1"># Create pass manager for transpilation</span>
+<span class="n">pm</span> <span class="o">=</span> <span class="n">generate_preset_pass_manager</span><span class="p">(</span><span class="n">optimization_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">)</span>
+
+<span class="n">candidate_circuit</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit</span><span class="p">)</span>
+<span class="n">candidate_circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/52453db04c99801c2523026c52e3b8ee82f337ad142109e0d4cf25e29eb58842.png" src="../../_images/52453db04c99801c2523026c52e3b8ee82f337ad142109e0d4cf25e29eb58842.png" />
+</div>
+</div>
+</section>
+<section id="step-3-execute-using-qiskit-primitives">
+<h2>Step 3. Execute using Qiskit primitives<a class="headerlink" href="#step-3-execute-using-qiskit-primitives" title="Link to this heading"></a></h2>
+<p>In the QAOA workflow, the optimal QAOA parameters are found in an iterative optimization loop, which runs a series of circuit evaluations and uses a classical optimizer to find the optimal <span class="math notranslate nohighlight">\(\beta_k\)</span> and <span class="math notranslate nohighlight">\(\gamma_k\)</span> parameters. This execution loop is executed via the following steps:</p>
+<ol class="arabic simple">
+<li><p>Define the initial parameters.</p></li>
+<li><p>Use a classical optimizer to minimize the expectation value of the cost Hamiltonian, <span class="math notranslate nohighlight">\(H_C\)</span>, by iteratively adjusting <span class="math notranslate nohighlight">\(\beta_k\)</span> and <span class="math notranslate nohighlight">\(\gamma_k\)</span>.</p></li>
+<li><p>Once the optimizer converges on a set of optimal parameters, execute the circuit one last time to sample the final distribution. The sampled states represent candidate solutions for the optimization problem.</p></li>
+</ol>
+<section id="step-3-1-define-circuit-with-initial-parameters">
+<h3>Step 3.1: Define circuit with initial parameters<a class="headerlink" href="#step-3-1-define-circuit-with-initial-parameters" title="Link to this heading"></a></h3>
+<p>We start with an initial guess for the parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">init_params</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">init_params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2.5, 2.5, 0.1, 0.1]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-2-run-optimizer">
+<h3>Step 3.2 Run optimizer<a class="headerlink" href="#step-3-2-run-optimizer" title="Link to this heading"></a></h3>
+<p>The two primitives are Sampler and Estimator, and the choice of primitive depends on what type of measurement you want to run on the quantum computer. For the minimization of <span class="math notranslate nohighlight">\(H_C\)</span>, use the Estimator since the measurement of the cost function is simply the expectation value of <span class="math notranslate nohighlight">\(\langle H_C \rangle\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">objective_func_vals</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Global variable</span>
+
+<span class="k">def</span> <span class="nf">cost_func_estimator</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">ansatz</span><span class="p">:</span> <span class="s2">&quot;QuantumCircuit&quot;</span><span class="p">,</span> <span class="n">hamiltonian</span><span class="p">:</span> <span class="s2">&quot;ObservablesArrayLike&quot;</span><span class="p">,</span> <span class="n">estimator</span><span class="p">:</span> <span class="s2">&quot;Estimator&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+
+    <span class="c1"># transform the observable defined on virtual qubits to</span>
+    <span class="c1"># an observable defined on all physical qubits for the backend.</span>
+    <span class="n">isa_hamiltonian</span> <span class="o">=</span> <span class="n">hamiltonian</span><span class="o">.</span><span class="n">apply_layout</span><span class="p">(</span><span class="n">ansatz</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span>
+
+    <span class="n">pub</span> <span class="o">=</span> <span class="p">(</span><span class="n">ansatz</span><span class="p">,</span> <span class="n">isa_hamiltonian</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">job</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">pub</span><span class="p">])</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">evs</span>
+
+    <span class="n">objective_func_vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cost</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit_ibm_runtime</span> <span class="kn">import</span> <span class="n">EstimatorV2</span> <span class="k">as</span> <span class="n">Estimator</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+
+<span class="n">estimator</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span><span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;default_shots&quot;</span><span class="p">:</span> <span class="mi">4_000</span><span class="p">})</span>
+
+<span class="n">bounds</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+    <span class="n">cost_func_estimator</span><span class="p">,</span>
+    <span class="n">init_params</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">candidate_circuit</span><span class="p">,</span> <span class="n">cost_hamiltonian</span><span class="p">,</span> <span class="n">estimator</span><span class="p">),</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;COBYLA&quot;</span><span class="p">,</span>
+    <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+    <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rhobeg&quot;</span><span class="p">:</span> <span class="mf">1e-1</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> message: Optimization terminated successfully.
+ success: True
+  status: 1
+     fun: -23.82091977005749
+       x: [ 2.635e+00  2.625e+00  5.093e-02  1.087e-01]
+    nfev: 30
+   maxcv: 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>The optimizer was able to minimize the cost and find better parameters for the circuit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">objective_func_vals</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cost&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f81e71e899cedc379c74817eb711d65dfce03e612f09195f39e99c2ede286219.png" src="../../_images/f81e71e899cedc379c74817eb711d65dfce03e612f09195f39e99c2ede286219.png" />
+</div>
+</div>
+<p>Once you have found the optimal parameters for the circuit, you can assign these parameters and sample the final distribution obtained with the optimized parameters. Here is where the <em>Sampler</em> primitive should be used since it is the probability distribution of bitstring measurements.</p>
+<p><strong>Note:</strong> This means preparing a quantum state <span class="math notranslate nohighlight">\(\psi\)</span> in the computer and then measuring it. A measurement will collapse the state into a single computational basis state - for example, <code class="docutils literal notranslate"><span class="pre">01010100</span></code> - which corresponds to a candidate solution <span class="math notranslate nohighlight">\(x\)</span> to our initial optimization problem (<span class="math notranslate nohighlight">\(\max f(x)\)</span> or <span class="math notranslate nohighlight">\(\min f(x)\)</span> depending on the task).</p>
+</section>
+<section id="step-3-3-run-circuit-once-more-using-optimal-parameters">
+<h3>Step 3.3: Run circuit once more using optimal parameters<a class="headerlink" href="#step-3-3-run-circuit-once-more-using-optimal-parameters" title="Link to this heading"></a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimized_circuit</span> <span class="o">=</span> <span class="n">candidate_circuit</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="n">optimized_circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ae54d28c59dcd68f08f3a63e982eb3e8216b52211a1f9cb0cac359dddbff2a04.png" src="../../_images/ae54d28c59dcd68f08f3a63e982eb3e8216b52211a1f9cb0cac359dddbff2a04.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit_ibm_runtime</span> <span class="kn">import</span> <span class="n">SamplerV2</span> <span class="k">as</span> <span class="n">Sampler</span>
+
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;default_shots&quot;</span><span class="p">:</span> <span class="mi">4_000</span><span class="p">})</span>
+
+<span class="n">pub</span> <span class="o">=</span> <span class="p">(</span><span class="n">optimized_circuit</span><span class="p">,)</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">pub</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">counts_bin</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">meas</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">meas</span><span class="o">.</span><span class="n">num_shots</span>
+<span class="n">final_distribution_bin</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="o">/</span> <span class="n">shots</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">counts_bin</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_distribution_bin</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;10010100&#39;: 0.00825, &#39;00010111&#39;: 0.02375, &#39;00011101&#39;: 0.242, &#39;10110110&#39;: 0.00225, &#39;10000101&#39;: 0.05525, &#39;01110100&#39;: 0.00175, &#39;00110011&#39;: 0.00025, &#39;11000110&#39;: 0.004, &#39;10000100&#39;: 0.0165, &#39;00000101&#39;: 0.03275, &#39;01000000&#39;: 0.001, &#39;00010101&#39;: 0.067, &#39;00110111&#39;: 0.00475, &#39;11100111&#39;: 0.0035, &#39;00101101&#39;: 0.00125, &#39;11001111&#39;: 0.0025, &#39;01100011&#39;: 0.0015, &#39;11000101&#39;: 0.0095, &#39;10100000&#39;: 0.0005, &#39;01011111&#39;: 0.003, &#39;10001111&#39;: 0.0105, &#39;10100101&#39;: 0.01075, &#39;01011100&#39;: 0.005, &#39;11100101&#39;: 0.0035, &#39;11011101&#39;: 0.00225, &#39;10010101&#39;: 0.02625, &#39;00001101&#39;: 0.00975, &#39;10000111&#39;: 0.02375, &#39;10000110&#39;: 0.011, &#39;00010100&#39;: 0.00575, &#39;11000100&#39;: 0.01775, &#39;01010000&#39;: 0.00225, &#39;00000111&#39;: 0.017, &#39;01100010&#39;: 0.00075, &#39;11110100&#39;: 0.00475, &#39;01000010&#39;: 0.001, &#39;00111101&#39;: 0.0055, &#39;11110101&#39;: 0.00175, &#39;11101101&#39;: 0.002, &#39;00100101&#39;: 0.00775, &#39;00011111&#39;: 0.01975, &#39;01010101&#39;: 0.0145, &#39;00011001&#39;: 0.0085, &#39;10110101&#39;: 0.0045, &#39;10011101&#39;: 0.02675, &#39;00100111&#39;: 0.0045, &#39;11100000&#39;: 0.0035, &#39;11001101&#39;: 0.004, &#39;00110100&#39;: 0.0015, &#39;01000101&#39;: 0.0045, &#39;11100110&#39;: 0.004, &#39;00110101&#39;: 0.00875, &#39;00010001&#39;: 0.00075, &#39;10110111&#39;: 0.0055, &#39;11100100&#39;: 0.006, &#39;01110101&#39;: 0.0025, &#39;10100011&#39;: 0.0005, &#39;10001101&#39;: 0.02525, &#39;10100100&#39;: 0.00775, &#39;01010001&#39;: 0.00375, &#39;10001001&#39;: 0.002, &#39;01101111&#39;: 0.001, &#39;11000001&#39;: 0.00175, &#39;01111001&#39;: 0.00125, &#39;11100001&#39;: 0.00125, &#39;10101101&#39;: 0.0055, &#39;10010110&#39;: 0.0015, &#39;10101100&#39;: 0.00075, &#39;00010110&#39;: 0.00025, &#39;00001111&#39;: 0.00175, &#39;10100110&#39;: 0.00325, &#39;00111100&#39;: 0.0005, &#39;11110010&#39;: 0.00125, &#39;11000111&#39;: 0.0045, &#39;11010100&#39;: 0.00275, &#39;11001110&#39;: 0.001, &#39;01011001&#39;: 0.0055, &#39;00100011&#39;: 0.00125, &#39;01000111&#39;: 0.0025, &#39;00000110&#39;: 0.0025, &#39;01000110&#39;: 0.00125, &#39;10000001&#39;: 0.0015, &#39;01110011&#39;: 0.00025, &#39;10101110&#39;: 0.00175, &#39;01110111&#39;: 0.0015, &#39;10111100&#39;: 0.0005, &#39;00100100&#39;: 0.00175, &#39;11101110&#39;: 0.00025, &#39;01101110&#39;: 0.00075, &#39;11010001&#39;: 0.00125, &#39;10101111&#39;: 0.00575, &#39;11101111&#39;: 0.0005, &#39;01100100&#39;: 0.00175, &#39;01010100&#39;: 0.00775, &#39;01100101&#39;: 0.00125, &#39;10111001&#39;: 0.0005, &#39;00000100&#39;: 0.008, &#39;10110001&#39;: 0.00025, &#39;01011101&#39;: 0.006, &#39;01001111&#39;: 0.0015, &#39;01000100&#39;: 0.006, &#39;10110100&#39;: 0.0005, &#39;10111101&#39;: 0.00275, &#39;10010111&#39;: 0.012, &#39;11011000&#39;: 0.00025, &#39;01010010&#39;: 0.0005, &#39;01100000&#39;: 0.0015, &#39;01111100&#39;: 0.0005, &#39;11110110&#39;: 0.00025, &#39;01101101&#39;: 0.00075, &#39;11000000&#39;: 0.00075, &#39;10011110&#39;: 0.0005, &#39;11010101&#39;: 0.004, &#39;10001011&#39;: 0.0005, &#39;00000011&#39;: 0.00025, &#39;00001001&#39;: 0.00175, &#39;01100111&#39;: 0.00075, &#39;11010111&#39;: 0.00275, &#39;11100011&#39;: 0.00125, &#39;01010111&#39;: 0.005, &#39;01111110&#39;: 0.00075, &#39;11001100&#39;: 0.0005, &#39;11101011&#39;: 0.0005, &#39;01111011&#39;: 0.00075, &#39;10100111&#39;: 0.006, &#39;11110111&#39;: 0.00075, &#39;10011111&#39;: 0.00475, &#39;10010001&#39;: 0.00075, &#39;01100001&#39;: 0.001, &#39;11101100&#39;: 0.0015, &#39;11011100&#39;: 0.00175, &#39;01001101&#39;: 0.00175, &#39;11010110&#39;: 0.00175, &#39;01111101&#39;: 0.0005, &#39;10001100&#39;: 0.00075, &#39;00111011&#39;: 0.00075, &#39;11000011&#39;: 0.0015, &#39;01001100&#39;: 0.00125, &#39;00100110&#39;: 0.00125, &#39;11011001&#39;: 0.001, &#39;11010000&#39;: 0.001, &#39;01011000&#39;: 0.00025, &#39;00011100&#39;: 0.0005, &#39;11100010&#39;: 0.00125, &#39;10011011&#39;: 0.00025, &#39;11011111&#39;: 0.00075, &#39;00101011&#39;: 0.00025, &#39;01011011&#39;: 0.00175, &#39;00111001&#39;: 0.001, &#39;00010000&#39;: 0.00075, &#39;00111111&#39;: 0.00075, &#39;11110001&#39;: 0.00125, &#39;11111110&#39;: 0.002, &#39;01110000&#39;: 0.00025, &#39;01000001&#39;: 0.00125, &#39;01001000&#39;: 0.00025, &#39;10100001&#39;: 0.0005, &#39;10000000&#39;: 0.0005, &#39;11000010&#39;: 0.002, &#39;00011110&#39;: 0.00025, &#39;00001100&#39;: 0.00025, &#39;11111100&#39;: 0.0005, &#39;10001110&#39;: 0.00075, &#39;11111111&#39;: 0.00075, &#39;11010011&#39;: 0.00075, &#39;00100000&#39;: 0.001, &#39;01110001&#39;: 0.0005, &#39;11111011&#39;: 0.0005, &#39;01101011&#39;: 0.00075, &#39;01011110&#39;: 0.001, &#39;10010000&#39;: 0.0005, &#39;11111101&#39;: 0.00025, &#39;10000010&#39;: 0.0005, &#39;10110011&#39;: 0.00075, &#39;10100010&#39;: 0.00075, &#39;00101100&#39;: 0.00025, &#39;00011000&#39;: 0.00025, &#39;11011011&#39;: 0.00025, &#39;10111111&#39;: 0.00025, &#39;01010110&#39;: 0.0005, &#39;10011001&#39;: 0.0005, &#39;11101001&#39;: 0.00025, &#39;01000011&#39;: 0.0005, &#39;01011010&#39;: 0.0005, &#39;11001001&#39;: 0.00075, &#39;00110110&#39;: 0.00025, &#39;00110001&#39;: 0.00025, &#39;10001000&#39;: 0.00025, &#39;00010011&#39;: 0.00025, &#39;01111111&#39;: 0.0005, &#39;10010010&#39;: 0.00025, &#39;00101111&#39;: 0.00075, &#39;01001001&#39;: 0.00025, &#39;01001010&#39;: 0.0005, &#39;00001110&#39;: 0.00025, &#39;00000000&#39;: 0.00025, &#39;00011011&#39;: 0.00025, &#39;11001011&#39;: 0.00025, &#39;10110010&#39;: 0.00025, &#39;01001011&#39;: 0.00025}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="step-4-post-process-return-result-in-classical-format">
+<h2>Step 4. Post-process, return result in classical format<a class="headerlink" href="#step-4-post-process-return-result-in-classical-format" title="Link to this heading"></a></h2>
+<p>The final step involves interpreting the output of the quantum computation and translating it back into a solution for your original problem.</p>
+<p>When the quantum circuit is executed, it samples from the probability distribution defined by the final quantum state. The output consists of bitstrings, where each bitstring corresponds to a potential solution to the problem. In this step, we:</p>
+<ol class="arabic simple">
+<li><p><strong>Filter Solutions</strong>: If any of the sampled bitstrings satisfy the constraints of the original problem (e.g., <span class="math notranslate nohighlight">\(f(\vec{x})=(A\vec{x} -\vec{1})^2=0\)</span> for the tail-assignment problem).</p></li>
+<li><p><strong>Count Occurrences</strong>: Determine the most frequently observed bitstrings and plot a histogram.</p></li>
+</ol>
+<section id="step-4-1-filter-solutions">
+<h3>Step 4.1: Filter Solutions<a class="headerlink" href="#step-4-1-filter-solutions" title="Link to this heading"></a></h3>
+<p>We now process the bit-strings sampled from the quantum circuit to determine if any of them satisfy the constraints of the original optimization problem. For each sampled bit-string, we calculate whether it satisfies the problem constraints using the classical cost function <span class="math notranslate nohighlight">\(f(\vec{x})\)</span>. If and only if this function evaluates to <span class="math notranslate nohighlight">\(0\)</span> for a bitstring, a solution exists!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">classical_cost_fun</span><span class="p">(</span><span class="n">bit_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="c1"># convert binary string to column vector</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="nb">int</span><span class="p">(</span><span class="n">bit</span><span class="p">)]</span> <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">bit_str</span><span class="p">)])</span>
+    <span class="n">id_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">A</span><span class="nd">@x</span><span class="o">-</span><span class="n">id_vec</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Look through samples to see if any of the bit strings solve the problem</span>
+<span class="k">for</span> <span class="n">bit_str</span> <span class="ow">in</span> <span class="n">counts_bin</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">classical_cost_fun</span><span class="p">(</span><span class="n">bit_str</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valid solution found:&quot;</span><span class="p">,</span> <span class="n">bit_str</span><span class="p">)</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valid solution found: 00011101
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-2-count-occurences">
+<h3>Step 4.2 Count Occurences<a class="headerlink" href="#step-4-2-count-occurences" title="Link to this heading"></a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">highest_probability_bitstring</span><span class="p">(</span><span class="n">prob_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the bitstring with the highest probability as a column vector and corresponding probability.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        prob_dict (dict): A dictionary where keys are bitstrings (str) and values are probabilities (float).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (np.ndarray, float): The bitstring with the highest probability and the corresponding probability.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Find the key with the highest value</span>
+    <span class="n">highest_key</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">prob_dict</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">prob_dict</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+    <span class="n">highest_value</span> <span class="o">=</span> <span class="n">prob_dict</span><span class="p">[</span><span class="n">highest_key</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">highest_key</span><span class="p">,</span> <span class="n">highest_value</span>
+
+<span class="n">bit_str</span><span class="p">,</span> <span class="n">prob</span> <span class="o">=</span> <span class="n">highest_probability_bitstring</span><span class="p">(</span><span class="n">final_distribution_bin</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Most Likely bitstring is </span><span class="si">{</span><span class="n">bit_str</span><span class="si">}</span><span class="s2"> with probability </span><span class="si">{</span><span class="n">prob</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Most Likely bitstring is 00011101 with probability 24.2%
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that QAOA return the solution bit-string with the highest probability. This can be compared to random-guessing, where the probability of obtaining the solution in this case is <span class="math notranslate nohighlight">\(1/2^8\approx 0.004\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the classical cost function for all binary bitstrings</span>
+<span class="n">costs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">bit_str</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">final_distribution_bin</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">classical_cost_fun</span><span class="p">(</span><span class="n">bit_str</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+    <span class="n">costs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+    <span class="n">probabilities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+
+<span class="n">costs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">costs</span><span class="p">)</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
+
+<span class="c1"># Plot the histogram</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;purple&#39;</span> <span class="k">if</span> <span class="n">cost</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;black&#39;</span> <span class="k">for</span> <span class="n">cost</span> <span class="ow">in</span> <span class="n">costs</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">costs</span><span class="p">,</span> <span class="mi">100</span><span class="o">*</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Classical Cost Function $f(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Probability %&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histogram of Classical Cost Function vs. Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/2a30600f02a6ae012804d52df1eb061ee8c15bcdfa45241ee548ce8e3ed049de.png" src="../../_images/2a30600f02a6ae012804d52df1eb061ee8c15bcdfa45241ee548ce8e3ed049de.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="extra-running-a-smaller-problem-on-actual-quantum-computer">
+<h2>(Extra): Running a smaller problem on actual quantum computer<a class="headerlink" href="#extra-running-a-smaller-problem-on-actual-quantum-computer" title="Link to this heading"></a></h2>
+<p>In this section, we demonstrate how to run a smaller version of the tail-assignment problem on a real quantum computer. To accommodate the 5-qubit Helmi quantum computer, we load a simplified 2-qubit toy problem.</p>
+<ul class="simple">
+<li><p>Load a Toy Problem: We initialize a smaller version of the tail-assignment problem, ensuring it fits within the qubit limits of the hardware.</p></li>
+<li><p>Simulate Performance: Before running the problem on the real hardware, we test the circuit on a simulator to evaluate its behavior under ideal conditions.</p></li>
+<li><p>Execute on a Real Backend: Finally, we execute the problem on the Helmi quantum computer to compare results and assess the impact of quantum noise.</p></li>
+</ul>
+<p>By exploring this smaller-scale problem, we get insights into real-world quantum hardware performance and its limitations, while preparing for scaling up to larger problems in the future.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;instance_2.csv&quot;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="c1"># load problem data</span>
+<span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of flights equals </span><span class="si">{</span><span class="n">num_rows</span><span class="si">}</span><span class="s2">, and number of routes equals </span><span class="si">{</span><span class="n">num_cols</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of flights equals 2, and number of routes equals 2.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q</span> <span class="o">=</span> <span class="n">QUBO</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">+</span> <span class="n">Q</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">pauli_terms</span> <span class="o">=</span> <span class="n">generate_pauli_terms</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">cost_hamiltonian</span> <span class="o">=</span> <span class="n">SparsePauliOp</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="n">pauli_terms</span><span class="p">)</span>
+<span class="n">cost_hamiltonian</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SparsePauliOp([&#39;ZZ&#39;, &#39;IZ&#39;],
+              coeffs=[0.5+0.j, 0.5+0.j])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span> <span class="o">=</span> <span class="n">QAOAAnsatz</span><span class="p">(</span><span class="n">cost_operator</span><span class="o">=</span><span class="n">cost_hamiltonian</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+<span class="c1"># Create pass manager for transpilation</span>
+<span class="n">pm</span> <span class="o">=</span> <span class="n">generate_preset_pass_manager</span><span class="p">(</span><span class="n">optimization_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">)</span>
+<span class="n">candidate_circuit</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit</span><span class="p">)</span>
+
+<span class="c1"># Theoretical pre-calculated optimal parameters</span>
+<span class="n">optimal_params</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.3562</span><span class="p">,</span> <span class="mf">2.3562</span><span class="p">,</span> <span class="mf">1.5708</span><span class="p">,</span> <span class="mf">1.5708</span><span class="p">]</span>
+<span class="n">optimized_circuit</span> <span class="o">=</span> <span class="n">candidate_circuit</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimized_circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/af1f41bef15920178586c955ee77d3d0cd07e5f63eeb74a05c26319e852769d4.png" src="../../_images/af1f41bef15920178586c955ee77d3d0cd07e5f63eeb74a05c26319e852769d4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;default_shots&quot;</span><span class="p">:</span> <span class="mi">4_000</span><span class="p">})</span>
+<span class="n">pub</span> <span class="o">=</span> <span class="p">(</span><span class="n">optimized_circuit</span><span class="p">,)</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">pub</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">counts_bin</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">meas</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">meas</span><span class="o">.</span><span class="n">num_shots</span>
+<span class="n">final_distribution_bin</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="o">/</span> <span class="n">shots</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">counts_bin</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">final_distribution_bin</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;01&#39;: 1.0}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Look through samples to see if any of the bit strings solve the problem</span>
+<span class="k">for</span> <span class="n">bit_str</span> <span class="ow">in</span> <span class="n">counts_bin</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">classical_cost_fun</span><span class="p">(</span><span class="n">bit_str</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valid solution found:&quot;</span><span class="p">,</span> <span class="n">bit_str</span><span class="p">)</span>
+        <span class="k">break</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">prob</span> <span class="o">=</span> <span class="n">highest_probability_bitstring</span><span class="p">(</span><span class="n">final_distribution_bin</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valid solution found: 01
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot distrubution of bit-strings.</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">final_distribution_bin</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">final_distribution_bin</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="c1"># Plot the histogram</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;bit-strings&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Probability %&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histogram of bit-strings vs. Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6521f20585c97cfc9efeafe20e00ed5758907c3a1b25f2c91fead6121dcb9d45.png" src="../../_images/6521f20585c97cfc9efeafe20e00ed5758907c3a1b25f2c91fead6121dcb9d45.png" />
+</div>
+</div>
+<p>For the 2-qubit toy problem, the QAOA algorithm correctly identifies the optimal solution bit-string with 100% probability in the simulation using 2-layers. This result is under ideal conditions, where noise and hardware imperfections are absent.</p>
+<section id="running-qaoa-on-the-helmi-quantum-computer">
+<h3>Running QAOA on the HELMI quantum computer<a class="headerlink" href="#running-qaoa-on-the-helmi-quantum-computer" title="Link to this heading"></a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">iqm.qiskit_iqm</span> <span class="kn">import</span> <span class="n">IQMProvider</span>
+
+<span class="n">HELMI_CORTEX_URL</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;HELMI_CORTEX_URL&#39;</span><span class="p">)</span>  <span class="c1"># This is set when loading the module</span>
+<span class="n">provider</span> <span class="o">=</span> <span class="n">IQMProvider</span><span class="p">(</span><span class="n">HELMI_CORTEX_URL</span><span class="p">)</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">get_backend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.compiler</span> <span class="kn">import</span> <span class="n">transpile</span>
+<span class="kn">from</span> <span class="nn">iqm.qiskit_iqm.iqm_transpilation</span> <span class="kn">import</span> <span class="n">optimize_single_qubit_gates</span>
+
+<span class="n">transpiled_circuit</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">optimized_transpiled_circuit</span> <span class="o">=</span> <span class="n">optimize_single_qubit_gates</span><span class="p">(</span><span class="n">transpiled_circuit</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">))</span>
+<span class="n">optimized_transpiled_circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d3fd835d305489f19485256fa4a679ebddd92b53ec6773545a75bb48f0d4bb35.png" src="../../_images/d3fd835d305489f19485256fa4a679ebddd92b53ec6773545a75bb48f0d4bb35.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">optimized_transpiled_circuit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">.</span><span class="n">status</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;JobStatus.QUEUED: &#39;job is queued&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">counts_bin</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">()[</span><span class="s2">&quot;counts&quot;</span><span class="p">]</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shots</span>
+<span class="n">final_distribution_bin</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="o">/</span> <span class="n">shots</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">counts_bin</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">final_distribution_bin</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;01&#39;: 0.7080078125,
+ &#39;11&#39;: 0.2880859375,
+ &#39;00&#39;: 0.0029296875,
+ &#39;10&#39;: 0.0009765625}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot distrubution of bit-strings.</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">final_distribution_bin</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">final_distribution_bin</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="c1"># Plot the histogram</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;bit-strings&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Probability %&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histogram of bit-strings vs. Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8624a948632fb10569fa8dd5911b477f6cc74ddc93c85cc159e542e205804a91.png" src="../../_images/8624a948632fb10569fa8dd5911b477f6cc74ddc93c85cc159e542e205804a91.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading"></a></h2>
+<p>This tutorial demonstrated how to solve the tail-assignment problem using Qiskit. While quantum computers currently do not outperform classical computers for combinatorial optimization tasks—primarily due to noise and hardware limitations—progress in this field is advancing rapidly.</p>
+<p>The hardware is steadily improving, with new algorithms continually being developed. Many of these quantum heuristics are currently tested on classical simulators, which are limited to small problem sizes (typically around 20 qubits).</p>
+<p>In the near future, as quantum computers with more qubits and less noise, it will become feasible to benchmark quantum heuristics on larger, real-world problem instances. This progress holds the potential to unlock new capabilities in solving challenging optimization problems that are intractable by classical methods.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../qsip/" class="btn btn-neutral float-left" title="QSIP - Quantum Sweden Innovation Platform" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../qwalks/" class="btn btn-neutral float-right" title="Quantum walks on quantum computers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

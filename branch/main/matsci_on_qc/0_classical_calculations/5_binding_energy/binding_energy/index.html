@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Binding Energy Calculations &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/QAS2024_QAOA_exercise/">Tutorial - Variational Quantum Algorithms</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/css_code_steane/">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/surface_code_threshold/">Tutorial - Estimating the Surface Code Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/option_pricing_tutorial/">Tutorial - Pricing a European call option using quantum computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/flight_scheduling_optimization_qaoa/">Tutorial - Solving Flight Scheduling Optimization using QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README/">Quantum Computing for Materials Science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Binding Energy Calculations</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/matsci_on_qc/0_classical_calculations/5_binding_energy/binding_energy.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="binding-energy-calculations">
+<h1>Binding Energy Calculations<a class="headerlink" href="#binding-energy-calculations" title="Link to this heading"></a></h1>
+<p>This analysis calculates the binding energy of the triazole inhibitor on the Al(111) surface using the results from our DFT calculations. The binding energy indicates the strength of the interaction between the inhibitor and the surface.</p>
+<section id="calculation-method">
+<h2>Calculation Method<a class="headerlink" href="#calculation-method" title="Link to this heading"></a></h2>
+<p>The binding energy is calculated using the following formula:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">E_binding</span> <span class="o">=</span> <span class="n">E_supercell</span> <span class="o">-</span> <span class="p">(</span><span class="n">E_substrate</span> <span class="o">+</span> <span class="n">E_inhibitor</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">E_supercell</span></code>: Total energy of the complete system (surface + inhibitor)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">E_substrate</span></code>: Energy of the isolated Al(111) surface</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">E_inhibitor</span></code>: Energy of the isolated triazole molecule</p></li>
+</ul>
+</section>
+<section id="system-components">
+<h2>System Components<a class="headerlink" href="#system-components" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Complete System (Supercell):</p>
+<ul class="simple">
+<li><p>4×4 Al(111) surface with triazole</p></li>
+<li><p>Total Energy: -241.400214 Hartree</p></li>
+</ul>
+</li>
+<li><p>Substrate:</p>
+<ul class="simple">
+<li><p>Clean Al(111) surface</p></li>
+<li><p>Total Energy: -198.415357 Hartree</p></li>
+</ul>
+</li>
+<li><p>Inhibitor:</p>
+<ul class="simple">
+<li><p>Isolated triazole molecule</p></li>
+<li><p>Total Energy: -42.970690 Hartree</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="results">
+<h2>Results<a class="headerlink" href="#results" title="Link to this heading"></a></h2>
+<p>The binding energy calculation yields:</p>
+<ul class="simple">
+<li><p><strong>Binding Energy: -8.890122 kcal/mol</strong></p></li>
+</ul>
+<p>This negative value indicates:</p>
+<ul class="simple">
+<li><p>Favorable binding between inhibitor and surface</p></li>
+<li><p>Spontaneous adsorption process</p></li>
+<li><p>Stable surface-inhibitor complex</p></li>
+</ul>
+</section>
+<section id="analysis-details">
+<h2>Analysis Details<a class="headerlink" href="#analysis-details" title="Link to this heading"></a></h2>
+<p>The calculation process involves:</p>
+<ol class="arabic simple">
+<li><p>DFT calculations for each component (see <a class="reference internal" href="../../2_supercell_calculation/supercell_calculation/"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">2_supercell_calculation</span></code></span></a>)</p></li>
+<li><p>Energy extraction from CP2K output files</p></li>
+<li><p>Binding energy calculation using Python</p></li>
+<li><p>Unit conversion from Hartree to kcal/mol</p></li>
+</ol>
+</section>
+<section id="additional-analysis">
+<h2>Additional Analysis<a class="headerlink" href="#additional-analysis" title="Link to this heading"></a></h2>
+<p>For more detailed analysis, including:</p>
+<ul class="simple">
+<li><p>Geometric changes upon binding</p></li>
+<li><p>Electronic structure analysis</p></li>
+<li><p>Charge transfer investigation</p></li>
+<li><p>Orbital interactions</p></li>
+</ul>
+<p>Please refer to the complete analysis notebook: <a class="reference internal" href="../classical_analysis/"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">classical_analysis.ipynb</span></code></span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

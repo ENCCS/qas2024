@@ -1,0 +1,609 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VQE Client Implementation &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/QAS2024_QAOA_exercise/">Tutorial - Variational Quantum Algorithms</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/css_code_steane/">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/surface_code_threshold/">Tutorial - Estimating the Surface Code Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/option_pricing_tutorial/">Tutorial - Pricing a European call option using quantum computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/flight_scheduling_optimization_qaoa/">Tutorial - Solving Flight Scheduling Optimization using QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README/">Quantum Computing for Materials Science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">VQE Client Implementation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/matsci_on_qc/1_hybrid_quantum_classical_calculations/supercell_calculation/client-vqe-ucc.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="vqe-client-implementation">
+<h1>VQE Client Implementation<a class="headerlink" href="#vqe-client-implementation" title="Link to this heading"></a></h1>
+<p>This file implements the quantum-classical hybrid calculation using Qiskit and CP2K integration.</p>
+<section id="full-implementation">
+<h2>Full Implementation<a class="headerlink" href="#full-implementation" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#client-vqe-ucc.py</span>
+<span class="c1"># pylint: disable=invalid-name</span>
+<span class="sd">&quot;&quot;&quot;CP2K + Qiskit Nature embedding.</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    python dft-emb-client.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">qiskit_algorithms.optimizers</span> <span class="kn">import</span> <span class="n">L_BFGS_B</span><span class="p">,</span> <span class="n">SPSA</span>
+<span class="kn">from</span> <span class="nn">qiskit_algorithms</span> <span class="kn">import</span> <span class="n">NumPyMinimumEigensolver</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">EvolvedOperatorAnsatz</span>
+<span class="kn">from</span> <span class="nn">qiskit.primitives</span> <span class="kn">import</span> <span class="n">Estimator</span>
+<span class="kn">from</span> <span class="nn">qiskit.primitives</span> <span class="kn">import</span> <span class="n">StatevectorEstimator</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">SparsePauliOp</span>
+<span class="kn">from</span> <span class="nn">qiskit_aer</span> <span class="kn">import</span> <span class="n">Aer</span>
+<span class="kn">from</span> <span class="nn">qiskit_aer.primitives</span> <span class="kn">import</span> <span class="n">Estimator</span> <span class="k">as</span> <span class="n">AerEstimator</span>
+<span class="kn">from</span> <span class="nn">qiskit_nature.logging</span> <span class="kn">import</span> <span class="n">logging</span> <span class="k">as</span> <span class="n">nature_logging</span>
+<span class="kn">from</span> <span class="nn">qiskit_nature.second_q.algorithms</span> <span class="kn">import</span> <span class="n">GroundStateEigensolver</span>
+<span class="kn">from</span> <span class="nn">qiskit_nature.second_q.algorithms.excited_states_solvers</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QEOM</span><span class="p">,</span> <span class="n">EvaluationRule</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">qiskit_nature.second_q.circuit.library</span> <span class="kn">import</span> <span class="n">UCC</span><span class="p">,</span> <span class="n">HartreeFock</span>
+<span class="kn">from</span> <span class="nn">qiskit_nature.second_q.circuit.library.ansatzes.utils</span> <span class="kn">import</span> \
+    <span class="n">generate_fermionic_excitations</span>
+<span class="kn">from</span> <span class="nn">qiskit_nature.second_q.mappers</span> <span class="kn">import</span> <span class="n">ParityMapper</span>
+<span class="kn">from</span> <span class="nn">qiskit_algorithms.minimum_eigensolvers</span> <span class="kn">import</span> <span class="n">VQE</span>
+
+<span class="kn">from</span> <span class="nn">qiskit_nature_cp2k.cp2k_integration</span> <span class="kn">import</span> <span class="n">CP2KIntegration</span>
+<span class="kn">from</span> <span class="nn">qiskit_nature_cp2k.stateful_adapt_vqe</span> <span class="kn">import</span> <span class="n">StatefulAdaptVQE</span>
+<span class="kn">from</span> <span class="nn">qiskit_nature_cp2k.stateful_vqe</span> <span class="kn">import</span> <span class="n">StatefulVQE</span>
+
+<span class="kn">from</span> <span class="nn">braket.aws</span> <span class="kn">import</span> <span class="n">AwsDevice</span>
+<span class="kn">from</span> <span class="nn">braket.devices</span> <span class="kn">import</span> <span class="n">Devices</span>
+<span class="kn">from</span> <span class="nn">braket.jobs</span> <span class="kn">import</span> <span class="n">hybrid_job</span><span class="p">,</span> <span class="n">save_job_result</span>
+<span class="kn">from</span> <span class="nn">qiskit.primitives</span> <span class="kn">import</span> <span class="n">BackendEstimator</span>
+
+<span class="kn">from</span> <span class="nn">qiskit_braket_provider</span> <span class="kn">import</span> <span class="n">BraketProvider</span>
+<span class="kn">from</span> <span class="nn">qiskit_braket_provider</span> <span class="kn">import</span> <span class="n">BraketLocalBackend</span>
+
+<span class="kn">from</span> <span class="nn">qiskit_ibm_runtime</span> <span class="kn">import</span> <span class="n">QiskitRuntimeService</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span>
+
+<span class="n">nature_logging</span><span class="o">.</span><span class="n">set_levels_for_names</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="vm">__name__</span><span class="p">:</span> <span class="n">level</span><span class="p">,</span>
+        <span class="s2">&quot;qiskit&quot;</span><span class="p">:</span> <span class="n">level</span><span class="p">,</span>
+        <span class="s2">&quot;qiskit_nature&quot;</span><span class="p">:</span> <span class="n">level</span><span class="p">,</span>
+        <span class="s2">&quot;qiskit_nature_cp2k&quot;</span><span class="p">:</span> <span class="n">level</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">HOST</span> <span class="o">=</span> <span class="s2">&quot;embedding_socket&quot;</span>
+    <span class="n">PORT</span> <span class="o">=</span> <span class="mi">12345</span>
+    <span class="n">UNIX</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1">#True</span>
+    <span class="n">shots</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">backend_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--nalpha&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--nbeta&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--norbs&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--two-qubit-reduce&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--adapt&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span> <span class="c1"># run statefull adapt</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--aer&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span> <span class="c1"># run with aer</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--sv_estimator&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--braket&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span> <span class="c1"># run on braket</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--numpy&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--stateless&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span> <span class="c1"># run just VQE</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--hw&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span> <span class="c1"># run on qiskit hw</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--local&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span> <span class="c1"># run on braket local</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--sv1&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span> <span class="c1"># run on braket sv1</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--aria1&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span> <span class="c1"># run on braket aria 1</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">nalpha</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">nbeta</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">norbs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing argument!&quot;</span><span class="p">)</span>
+
+    <span class="n">num_alpha</span><span class="p">,</span> <span class="n">num_beta</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">nalpha</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">nbeta</span>
+    <span class="n">num_orbs</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">norbs</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">two_qubit_reduce</span><span class="p">:</span>
+        <span class="n">mapper</span> <span class="o">=</span> <span class="n">ParityMapper</span><span class="p">(</span><span class="n">num_particles</span><span class="o">=</span><span class="p">(</span><span class="n">num_alpha</span><span class="p">,</span> <span class="n">num_beta</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mapper</span> <span class="o">=</span> <span class="n">ParityMapper</span><span class="p">()</span>
+
+    <span class="n">initial_state</span> <span class="o">=</span> <span class="n">HartreeFock</span><span class="p">(</span>
+        <span class="n">num_orbs</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">num_alpha</span><span class="p">,</span> <span class="n">num_beta</span><span class="p">),</span>
+        <span class="n">mapper</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ansatz</span> <span class="o">=</span> <span class="n">UCC</span><span class="p">(</span>
+        <span class="n">num_orbs</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">num_alpha</span><span class="p">,</span> <span class="n">num_beta</span><span class="p">),</span>
+        <span class="s2">&quot;sd&quot;</span><span class="p">,</span>
+        <span class="n">mapper</span><span class="p">,</span>
+        <span class="c1"># generalized=True,</span>
+        <span class="c1"># preserve_spin=False,</span>
+        <span class="n">initial_state</span><span class="o">=</span><span class="n">initial_state</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_no_fail</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="n">ansatz</span><span class="o">.</span><span class="n">_check_ucc_configuration</span> <span class="o">=</span> <span class="n">_no_fail</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">adapt</span><span class="p">:</span>
+        <span class="n">operator_pool</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">ansatz</span><span class="o">.</span><span class="n">operators</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">pauli</span><span class="p">,</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">paulis</span><span class="p">,</span> <span class="n">op</span><span class="o">.</span><span class="n">coeffs</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pauli</span><span class="o">.</span><span class="n">x</span> <span class="o">&amp;</span> <span class="n">pauli</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">operator_pool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SparsePauliOp</span><span class="p">([</span><span class="n">pauli</span><span class="p">],</span> <span class="n">coeffs</span><span class="o">=</span><span class="p">[</span><span class="n">coeff</span><span class="p">]))</span>
+
+        <span class="n">ansatz</span> <span class="o">=</span> <span class="n">EvolvedOperatorAnsatz</span><span class="p">(</span>
+            <span class="n">operators</span><span class="o">=</span><span class="n">operator_pool</span><span class="p">,</span>
+            <span class="n">initial_state</span><span class="o">=</span><span class="n">initial_state</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">aer</span><span class="p">:</span>
+        <span class="c1"># Configure the Aer simulator with the desired number of shots</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=== AER backend activated with 100 shots ===&quot;</span><span class="p">)</span>
+        <span class="n">estimator</span> <span class="o">=</span> <span class="n">AerEstimator</span><span class="p">(</span><span class="n">run_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shots&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">})</span>
+        <span class="n">backend_name</span> <span class="o">=</span> <span class="s2">&quot;AER&quot;</span>
+        <span class="n">shots</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">sv_estimator</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=== StatevectorEstimator backend activated with 100 shots ===&quot;</span><span class="p">)</span>
+            <span class="n">estimator</span> <span class="o">=</span> <span class="n">StatevectorEstimator</span><span class="p">()</span>
+            <span class="n">backend_name</span> <span class="o">=</span> <span class="s2">&quot;Qiskit Statevector&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=== Estimator backend activated with 100 shots ===&quot;</span><span class="p">)</span>
+            <span class="n">backend_name</span> <span class="o">=</span> <span class="s2">&quot;Qiskit Estimator&quot;</span>
+            <span class="n">estimator</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">braket</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">local</span><span class="p">:</span>
+            <span class="c1"># Configure local backend with desired shots</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=== Amazon Braket backend activated ===&quot;</span><span class="p">)</span>
+            <span class="n">backend</span> <span class="o">=</span> <span class="n">BraketLocalBackend</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using Braket Local Simulator backend&quot;</span><span class="p">)</span>
+            <span class="n">estimator</span> <span class="o">=</span> <span class="n">BackendEstimator</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shots&quot;</span><span class="p">:</span><span class="mi">1000</span><span class="p">})</span>
+            <span class="n">shots</span> <span class="o">=</span> <span class="mi">1000</span>
+            <span class="n">backend_name</span> <span class="o">=</span> <span class="s2">&quot;Braket Local&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Configured estimator with 1000 shots&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">sv1</span><span class="p">:</span>
+            <span class="c1"># Configure sv1 backend with desired shots</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=== Amazon Braket backend activated ===&quot;</span><span class="p">)</span>
+            <span class="n">provider</span> <span class="o">=</span> <span class="n">BraketProvider</span><span class="p">()</span>
+
+            <span class="n">online_simulators</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">backends</span><span class="p">(</span><span class="n">statuses</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ONLINE&quot;</span><span class="p">])</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Available backends: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">backend</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">online_simulators</span><span class="p">])</span>
+
+            <span class="n">sv1_backends</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">online_simulators</span> <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;SV1&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">sv1_backends</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;SV1 backend not found. Available backends: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">online_simulators</span><span class="p">])</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;SV1 backend not available&quot;</span><span class="p">)</span>
+
+            <span class="n">backend</span> <span class="o">=</span> <span class="n">sv1_backends</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using Braket SV1 Simulator backend&quot;</span><span class="p">)</span>
+            <span class="n">estimator</span> <span class="o">=</span> <span class="n">BackendEstimator</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shots&quot;</span><span class="p">:</span><span class="mi">1000</span><span class="p">})</span>
+            <span class="n">shots</span> <span class="o">=</span> <span class="mi">1000</span>
+            <span class="n">backend_name</span> <span class="o">=</span> <span class="s2">&quot;Braket SV1&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Configured estimator with 1000 shots&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">aria1</span><span class="p">:</span>
+            <span class="c1"># Configure aria1 backend with desired shots</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=== Amazon Braket backend activated ===&quot;</span><span class="p">)</span>
+            <span class="n">provider</span> <span class="o">=</span> <span class="n">BraketProvider</span><span class="p">()</span>
+
+            <span class="n">online_simulators</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">backends</span><span class="p">(</span><span class="n">statuses</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ONLINE&quot;</span><span class="p">])</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Available backends: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">backend</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">online_simulators</span><span class="p">])</span>
+
+            <span class="n">aria1_backends</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">online_simulators</span> <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Aria 1&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">aria1_backends</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Aria 1 backend not found. Available backends: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">online_simulators</span><span class="p">])</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Aria 1 backend not available&quot;</span><span class="p">)</span>
+
+            <span class="n">backend</span> <span class="o">=</span> <span class="n">aria1_backends</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using IONQ aria 1 backend&quot;</span><span class="p">)</span>
+            <span class="n">estimator</span> <span class="o">=</span> <span class="n">BackendEstimator</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shots&quot;</span><span class="p">:</span><span class="mi">1000</span><span class="p">})</span>
+            <span class="n">shots</span> <span class="o">=</span> <span class="mi">1000</span>
+            <span class="n">backend_name</span> <span class="o">=</span> <span class="s2">&quot;Braket IONQ Aria 1&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Configured estimator with 1000 shots&quot;</span><span class="p">)</span>
+            <span class="k">pass</span>
+
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">hw</span><span class="p">:</span>
+        <span class="c1"># connect to real hw</span>
+
+        <span class="c1"># Save an IBM Quantum account and set it as your default account.</span>
+        <span class="c1">#QiskitRuntimeService.save_account(</span>
+        <span class="c1">#    channel=&quot;ibm_quantum&quot;,</span>
+        <span class="c1">#    token=&quot;&quot;,</span>
+        <span class="c1">#    set_as_default=True,</span>
+        <span class="c1">#    # Use `overwrite=True` if you&#39;re updating your token.</span>
+        <span class="c1">#    overwrite=True,</span>
+        <span class="c1">#)</span>
+
+        <span class="n">service</span> <span class="o">=</span> <span class="n">QiskitRuntimeService</span><span class="p">()</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">least_busy</span><span class="p">(</span><span class="n">operational</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">simulator</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">min_num_qubits</span><span class="o">=</span><span class="mi">127</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running on IBM hw </span><span class="si">{</span><span class="n">backend</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">estimator</span> <span class="o">=</span> <span class="n">BackendEstimator</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shots&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">})</span>
+        <span class="n">shots</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="n">backend_name</span> <span class="o">=</span> <span class="s2">&quot;Qiskit HW&quot;</span>
+
+
+    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">nfev</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Iteration </span><span class="si">{</span><span class="n">nfev</span><span class="si">}</span><span class="s2">: Energy = </span><span class="si">{</span><span class="n">energy</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># Try using SPSA optimizer</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">SPSA</span><span class="p">(</span>
+        <span class="n">maxiter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>
+        <span class="n">perturbation</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">last_avg</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+
+
+    <span class="c1"># Use random initial parameters</span>
+    <span class="n">initial_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">ansatz</span><span class="o">.</span><span class="n">num_parameters</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">stateless</span><span class="p">:</span>
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">VQE</span><span class="p">(</span>
+            <span class="n">estimator</span><span class="p">,</span>
+            <span class="n">ansatz</span><span class="p">,</span>
+            <span class="n">optimizer</span><span class="p">,</span>
+            <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+            <span class="n">initial_point</span><span class="o">=</span><span class="n">initial_point</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">StatefulVQE</span><span class="p">(</span>
+            <span class="n">estimator</span><span class="p">,</span>
+            <span class="n">ansatz</span><span class="p">,</span>
+            <span class="n">optimizer</span><span class="p">,</span>
+            <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+            <span class="n">initial_point</span><span class="o">=</span><span class="n">initial_point</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">adapt</span><span class="p">:</span>
+        <span class="k">class</span> <span class="nc">CustomAdaptVQE</span><span class="p">(</span><span class="n">StatefulAdaptVQE</span><span class="p">):</span>
+            <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">previous_energies</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_window</span> <span class="o">=</span> <span class="mi">3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_threshold</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+            <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">problem</span><span class="p">):</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">previous_energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">total_energies</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previous_energies</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">convergence_window</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">previous_energies</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previous_energies</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">convergence_window</span><span class="p">:</span>
+                    <span class="n">energy_range</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previous_energies</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previous_energies</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">energy_range</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">convergence_threshold</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ADAPT-VQE Convergence achieved!&quot;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_converged</span> <span class="o">=</span> <span class="kc">True</span>
+                
+                <span class="k">return</span> <span class="n">result</span>
+
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">CustomAdaptVQE</span><span class="p">(</span>
+            <span class="n">solver</span><span class="p">,</span>
+            <span class="n">eigenvalue_threshold</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
+            <span class="n">gradient_threshold</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+            <span class="n">max_iterations</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">numpy</span><span class="p">:</span>
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">NumPyMinimumEigensolver</span><span class="p">()</span>
+
+    <span class="n">algo</span> <span class="o">=</span> <span class="n">GroundStateEigensolver</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">solver</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;Starting CP2KIntegration&quot;</span>
+        <span class="p">)</span>
+    <span class="n">integ</span> <span class="o">=</span> <span class="n">CP2KIntegration</span><span class="p">(</span><span class="n">algo</span><span class="p">)</span>
+    <span class="n">integ</span><span class="o">.</span><span class="n">connect_to_socket</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">,</span> <span class="n">UNIX</span><span class="p">)</span>
+    <span class="n">integ</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="n">problem</span> <span class="o">=</span> <span class="n">integ</span><span class="o">.</span><span class="n">construct_problem</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">my_generator</span><span class="p">(</span><span class="n">num_spatial_orbitals</span><span class="p">,</span> <span class="n">num_particles</span><span class="p">):</span>
+        <span class="n">singles</span> <span class="o">=</span> <span class="n">generate_fermionic_excitations</span><span class="p">(</span>
+            <span class="mi">1</span><span class="p">,</span> <span class="n">num_spatial_orbitals</span><span class="p">,</span> <span class="n">num_particles</span><span class="p">,</span> <span class="n">preserve_spin</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">doubles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># doubles = generate_fermionic_excitations(</span>
+        <span class="c1">#     2, num_spatial_orbitals, num_particles, preserve_spin=False</span>
+        <span class="c1"># )</span>
+        <span class="k">return</span> <span class="n">singles</span> <span class="o">+</span> <span class="n">doubles</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">integ</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">solver</span><span class="p">,</span> <span class="n">StatefulAdaptVQE</span><span class="p">):</span>
+        <span class="n">algo</span> <span class="o">=</span> <span class="n">GroundStateEigensolver</span><span class="p">(</span><span class="n">integ</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">qubit_mapper</span><span class="p">,</span> <span class="n">integ</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">solver</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;Creating QEOM&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">qeom</span> <span class="o">=</span> <span class="n">QEOM</span><span class="p">(</span>
+        <span class="n">algo</span><span class="p">,</span>
+        <span class="n">estimator</span><span class="p">,</span>
+        <span class="n">excitations</span><span class="o">=</span><span class="n">my_generator</span><span class="p">,</span>
+        <span class="n">aux_eval_rules</span><span class="o">=</span><span class="n">EvaluationRule</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span>
+        <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;Removing the ElectronicDensity property before starting QEOM&quot;</span>
+    <span class="p">)</span>
+    <span class="n">problem</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">electronic_density</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">excited_state_result</span> <span class="o">=</span> <span class="n">qeom</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span>
+
+    <span class="c1"># Print clear separation for results</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">80</span><span class="si">}</span>
+<span class="s2">                         QUANTUM CALCULATION RESULTS</span>
+<span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">80</span><span class="si">}</span>
+
+<span class="s2">CONFIGURATION:</span>
+<span class="s2">-------------</span>
+<span class="s2">Backend: </span><span class="si">{</span><span class="w"> </span><span class="n">backend_name</span><span class="si">}</span>
+<span class="s2">Number of alpha electrons: </span><span class="si">{</span><span class="n">num_alpha</span><span class="si">}</span>
+<span class="s2">Number of beta electrons: </span><span class="si">{</span><span class="n">num_beta</span><span class="si">}</span>
+<span class="s2">Number of orbitals: </span><span class="si">{</span><span class="n">num_orbs</span><span class="si">}</span>
+<span class="s2">Number of shots: </span><span class="si">{</span><span class="n">shots</span><span class="si">}</span>
+
+<span class="s2">CALCULATION RESULTS:</span>
+<span class="s2">------------------</span>
+<span class="s2">Ground State Energy: </span><span class="si">{</span><span class="n">excited_state_result</span><span class="o">.</span><span class="n">groundstate_energy</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">excited_state_result</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;groundstate_energy&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="si">}</span>
+
+<span class="s2">Excitation Energies:</span>
+<span class="si">{</span><span class="n">excited_state_result</span><span class="o">.</span><span class="n">raw_result</span><span class="o">.</span><span class="n">excitation_energies</span><span class="si">}</span>
+
+<span class="s2">Transition Amplitudes:</span>
+<span class="s2">&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">excited_state_result</span><span class="o">.</span><span class="n">raw_result</span><span class="o">.</span><span class="n">transition_amplitudes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">summary</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">State </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">summary</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">summary</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">80</span><span class="si">}</span>
+<span class="s2">                         CALCULATION COMPLETED</span>
+<span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">80</span><span class="si">}</span>
+<span class="s2">Total Iterations: </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">_eval_count</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">solver</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_eval_count&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="si">}</span>
+<span class="s2">Final Energy: </span><span class="si">{</span><span class="n">excited_state_result</span><span class="o">.</span><span class="n">groundstate_energy</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">excited_state_result</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;groundstate_energy&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="si">}</span>
+<span class="s2">Convergence Status: </span><span class="si">{</span><span class="s1">&#39;Converged&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">solver</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_converged&#39;</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">solver</span><span class="o">.</span><span class="n">_converged</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;Completed&#39;</span><span class="si">}</span>
+<span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">80</span><span class="si">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+    <span class="c1"># Print to both console and log file</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+
+    <span class="c1"># Save results to a JSON file</span>
+    <span class="n">results_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;configuration&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;backend&quot;</span><span class="p">:</span> <span class="n">backend_name</span><span class="p">,</span>
+            <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;ADAPT-VQE&quot;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">adapt</span> <span class="k">else</span> <span class="s2">&quot;VQE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;num_alpha&quot;</span><span class="p">:</span> <span class="n">num_alpha</span><span class="p">,</span>
+            <span class="s2">&quot;num_beta&quot;</span><span class="p">:</span> <span class="n">num_beta</span><span class="p">,</span>
+            <span class="s2">&quot;num_orbs&quot;</span><span class="p">:</span> <span class="n">num_orbs</span><span class="p">,</span>
+            <span class="s2">&quot;num_shots&quot;</span><span class="p">:</span> <span class="n">shots</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;results&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;ground_state_energy&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">excited_state_result</span><span class="o">.</span><span class="n">groundstate_energy</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">excited_state_result</span><span class="p">,</span> <span class="s1">&#39;groundstate_energy&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;excitation_energies&quot;</span><span class="p">:</span> <span class="n">excited_state_result</span><span class="o">.</span><span class="n">raw_result</span><span class="o">.</span><span class="n">excitation_energies</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="s2">&quot;transition_amplitudes&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">):</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">excited_state_result</span><span class="o">.</span><span class="n">raw_result</span><span class="o">.</span><span class="n">transition_amplitudes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;quantum_calculation_results.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">results_dict</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Results have been saved to &#39;quantum_calculation_results.json&#39;&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CP2KIntegration</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algo</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">algo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">connect_to_socket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">unix</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">unix</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_UNIX</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Connected to socket successfully.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Socket connection error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No socket connection available.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Ensure the socket is connected before sending data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Messages</span><span class="o">.</span><span class="n">HAVEDATA</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">BrokenPipeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Broken pipe error: Unable to send data. The connection may have been closed.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reconnect</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">reconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Attempting to reconnect to the socket...&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># Wait before attempting to reconnect</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect_to_socket</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">,</span> <span class="n">UNIX</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="key-components">
+<h2>Key Components<a class="headerlink" href="#key-components" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Imports</strong>: The script imports necessary libraries from Qiskit, Braket, and CP2K integration modules.</p></li>
+<li><p><strong>Configuration</strong>: Sets up logging and numpy print options.</p></li>
+<li><p><strong>VQE Implementation</strong>: Implements the VQE algorithm with SPSA optimizer.</p></li>
+<li><p><strong>Integration</strong>: Handles CP2K integration and quantum calculations.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

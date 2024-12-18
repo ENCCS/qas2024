@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Computing for Materials Science &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Quantum Computing Activities of NCC Iceland" href="../../ihpc/" />
+    <link rel="prev" title="Quantum extreme learning machine" href="../../qelm/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/QAS2024_QAOA_exercise/">Tutorial - Variational Quantum Algorithms</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/css_code_steane/">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/surface_code_threshold/">Tutorial - Estimating the Surface Code Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/option_pricing_tutorial/">Tutorial - Pricing a European call option using quantum computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/flight_scheduling_optimization_qaoa/">Tutorial - Solving Flight Scheduling Optimization using QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quantum Computing for Materials Science</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#contents">Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-quantum-computing-for-materials">Why Quantum Computing for Materials?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hands-on-example">Hands-on Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#classical-calculations">1. Classical Calculations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hybrid-quantum-classical-calculation">2. Hybrid Quantum Classical Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calculations-results">3. Calculations Results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#binding-energy-comparison">Binding Energy Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discussion-and-future-work">Discussion and Future Work</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#outlook-and-discussion">Outlook and Discussion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conclusion-and-future-work">Conclusion and Future Work</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snippets-from-the-slides">Snippets from the slides</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quantum Computing for Materials Science</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/matsci_on_qc/README.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="quantum-computing-for-materials-science">
+<h1>Quantum Computing for Materials Science<a class="headerlink" href="#quantum-computing-for-materials-science" title="Link to this heading"></a></h1>
+<blockquote>
+<div><p><strong>Note</strong>: This tutorial is based on research work available on <a class="reference external" href="https://arxiv.org/abs/2412.00951">arXiv:2412.00951</a>. Related codes and input files can be found in the <a class="reference external" href="https://github.com/MarcMaussner/2024_inhibitQ/tree/main/phase2_submission">2024_inhibitQ repository</a>.</p>
+</div></blockquote>
+<p>The slides for the talk related to this tutorial can be found <a class="reference download internal" download="" href="../../_downloads/498413dcc19eeda31a06490b936fd9e0/QAS2024_mat_sci_on_qc.pdf"><span class="xref download myst">here</span></a> (right-click and select “Open in new tab” to view in browser).</p>
+<p>The demo files for this tutorial are described and detailed throughout the text here in this page and the associated pages. It should also appear in your LUMI notebooks, otherwise, you can download them from <a class="reference external" href="https://github.com/ENCCS/qas2024/tree/main/content/notebooks/mat_sc_on_qc"><code class="docutils literal notranslate"><span class="pre">mat_sc_on_qc</span></code></a></p>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#why-quantum-computing-for-materials">Why Quantum Computing for Materials?</a></p></li>
+<li><p><a class="reference internal" href="#prerequisites">Prerequisites</a></p></li>
+<li><p><a class="reference internal" href="#hands-on-example">Hands-on Example</a></p>
+<ul>
+<li><p><a class="reference internal" href="#classical-calculations"><span class="xref myst">Classical Calculations</span></a></p></li>
+<li><p><a class="reference internal" href="#hybrid-quantum-classical-calculation"><span class="xref myst">Hybrid Quantum-Classical Calculation</span></a></p></li>
+<li><p><a class="reference internal" href="#results-and-analysis"><span class="xref myst">Results &amp; Analysis</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#binding-energy-comparison"><span class="xref myst">Binding Energy Comparison</span></a></p></li>
+<li><p><a class="reference internal" href="#discussion-and-future-work"><span class="xref myst">Discussion &amp; Future Work</span></a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>Quantum chemistry calculations are among the most promising early applications of quantum computers. However, materials science simulations, particularly those involving solid-state systems, have not been well covered in the literature. Such calculations are usually associated with periodic system descriptions and can involve a large number of atoms, often in the hundreds. This repository aims to provide a comprehensive guide on how to perform these calculations using quantum computers in a way that aligns with current efforts to introduce quantum-centric supercomputers, where the quantum computer is considered an accelerator for classical calculations, similar to the role of GPUs in various fields. The tutorial here is focusing on simulating the calculation on a quantum computer, some hinders weren’t solved when it comes to running the calculation on quantum computer at the time of writing this tutorial.</p>
+</section>
+<section id="why-quantum-computing-for-materials">
+<h2>Why Quantum Computing for Materials?<a class="headerlink" href="#why-quantum-computing-for-materials" title="Link to this heading"></a></h2>
+<p>The simulation of large solid-state systems typically involves a significant number of atoms, which necessitates approximations in calculating the ground state energy. Methods like Density Functional Theory (DFT) are useful in this context. However, there are important parts of the system that can be described more accurately, especially when they involve interactions of particular interest to scientists. Quantum computing algorithms could be advantageous in focusing on such subsystems of the supercell and communicating the results to the DFT code. In simpler terms, they can correct the energy by accounting for more detailed information from these specific subsystems. This approach is known as quantum embedding<a class="footnote-reference brackets" href="#id6" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Of course, this is a very simplified description and can be considered analogous to the QM/MM method; again, this is just a simplification of the problem description and not an entirely accurate illustration.</p>
+<p>It is a hot topic now given the quantum centeric supercomputers effort and the rise of hybrid quantum classical approaches. More recent literature to study can be found in those references<a class="footnote-reference brackets" href="#id7" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id8" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id9" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id10" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.</p>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>To follow this tutorial, you should have a basic understanding of quantum computing and materials science or quantum chemistry, like simulating the H2 molecule or LiH tutorials by qiskit for example. Familiarity with quantum chemistry calculations and Density Functional Theory (DFT) will be helpful.</p>
+</section>
+<section id="hands-on-example">
+<h2>Hands-on Example<a class="headerlink" href="#hands-on-example" title="Link to this heading"></a></h2>
+<section id="classical-calculations">
+<h3>1. Classical Calculations<a class="headerlink" href="#classical-calculations" title="Link to this heading"></a></h3>
+<p>For detailed information about the classical calculations, including supercell generation, geometry optimization, supercell calculations, and binding energy calculation, please see <a class="reference internal" href="../classical_calculations/"><span class="std std-doc">Classical Calculations</span></a>.</p>
+<p>The supercell used in this tutorial is a 4x4x1 Al(111) substrate with a 1,2,4-triazole molecule on top of the Al(111) surface.</p>
+<p><img alt="The geometry optimized supercell of triazole molecule on top Al substrate" src="../../_images/example_supercell.svg" /></p>
+</section>
+<section id="hybrid-quantum-classical-calculation">
+<h3>2. Hybrid Quantum Classical Calculation<a class="headerlink" href="#hybrid-quantum-classical-calculation" title="Link to this heading"></a></h3>
+<p>This section demonstrates the integration of classical DFT calculations with quantum computing methods through an active space embedding scheme. The implementation combines CP2K for classical DFT calculations with Qiskit for quantum computations, using an active space of 2 electrons in 5 orbitals.</p>
+<p>Key components include:</p>
+<ul class="simple">
+<li><p>Classical DFT calculations using CP2K</p></li>
+<li><p>Quantum calculations with Active space embedding using ADAPT-VQE algorithm</p></li>
+<li><p>Socket-based integration between classical and quantum components</p></li>
+</ul>
+<p>For detailed implementation information, including configuration parameters and workflow structure, see <a class="reference internal" href="../hybrid_quantum_classical/"><span class="std std-doc">Hybrid Quantum Classical Calculations</span></a>.</p>
+</section>
+<section id="calculations-results">
+<h3>3. Calculations Results<a class="headerlink" href="#calculations-results" title="Link to this heading"></a></h3>
+<p>After performing the hybrid quantum-classical calculations, we analyze the binding energy to understand the interaction strength between the surface and the adsorbate. The binding energy is calculated as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">E_binding</span> <span class="o">=</span> <span class="n">E_supercell</span> <span class="o">-</span> <span class="p">(</span><span class="n">E_substrate</span> <span class="o">+</span> <span class="n">E_inhibitor</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="binding-energy-comparison">
+<h4>Binding Energy Comparison<a class="headerlink" href="#binding-energy-comparison" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method</p></th>
+<th class="head"><p>Inhibitor</p></th>
+<th class="head"><p>Binding Energy (eV)</p></th>
+<th class="head"><p>Binding Distance (Å)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Classical DFT</p></td>
+<td><p>1,2,4-Triazole</p></td>
+<td><p>-0.385512</p></td>
+<td><p>3.54</p></td>
+</tr>
+<tr class="row-odd"><td><p>AdaptVQE</p></td>
+<td><p>1,2,4-Triazole</p></td>
+<td><p>-0.385508</p></td>
+<td><p>3.54</p></td>
+</tr>
+<tr class="row-even"><td><p>Vanilla VQE</p></td>
+<td><p>1,2,4-Triazole</p></td>
+<td><p>-2.325986</p></td>
+<td><p>3.54</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="discussion-and-future-work">
+<h4>Discussion and Future Work<a class="headerlink" href="#discussion-and-future-work" title="Link to this heading"></a></h4>
+<p>The results of this simulations show an agreement between classical DFT and AdaptVQE method. The AdaptVQE implementation proved more robust with its gradient-based operator pool selection compared to the vanilla VQE, which showed significant deviation with notably higher binding energy.</p>
+</section>
+<section id="outlook-and-discussion">
+<h4>Outlook and Discussion<a class="headerlink" href="#outlook-and-discussion" title="Link to this heading"></a></h4>
+<p>The calculation employed an active space of 2 electrons in 5 orbitals (10 spin-orbitals) around the Fermi level. For more accurate results, expanding the active space to include more orbitals could lead to different binding energies compared to the classical approach, particularly in better capturing the complex hybridization between molecular orbitals and substrate states. At the time of writting this tutorial, only the assigned number of orbitals and electrons managed the calculation to converge.</p>
+</section>
+<section id="conclusion-and-future-work">
+<h4>Conclusion and Future Work<a class="headerlink" href="#conclusion-and-future-work" title="Link to this heading"></a></h4>
+<p>This work successfully demonstrating a workflow for hybrid quantum-classical calculations for materials science, suitable for running on quantum centric supercomputers like Lumi. A lot of work is still needed to make this method practical for large systems and to improve the convergence of the calculation when using the AdaptVQE algorithm and including more orbitals in the active space, which will make the calculation worth it on quantum computers. Ofcourse, error mitigation techniques will be needed to make this method practical, but that is another story.</p>
+</section>
+<section id="snippets-from-the-slides">
+<h4>Snippets from the slides<a class="headerlink" href="#snippets-from-the-slides" title="Link to this heading"></a></h4>
+<p>I believe those snippets augment the text and provide a better understanding of the work. Ofcourse, the full slides are available <a class="reference download internal" download="" href="../../_downloads/498413dcc19eeda31a06490b936fd9e0/QAS2024_mat_sci_on_qc.pdf"><span class="xref download myst">here</span></a> (right-click and select “Open in new tab” to view in browser).`</p>
+<p>Here comes the snippets from the slides:
+<img alt="Quantum centric-supercomputing" src="../../_images/quantum-centric-supercomputing.png" />
+<img alt="workflow_for_simulations" src="../../_images/workflow_for_simulations.png" />
+<img alt="quantum_embedding_in_action" src="../../_images/quantum_embedding_in_action.png" />
+<img alt="adaptVQE" src="../../_images/adaptVQE.png" />
+<img alt="practical_usecase" src="../../_images/practical_usecase.png" />
+<img alt="cp2k_qiskit_integration" src="../../_images/cp2k_qiskit_integration.png" /></p>
+</section>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+</section>
+</section>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Vorwerk, C., Sheng, N., Govoni, M., et al. “Quantum embedding theories to simulate condensed systems on quantum computers.” <em>Nature Computational Science</em> <strong>2</strong>, 424–432 (2022). <a class="reference external" href="https://doi.org/10.1038/s43588-022-00279-0">DOI:10.1038/s43588-022-00279-0</a></p>
+</aside>
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Multiscale Embedding for Quantum Computing. <em>arXiv preprint</em> arXiv:2409.06813 (2023). <a class="reference external" href="https://arxiv.org/abs/2409.06813">https://arxiv.org/abs/2409.06813</a></p>
+</aside>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Toward practical quantum embedding simulation of realistic chemical systems on near-term quantum computers. <em>Chemical Science</em> <strong>13</strong>, 7311-7324 (2022). <a class="reference external" href="https://pubs.rsc.org/en/content/articlelanding/2022/sc/d2sc01492k">DOI:10.1039/D2SC01492K</a></p>
+</aside>
+<aside class="footnote brackets" id="id9" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Quantum Embedding and Quantum Simulations. Galli Group Research. University of Chicago. <a class="reference external" href="https://galligroup.uchicago.edu/Research/embedding.php">https://galligroup.uchicago.edu/Research/embedding.php</a></p>
+</aside>
+<aside class="footnote brackets" id="id10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>Quantum Embedding Method for the Simulation of Strongly Correlated Systems on Quantum Computers. <em>arXiv preprint</em> arXiv:2302.03052 (2023). <a class="reference external" href="https://arxiv.org/abs/2302.03052">https://arxiv.org/abs/2302.03052</a></p>
+</aside>
+</aside>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../qelm/" class="btn btn-neutral float-left" title="Quantum extreme learning machine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../ihpc/" class="btn btn-neutral float-right" title="Quantum Computing Activities of NCC Iceland" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

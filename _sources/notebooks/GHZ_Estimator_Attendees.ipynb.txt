@@ -1,0 +1,945 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "1f5634dd-772b-4c60-92a6-0bb8e063ba73",
+   "metadata": {},
+   "source": [
+    "# Tutorial - Introduction to Helmi\n",
+    "\n",
+    "## Estimating the GHZ fidelity\n",
+    "\n",
+    "### Preparing the GHZ circuit"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6842b62d-ee0f-4b5f-8966-65878e103ab8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Importing the required modules\n",
+    "import os\n",
+    "import networkx as nx\n",
+    "import numpy as np\n",
+    "import itertools\n",
+    "from iqm.qiskit_iqm import IQMProvider\n",
+    "from iqm.qiskit_iqm.fake_backends import fake_adonis\n",
+    "from iqm.qiskit_iqm.iqm_transpilation import optimize_single_qubit_gates\n",
+    "from qiskit.compiler import transpile\n",
+    "from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister\n",
+    "from qiskit.visualization import plot_histogram\n",
+    "from qiskit.result import marginal_counts\n",
+    "from functools import reduce\n",
+    "import matplotlib.pyplot as plt\n",
+    "from scipy.optimize import minimize"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "017a8ec5-0703-4d0a-af56-d0d03ef5f332",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Set up the Helmi backend\n",
+    "HELMI_CORTEX_URL = os.getenv('HELMI_CORTEX_URL')\n",
+    "if not HELMI_CORTEX_URL:\n",
+    "\traise ValueError(\"Environment variable HELMI_CORTEX_URL is not set\")\n",
+    "\n",
+    "provider = IQMProvider(HELMI_CORTEX_URL) \n",
+    "backend = provider.get_backend() # fake_adonis.IQMFakeAdonis()\n",
+    "shots = 1024\n",
+    "n_qubits = 5"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "05118a0b-35d3-4765-ba1c-d3e3f2bc1b55",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(f\"Native operations: {backend.operation_names}\")\n",
+    "print(f\"Number of qubits: {backend.num_qubits}\")\n",
+    "print(f\"Coupling map: {backend.coupling_map}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0116542b-a0e2-4d53-9ab6-86a858509cc5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "G = nx.Graph()\n",
+    "G.add_edges_from(backend.coupling_map)\n",
+    "node_labels = {node: f\"QB{node + 1}\" for node in G.nodes}\n",
+    "nx.draw(G, labels=node_labels, node_color=\"skyblue\", node_size=500, font_size=10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5c38dfbb-7e3d-4b6c-a119-3977003b3ce6",
+   "metadata": {},
+   "source": [
+    "Let us first prepare the GHZ circuit."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4b57f5d8-f287-4a7f-a724-3d3b26c061c0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Simple GHZ circuit\n",
+    "qubits: dict[str, QuantumRegister] = {i: QuantumRegister(1, \"QB\" + str(i)) for i in range(1, 6)}\n",
+    "qc = QuantumCircuit(*qubits.values())\n",
+    "qc.h(qubits[3])\n",
+    "qc.cx(qubits[3],qubits[2])\n",
+    "qc.cx(qubits[3], qubits[4])\n",
+    "qc.cx(qubits[3], qubits[1])\n",
+    "qc.barrier()\n",
+    "qc.cx(qubits[3],qubits[5])\n",
+    "qc.measure_all() #expected equal majority counts of '00000' and '11111'\n",
+    "qc.draw(output=\"mpl\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d3c137f0-6cd2-4ea2-93f1-ad8c817649e3",
+   "metadata": {},
+   "source": [
+    "Here is how the circuit will look like if we convert to Helmi's native gateset."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a5085449-d043-4fab-86db-446269cda5af",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "# Optimising for Helmi -> \n",
+    "initial_layout: list[int] = [backend.qubit_name_to_index(qubit) for qubit in qubits.values()]\n",
+    "transpiled_circuit = transpile(qc, backend, initial_layout= initial_layout, optimization_level=0)\n",
+    "transpiled_circuit.draw(output=\"mpl\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5b1dd700-acf2-4b22-aea5-89c7b4bd87c9",
+   "metadata": {},
+   "source": [
+    "As the *RZ* gates commute with the *CZ* gates, and the measurement is not affected by the final *RZ* gate, we can optimise those away to decrease the number of gates we perform."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "28396032-e702-4052-80ed-5636243a4f63",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "transpiled_circuit = optimize_single_qubit_gates(transpiled_circuit)\n",
+    "transpiled_circuit = transpile(transpiled_circuit, backend, optimization_level=0)\n",
+    "transpiled_circuit.draw(output=\"mpl\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f7b0f724-e9fc-4b38-8538-89a7a5b61c66",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "job = backend.run(transpiled_circuit, shots=shots)\n",
+    "result = job.result()\n",
+    "counts = result.get_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f84e7eb2-1bbe-4def-9a2a-27b15faf584f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plot_histogram(counts)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e99e5c83-f28d-4f21-9153-931f71fff1ff",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(\"Unmitigated GHZ fidelity =\", (counts[\"00000\"] + counts[\"11111\"])/shots)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c85b3095-3377-4b6e-93a9-7778b6a6a02e",
+   "metadata": {},
+   "source": [
+    "### Applying readout mitigation\n",
+    "\n",
+    "The code used here was modified from [this tutorial](https://nvidia.github.io/cuda-quantum/latest/applications/python/readout_error_mitigation.html) from NVIDIA.\n",
+    "\n",
+    "To perform readout mitigation with the minimum number of jobs, we will prepare the $\\mid \\! 00000 \\rangle$ and $\\mid \\! 11111 \\rangle$ and see which states we actually measure. \n",
+    "\n",
+    "First, we observe how the $\\mid \\! 00000 \\rangle$ state is not strongly affected by state preparation and measurement (SPAM) errors."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c5429cd6-9b94-4e4a-a857-3ecd2b70ea49",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "qubits: dict[str, QuantumRegister] = {i: QuantumRegister(1, \"QB\" + str(i)) for i in range(1, 6)}\n",
+    "qc_0s = QuantumCircuit(*qubits.values())\n",
+    "qc_0s.measure_all()\n",
+    "\n",
+    "initial_layout: list[int] = [backend.qubit_name_to_index(qubit) for qubit in qubits.values()]\n",
+    "qc_0s = transpile(qc_0s, backend, initial_layout = initial_layout, optimization_level=0)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4e973867-918c-4a5a-b280-0676c60c01a6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "job_0s = backend.run(qc_0s, shots=shots)\n",
+    "result_0s = job_0s.result()\n",
+    "counts_0s = result_0s.get_counts()\n",
+    "plot_histogram(counts_0s)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "eba28930-239e-41bc-89bb-c8a37987ab24",
+   "metadata": {},
+   "source": [
+    "Next, we can observe how the $\\mid \\! 11111 \\rangle$ is much more strongly affected by SPAM error. Part of this comes from the $\\mid \\! 1 \\rangle$ state relaxing to $\\mid \\! 0 \\rangle$, however, the exact ways in which Helmi is calibrated also plays an important role here."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e14502f4-920a-421a-8e73-365bb46af13b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "qubits: dict[str, QuantumRegister] = {i: QuantumRegister(1, \"QB\" + str(i)) for i in range(1, 6)}\n",
+    "qc_1s = QuantumCircuit(*qubits.values())\n",
+    "for qubit in range(1,6):\n",
+    "    qc_1s.x(qubits[qubit])\n",
+    "qc_1s.measure_all()\n",
+    "\n",
+    "initial_layout: list[int] = [backend.qubit_name_to_index(qubit) for qubit in qubits.values()]\n",
+    "qc_1s = transpile(qc_1s, backend, initial_layout = initial_layout, optimization_level=0)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4262f7da-62a1-4d43-86a7-41b37aef6d5e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "job_1s = backend.run(qc_1s, shots=shots)\n",
+    "result_1s = job_1s.result()\n",
+    "counts_1s = result_1s.get_counts()\n",
+    "plot_histogram(counts_1s)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0d2bc45f-5e2f-4623-8b7b-b29f1e0b3e6b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "local_states = [\"0\" * n_qubits, \"1\" * n_qubits]\n",
+    "results = {\"00000\": result_0s, \"11111\": result_1s}\n",
+    "for state in local_states:\n",
+    "    res = dict(list(results[state].get_counts().items()))\n",
+    "    print(f\"{state} becomes {res}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "00fd6510-4429-411f-b2b0-2fcd289272dd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "possible_counts = [\n",
+    "    dict(list(results[state].get_counts().items())) for state in local_states\n",
+    "]\n",
+    "matrices = []\n",
+    "\n",
+    "for k in range(n_qubits):\n",
+    "    matrix = np.zeros([2, 2], dtype=float)\n",
+    "    marginalized_counts = []\n",
+    "    total_shots = []\n",
+    "    for i in local_states:\n",
+    "        marginal_cts = marginal_counts(results[i], indices = [k]).get_counts()\n",
+    "        marginalized_counts.append(marginal_cts)\n",
+    "        total_shots.append(sum(marginal_cts.values()))\n",
+    "\n",
+    "    # matrix[i][j] is the probability of counting i for expected j\n",
+    "    for i in range(2):\n",
+    "        for j in range(2):\n",
+    "            matrix[i][j] = marginalized_counts[j].get(str(i),\n",
+    "                                                      0) / total_shots[j]\n",
+    "    matrices.append(matrix)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9e7a573e-4a46-4760-bc46-80722bbed456",
+   "metadata": {},
+   "source": [
+    "We have just prepared the confusion matrices for each of the $5$ qubits using just $2$ jobs, which can be used to calculate the confusion matrix for the whole system. This does assume that measurement or doing gates on one qubit does not affect other gates. We could create these confusion matrices using $2n_{\\text{qubits}}$, or even more properly using $2^{n_{\\text{qubits}}}$ jobs, however, just these $2$ jobs should suffice."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5276e06a-b483-49d8-8c08-6a1037835200",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for i, matrix in enumerate(matrices):\n",
+    "    print(f\"Confusion matrix for QB{i+1}:\")\n",
+    "    print(matrix, \"\\n\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3a422a6f-9b6c-4e5d-beb7-221e1636d2de",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "labels = list(map(list, itertools.product([0, 1], repeat=n_qubits)))\n",
+    "states = list(map(lambda label: \"\".join(map(str, label)), labels))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ef6400b8-3afc-49ac-af90-dc2cd82539b1",
+   "metadata": {},
+   "source": [
+    "Let us have another look at the counts from the GHZ circuit. We will perform readout error mitigation on it, and hopefully, improve the GHZ state fidelity."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f5e75969-30da-4dcd-83b6-78b564e31eb1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "new_counts = dict(counts.items())\n",
+    "noisy_counts = np.array(\n",
+    "    [new_counts.get(state, 0) for i, state in enumerate(states)])\n",
+    "noisy_counts"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b72332ad-7127-4c09-a03b-e92fddc8eb0e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def find_closest_distribution(empirical_dist):\n",
+    "    \"\"\"\n",
+    "    Find the closest distribution to an empirical distribution by minimizing the L1 norm.\n",
+    "\n",
+    "    Args:\n",
+    "        empirical_dist: Empirical distribution that you want to find the closest distribution to.\n",
+    "\n",
+    "    Returns:\n",
+    "        Closest distribution to `empirical_dist`\n",
+    "    \"\"\"\n",
+    "\n",
+    "    def objective(x):\n",
+    "        return np.linalg.norm(empirical_dist - x, ord=1)\n",
+    "\n",
+    "    # Constraint: all elements of p must be positive, and the distribution must sum to 1\n",
+    "    cons = (\n",
+    "        {\n",
+    "            \"type\": \"ineq\",\n",
+    "            \"fun\": lambda p: p\n",
+    "        },\n",
+    "        {\n",
+    "            \"type\": \"eq\",\n",
+    "            \"fun\": lambda p: np.sum(p) - 1\n",
+    "        },\n",
+    "    )\n",
+    "    bnds = [(0, 1) for _ in range(len(empirical_dist))]\n",
+    "    initial_value = np.random.uniform(size=len(empirical_dist))\n",
+    "\n",
+    "    res = minimize(\n",
+    "        objective,\n",
+    "        initial_value,\n",
+    "        method=\"SLSQP\",\n",
+    "        options={\"maxiter\": 1000},\n",
+    "        bounds=bnds,\n",
+    "        constraints=cons,\n",
+    "    )\n",
+    "\n",
+    "    return res.x"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "94de3fb4-60b8-4df1-9756-d2670e3e6ae2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def get_counts_from_distribution(n_qubits, size, dist):\n",
+    "    \"\"\"\n",
+    "    Generates samples based on a given distribution and returns the counts of each sample value.\n",
+    "\n",
+    "    Args:\n",
+    "        n_qubits: The number of qubits in the quantum circuit.\n",
+    "        dist: The probability distribution from which samples are drawn.\n",
+    "\n",
+    "    Returns:\n",
+    "        An array of counts for each possible value in the distribution. The array has a length of 2^n_qubits.\n",
+    "    \"\"\"\n",
+    "    samples = np.random.choice(np.arange(2**n_qubits), size=size, p=dist)\n",
+    "    values, counts = np.unique(samples, return_counts=True)\n",
+    "    res = np.zeros(2**n_qubits, dtype=int)\n",
+    "    res[values] = counts\n",
+    "    return res"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9f0031a1-5560-481d-ae3c-0bf724d76f5f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Function to draw the confusion matrix\n",
+    "def plot_cmat(mat):\n",
+    "    fig, ax = plt.subplots()\n",
+    "    n = len(mat)\n",
+    "    im2 = ax.matshow(mat, cmap=plt.cm.Reds, vmin=0, vmax=1.0)\n",
+    "    ax.set_yticks(np.arange(n))\n",
+    "    ax.set_xticks(np.arange(n))\n",
+    "    ax.set_yticklabels(n * [\"\"])\n",
+    "    ax.set_xticklabels(n * [\"\"])\n",
+    "    ax.set_title(r\"Confusion Matrix\", fontsize=16)\n",
+    "    ax.set_xlabel(\"Prepared State\")\n",
+    "    ax.xaxis.set_label_position(\"top\")\n",
+    "    ax.set_ylabel(\"Measured State\")\n",
+    "    fig.colorbar(im2, ax=ax)\n",
+    "    plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "14a9b699-e52a-4c96-ac36-b4b3239d68e7",
+   "metadata": {},
+   "source": [
+    "First, we invert the confusion matrix for each individual qubit. Next, we approximate the inverse confusion matrix for Helmi using the tensor product. Now, we can simply apply this to our \"noisy\" results and we should have mitigated the effects of the readout errors.\n",
+    "\n",
+    "As this is a mathematical operation, we can end up with negative counts, which lack any physical meaning. We can find another distribution with all positive values that is similar to our mitigated distribution. We sample this distribution probabilistically to obtain our corrected counts."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "88fa8e4a-2114-4ffc-b673-df540a8f9c9f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pinv_confusion_matrices = [np.linalg.pinv(m) for m in matrices]\n",
+    "A_pinv = reduce(np.kron, pinv_confusion_matrices)\n",
+    "mitigated = np.array(np.dot(A_pinv, noisy_counts), dtype=int)\n",
+    "print(f\"Mitigated counts:\\n{mitigated}\")\n",
+    "\n",
+    "if not np.all(mitigated >= 0):\n",
+    "    positive_dist = find_closest_distribution(mitigated / shots)\n",
+    "    mitigated = get_counts_from_distribution(n_qubits, shots, positive_dist)\n",
+    "    print(f\"\\nCorrected for negative counts:\\n{mitigated}\")\n",
+    "\n",
+    "A_joint = reduce(np.kron, matrices)\n",
+    "plot_cmat(A_joint)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "52431396-93ca-412f-a34a-6ac4dff62e63",
+   "metadata": {},
+   "source": [
+    "As we can see, the mitigated fidelity is higher than the unmitigated fidelity, at the cost of two more jobs run."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "03a6ebd0-97b9-4261-8a17-6382328d9a2e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plot_histogram([counts, dict({bin(i)[2:].zfill(5): x for i, x in enumerate(mitigated)})], legend=[\"Unmitigated\", \"Mitigated\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "55cd2d5b-94bc-4501-acb4-1a47781cc59a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(\"Unmitigated GHZ fidelity =\", (counts[\"00000\"] + counts[\"11111\"])/shots)\n",
+    "print(\"Corrected GHZ fidelity =\", (mitigated[0] + mitigated[-1])/shots)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8f9ce5aa-f06d-4d5d-8304-a28de39e2313",
+   "metadata": {},
+   "source": [
+    "## Multiple Quantum Coherences\n",
+    "\n",
+    "### Theory\n",
+    "\n",
+    "[Multiple Quantum Coherences](https://journals.aps.org/pra/abstract/10.1103/PhysRevA.101.032343) (MQC) offers an alternative way to estimate the GHZ fidelity. It allows us to calculate a lower and upper bound on the GHZ fidelity, as well as calculating the exact GHZ fidelity if run alongside a GHZ circuit. \n",
+    "\n",
+    "MQC works by utilising phase kickback, a highly versatile tool used in many algorithms to \"kick\" a phase from a target qubit \"back\" to a control qubit. First, we prepare a $N$-qubit GHZ state, and then we apply a phase $\\phi$ to all $N$ qubits. Then, we \"undo\" the GHZ state, and this \"kicksback\" the phase to the control qubit, applying a phase shift of $N\\phi$ to the control qubit.\n",
+    "\n",
+    "To help explain this more easily, I will quote the paper directly here.\n",
+    "\n",
+    "> 1. Starting from the $N$-qubit ground state: $\\mid \\! GS \\rangle = \\mid \\! 000..00 \\rangle$, apply a Hadamard gate on qubit $0$ followed by a sequence of *CX* gates. Ideally this brings the system into the GHZ state: $\\mid \\! GHZ \\rangle = \\tfrac 1{\\sqrt 2} \\left( \\mid \\! 000..00 \\rangle + \\mid \\! 111..11 \\rangle\\right)$\n",
+    "> 2. Apply a collective rotation given by the unitary $U_{\\phi}$ on all qubits. This amounts to adding a phase $N\\phi$ to the GHZ state: $\\tfrac 1{\\sqrt 2} \\left( \\mid \\! 000..00 \\rangle + e^{-iN\\phi}\\mid \\! 111..11 \\rangle\\right)$\n",
+    "> 3. Disentangle the GHZ state by performing the *CX* gate sequence in reverse order. The amplified phase is mapped onto qubit $0$: $\\tfrac 1{\\sqrt 2} \\left( \\mid \\! 000..00 \\rangle + e^{-iN\\phi}\\mid \\! 111..11 \\rangle\\right) \\otimes \\mid \\! 00..00 \\rangle$\n",
+    "> 4. Read out the amplified phase by measuring the probability of the system returning to its initial state: $\\mid \\! GS \\rangle\n$",
+    "> \n",
+    "> The measured signal of this protocol is given by $S_\\phi = \\left| \\langle 000..00 \\! \\mid \\! U^{\\dagger}_{GHZ} U_{\\phi} U_{GHZ} \\! \\mid \\! 000..00 \\rangle \\right|^2 = Tr(\\rho_\\phi\\rho)$ where $\\rho = U_{GHZ} \\! \\mid \\! GS \\rangle \\langle GS \\! \\mid \\! U^{\\dagger}_{GHZ}$, $U_{GHZ} = U_{CZ}H_0$, and $\\rho_\\phi = U_{\\phi}\\rho U^{\\dagger}_{\\phi}$.\n",
+    "\n",
+    "If we run this on a noiseless quantum computer, we expect $S_{\\phi} = \\tfrac 12(1 + \\cos(N\\phi))$. We can then measure $S_{\\phi}$ for multiple angles $\\phi$, and then perform a Fourier transform to find which frequency our $S_{\\phi}$ actually corresponds to. \n",
+    "\n",
+    "$$I_q=\\mathcal{N}^{-1}\\left|\\sum_\\phi e^{i q \\phi} S_\\phi\\right|$$\n",
+    "\n",
+    "Ideally, it should be completely dependent on $N$, and have no reliance on any of the other frequencies - however, due to noise, we shall get a spread of frequencies with varying amplitudes. We can then use these to estimate the lower and upper bounds of the GHZ fidelity.\n",
+    "\n",
+    "$$2 \\sqrt{I_N} \\leq F \\leq \\sqrt{I_0 / 2}+\\sqrt{I_N}$$\n",
+    "\n",
+    "\n",
+    "\n",
+    "### Preparing the MQC circuits\n",
+    "\n",
+    "First, let us define a parametrised circuit for the MQC experiment. Developed based on the original paper."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "038a7998-4974-453a-a19f-1955af9406c1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def mqc_circuit(angle: float):\n",
+    "    qubits: dict[str, QuantumRegister] = {i: QuantumRegister(1, \"QB\" + str(i)) for i in range(1, 6)}\n",
+    "    mqc = QuantumCircuit(*qubits.values())\n",
+    "    mqc.h(qubits[3])\n",
+    "    mqc.cx(qubits[3],qubits[2])\n",
+    "    mqc.cx(qubits[3], qubits[4])\n",
+    "    mqc.cx(qubits[3], qubits[1])\n",
+    "    mqc.cx(qubits[3],qubits[5])\n",
+    "    for qubit in qubits.values():\n",
+    "        mqc.x(qubit) # We will comment out this line later\n",
+    "        mqc.rz(angle, qubit)\n",
+    "    mqc.cx(qubits[3],qubits[5])\n",
+    "    mqc.cx(qubits[3],qubits[2])\n",
+    "    mqc.cx(qubits[3], qubits[4])\n",
+    "    mqc.cx(qubits[3], qubits[1])\n",
+    "    mqc.h(qubits[3])\n",
+    "    mqc.measure_all()\n",
+    "    return mqc"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "da54df34-cd90-42ad-b6e8-87811ae8c390",
+   "metadata": {},
+   "source": [
+    "Next, we define which $\\phi$ to sweep over, and how many shots to execute for each circuit. We need a minimum of $12$ experiments here, so that our Fourier transform can detect frequencies upto $6$."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "543921ba-a71c-45ed-b51a-a350cf7737c9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "n_exp = 2 * n_qubits + 2\n",
+    "angles = [2 * np.pi * j / n_exp for j in range(n_exp)]\n",
+    "shots = 16_384"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b7e25f8e-1f3c-48db-b797-14f3f10b0c67",
+   "metadata": {},
+   "source": [
+    "The parameterized circuits are collected in a list `mqc_circuits`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5c1100cf-a4db-494f-9964-f1894ff5e910",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "mqc_circuits = []\n",
+    "\n",
+    "for angle in angles:\n",
+    "    mqc = mqc_circuit(angle)    \n",
+    "    mqc_circuits.append(mqc)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "75ab8683-b42c-4d99-a558-bc4a2a9ce251",
+   "metadata": {},
+   "source": [
+    "Let us observe how the untranspiled circuit looks."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a21a7d41-fb35-4ee5-a2a5-0264942d8558",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "mqc_circuits[1].draw(output='mpl')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "32f9111f-b4ed-478e-bf0d-db564674a400",
+   "metadata": {},
+   "source": [
+    "Before running, we transpile each circuit to the native gate set and map the logical qubits to the physical qubits."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "340bde14-7143-4c3a-aa61-4dad92789945",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "initial_layout: list[int] = [backend.qubit_name_to_index(qubit) for qubit in [\"QB1\", \"QB2\", \"QB3\", \"QB4\", \"QB5\"]]\n",
+    "\n",
+    "fidelity_circuits = transpile(mqc_circuits, backend, initial_layout= initial_layout, optimization_level=2)\n",
+    "fidelity_circuits = optimize_single_qubit_gates(fidelity_circuits)\n",
+    "fidelity_circuits = transpile(fidelity_circuits, backend, initial_layout= initial_layout, optimization_level=0)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c187673c-479d-442d-bffa-c4e59d1c5830",
+   "metadata": {},
+   "source": [
+    "Let's have a look at the transpiled circuit."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "60a4c1f9-de82-4907-8693-07b65630dff0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fidelity_circuits[1].draw(output='mpl')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6c1e8d5c-59fd-43cf-a1c3-748cb86dfa87",
+   "metadata": {},
+   "source": [
+    "### With Ideal Backend"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "21725ce2-3b2d-40f0-b779-343e750a7070",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fake_backend = fake_adonis.IQMFakeAdonis()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "40692127-f88d-468b-9a77-2c5ee31193ba",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fake_jobs = fake_backend.run(fidelity_circuits, shots=shots)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fae3807d-e129-4aba-aa5a-7a6bef92e56c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fake_results = fake_jobs.result()\n",
+    "fake_counts = fake_results.get_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b628e1f3-d86f-46b2-ae08-883f304068fc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plot_histogram(fake_counts[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d1d57253-309d-4363-ad85-aa0b77e5cf1d",
+   "metadata": {},
+   "source": [
+    "After running the circuit, we should only have the states $\\mid \\! 00000 \\rangle$ and $\\mid \\! 00100 \\rangle$."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f2e5eeb0-1a59-45c8-a2d4-f97b01b45ff6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fake_outcomes = [fake_count['00000'] / (fake_count['00000'] + fake_count['00100']) for fake_count in fake_counts] # (fake_count['00000'] + fake_count['00100'])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2c7a1d8a-a7e1-4f5b-8a91-3bbc3f0e8cae",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig, ax = plt.subplots(1, 1, figsize=(10, 6))\n",
+    "all_angles = np.linspace(0, 2 * np.pi, 10_000)\n",
+    "expected_fidelity = [(1 + np.cos(n_qubits * j)) / 2 for j in all_angles]\n",
+    "ax.plot(angles, fake_outcomes, 'o', label='Fake', color='red')\n",
+    "ax.plot(all_angles, expected_fidelity, '-', label='Expected', color='black')\n",
+    "ax.set_xlabel('Angle $(\\phi)$')\n",
+    "ax.set_ylabel('$S_{\\phi}$')\n",
+    "ax.legend(loc='lower right')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9df60cc5-426e-4ae6-997e-e289890bb52f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "I_0 = 0\n",
+    "I_n = 0\n",
+    "for i, angle in enumerate(angles):\n",
+    "    I_0 += fake_outcomes[i]\n",
+    "    I_n += np.exp(1j * n_qubits * angle) * fake_outcomes[i]\n",
+    "I_0 = np.abs(I_0 / n_exp)\n",
+    "I_n = np.abs(I_n / n_exp)\n",
+    "print(\"Lower bound for MQC fidelity = \" + str(2 * np.sqrt(I_n)))\n",
+    "print(\"Upper bound for MQC fidelity = \" + str(np.sqrt(I_0 / 2) + np.sqrt(I_n)))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d3269406-5ec6-4249-8be6-9b96944e944f",
+   "metadata": {},
+   "source": [
+    "### Simulations vs Actual Hardware\n",
+    "Let us now rerun this, but comment out the `mqc.x(qubit)` line at the very start of the circuit. Similarly, try changing the `n_exp` to a higher value. What changes do you observe?\n",
+    "\n",
+    "<details>\n",
+    "  <summary>Spoiler warning</summary>\n",
+    "  \n",
+    "  We should not observe any significant changes in the fidelity estimates for the simulator. However, we will now see how this changes when we run on actual hardware.\n",
+    "  \n",
+    "</details>\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0beeedca-a556-4c11-95b9-86fd631f6c5e",
+   "metadata": {},
+   "source": [
+    "### With Helmi Backend"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "03960a49-9c04-4526-b6d2-2438a2cd9a94",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "jobs = backend.run(fidelity_circuits, shots=shots)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4f3a6541-d35e-4cd9-a4c1-a5c3457ee1ac",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "jobs.status()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "aea1c742-c50e-4a13-820c-03ba27f347be",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "mqc_results = jobs.result()\n",
+    "mqc_counts = mqc_results.get_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4ebdf405-b474-4329-acf6-e410ade49565",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "mqc_results.timestamps"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "710e3a96-39f5-445e-a55e-6b8d5712d9ad",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plot_histogram(mqc_counts[1])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "86be3709-ea4d-4500-a6a8-0319d1359717",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "outcomes = [mqc_count['00000'] / (mqc_count['00000'] + mqc_count['00100'])  for mqc_count in mqc_counts] # (mqc_count['00000'] + mqc_count['00100'])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9d886eca-023e-415a-ba5d-ce943ecdaac6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig, ax = plt.subplots(1, 1, figsize=(10, 6))\n",
+    "all_angles = np.linspace(0, 2 * np.pi, 10_000)\n",
+    "expected_fidelity = [(1 + np.cos(n_qubits * i)) / 2 for i in all_angles]\n",
+    "ax.plot(angles, fake_outcomes, 'o', label='Simulated', color='red')\n",
+    "ax.plot(angles, outcomes, 'o', label='Experimental', color='blue')\n",
+    "ax.plot(all_angles, expected_fidelity, '-', label='Expected', color='black')\n",
+    "ax.set_xlabel('Angle $(\\phi)$')\n",
+    "ax.set_ylabel('$S_{\\phi}$')\n",
+    "ax.legend(loc='lower right')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9c43001b-7100-4931-b1f1-6a12921b70cc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "I_0 = 0\n",
+    "I_n = 0\n",
+    "for i, angle in enumerate(angles):\n",
+    "    I_0 += outcomes[i]\n",
+    "    I_n += np.exp(1j * n_qubits * angle) * outcomes[i]\n",
+    "I_0 = np.abs(I_0 / n_exp)\n",
+    "I_n = np.abs(I_n / n_exp)\n",
+    "print(\"Lower bound for MQC fidelity = \" + str(2 * np.sqrt(I_n)))\n",
+    "print(\"Upper bound for MQC fidelity = \" + str(np.sqrt(I_0 / 2) + np.sqrt(I_n)))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "013d703c-be35-4eec-a2d0-232a44b16de4",
+   "metadata": {},
+   "source": [
+    "What we observe is that removing the $X$ gates results in a noticeable phase shift in the results, even though it should technically not matter. The presenter's hypothesis is that this phenomenon is related to qubit relaxation, which causes the state $\\mid \\! 00000\\rangle$ to dominate over $\\mid  \\! 11111\\rangle$, even though they should be even. Consequently, applying the $X$ gates inverts this distribution, and further relaxation should lead to a more balanced ratio of these states. An analogy can be drawn to the Hahn-Echo experiment, where a $Z$ gate can help cancel out some of the dephasing effects.\n",
+    "\n",
+    "Furthermore, running more experiments provides a higher fidelity. The presenter hypothesises that this can be attributed to the noise after the Fourier transform being spread out over more frequencies, leading to improved results. We are not changing the experiment - just collecting additional data to help average out errors."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4c87ccd8-663e-4bdb-8e11-2934bee1fc33",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

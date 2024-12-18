@@ -1,0 +1,17 @@
+git+https://github.com/FiQCI/iqm-client@fiqci-18.8
+jupyterlab==4.2.5
+ipykernel==6.29.5
+matplotlib==3.9.2
+numpy==1.26.4
+pennylane-qiskit==0.38.1
+pylatexenc==2.10
+qiskit-experiments==0.7.0
+qiskit-iqm==13.16
+qiskit[visualization]
+qiskit==1.1.2
+graphviz
+qiskit-finance
+qiskit
+pydot
+qiskit-ibm-runtime
+qiskit-aer

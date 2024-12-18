@@ -1,0 +1,1114 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial - Pricing a European call option using quantum computing &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="QSIP - Quantum Sweden Innovation Platform" href="../../qsip/" />
+    <link rel="prev" title="Pricing a European call option on a quantum computer" href="../option_pricing/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../QAS2024_QAOA_exercise/">Tutorial - Variational Quantum Algorithms</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../css_code_steane/">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_code_threshold/">Tutorial - Estimating the Surface Code Threshold</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial - Pricing a European call option using quantum computing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reminder-what-is-a-european-call-option">0. Reminder - what is a European call option?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple-example">Simple example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#asset-distributions-and-payoff-function">1. Asset distributions and payoff function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exercise">📝 Exercise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#encode-the-distribution-onto-a-quantum-circuit">Encode the distribution onto a quantum circuit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">📝 Exercise</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#encoding-the-payoff-function">Encoding the payoff function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">📝 Exercise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">📝 Exercise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wait-now-we-are-working-with-more-qubits-than-we-originally-specified-for-p-x">Wait, now we are working with more qubits than we originally specified for <span class="math notranslate nohighlight">\(P(X)\)</span>.. ❓</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">📝 Exercise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#now-we-need-to-add-the-p-x-distribution-circuit-to-before-the-payoff-function">Now we need to add the <span class="math notranslate nohighlight">\(P(X)\)</span> distribution circuit to before the payoff function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#do-you-see-any-potential-issues-with-the-circuit-depth">Do you see any potential issues with the circuit depth?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#classical-monte-carlo-on-a-qc">2. Classical Monte Carlo on a QC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#estimate-the-expected-payoff-for-the-european-call-option">Estimate the expected payoff for the European call option</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">📝 Exercise</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#quantum-amplitude-estimation-qae">3. Quantum Amplitude Estimation (QAE)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">📝 Exercise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">📝 Exercise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">📝 Exercise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-if-we-wanted-to-run-this-qmc-circuit-on-a-specific-backend">What if we wanted to run this QMC circuit on a specific backend?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">📝 Exercise</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#code-solutions">Code solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../flight_scheduling_optimization_qaoa/">Tutorial - Solving Flight Scheduling Optimization using QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../matsci_on_qc/README/">Quantum Computing for Materials Science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial - Pricing a European call option using quantum computing</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/notebooks/option_pricing_tutorial.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="tutorial-pricing-a-european-call-option-using-quantum-computing">
+<h1>Tutorial - Pricing a European call option using quantum computing<a class="headerlink" href="#tutorial-pricing-a-european-call-option-using-quantum-computing" title="Link to this heading"></a></h1>
+<p>Welcome!👋👋 This tutorial notebook is designed such that you will get to work hands-on with pricing a European call option using quantum computing algorithms. It is structured in the following 4 sections:</p>
+<ol class="arabic simple" start="0">
+<li><p>Reminder - what is a European call option?</p></li>
+<li><p>Asset distributions and payoff function</p></li>
+<li><p>Classical Monte Carlo on a QC</p></li>
+<li><p>Quantum Amplitude Estimation (QAE)</p></li>
+</ol>
+<p>If you have any questions or need assistance, dont hesitate to find either one of us in the room and we’ll try and help you! 🤗</p>
+<p>Authors: Björn Löfdahl, Victorio Úbeda Sosa, Wilhelm Ågren</p>
+<hr class="docutils" />
+<section id="reminder-what-is-a-european-call-option">
+<h2>0. Reminder - what is a European call option?<a class="headerlink" href="#reminder-what-is-a-european-call-option" title="Link to this heading"></a></h2>
+<p>A call option is a financial contract in which the holder (buyer) has the right (but not the obligation) to buy a specified quantity of a security at a specified price (strike price) within a fixed period of time (until its expiration/maturity). For a European call option the holder can only exercise the option at expiry/maturity.</p>
+<p>For the writer (seller) of a call option, it represents an obligation to sell the underlying security at the strike price if the option is exercised. The call option writer is paid a premium for taking on the risk associated with the obligation (this is however omitted here as it only offsets the payoff by the premium price).</p>
+<p>Suppose a European call option with strike price <span class="math notranslate nohighlight">\(K\)</span> and and underlying asset whose spot price at maturity <span class="math notranslate nohighlight">\(S_T\)</span> follows a given distribution, then the corresponding payoff function for the holder is defined as</p>
+<div class="math notranslate nohighlight">
+\[
+\phi(S_T) = \max(S_T - K, 0).
+\]</div>
+<p>For an investor to profit from a European call option, the spot price at maturity <span class="math notranslate nohighlight">\(S_T\)</span> has to be high enough above the strike price to cover the cost of the option premium.</p>
+<section id="simple-example">
+<h3>Simple example<a class="headerlink" href="#simple-example" title="Link to this heading"></a></h3>
+<p>Assume that Bob is the writer for a European call option with <a class="reference external" href="https://www.avanza.se/aktier/om-aktien.html/1284389/ionq">IonQ</a> (NYSE: IONQ) as the underlying with spot price <span class="math notranslate nohighlight">\(S_0=€30\)</span>. The contract has maturity time <span class="math notranslate nohighlight">\(T\)</span> of 30 days from today, strike price <span class="math notranslate nohighlight">\(K=€35\)</span>, with a premium of <span class="math notranslate nohighlight">\(€5\)</span> per contract. In this simple example we disregard all brokerage and assume that Bob does not already own the underlying asset (referred to as a naked call option).</p>
+<p>Is this premium too high? Is it too low? Is it perhaps a fair price? 🤔</p>
+<p>Alice is interested in buying this call option but is unsure whether Bob has a fair premium on the contract. However, Alice strongly believes that IonQ will be trading for <span class="math notranslate nohighlight">\(€50\)</span> in 30 days (i.e. at maturity <span class="math notranslate nohighlight">\(T\)</span>). Fast forward 30 days and in this case Alices’ beliefs turned out to be true, thus she will make <span class="math notranslate nohighlight">\(S_T - K - \text{premium} = 50 - 35 - 5 = €10\)</span> per contract.</p>
+<p>If IonQ would be worth less than the strike price <span class="math notranslate nohighlight">\(K\)</span> at maturity <span class="math notranslate nohighlight">\(T\)</span> then the option is not exercised and expires worthless. The holder (Alice) loses the premium and the writer (Bob) profits on the premium.</p>
+<p>Why would Bob want to write this specific call option? Based on the strike price <span class="math notranslate nohighlight">\(K=€35\)</span> and the premium <span class="math notranslate nohighlight">\(€5\)</span> we know that Bob makes money if IonQ is trading for less than <span class="math notranslate nohighlight">\(€40\)</span> at maturity (<span class="math notranslate nohighlight">\(\text{premium} -(S_T - K) = 5 - (40 - 35)\)</span>). If <span class="math notranslate nohighlight">\(S_T=€38\)</span> then Bob makes <span class="math notranslate nohighlight">\(5 - (38 -35) = €2\)</span> per contract. So Bob would only really want to write this call option because he believes that IonQ will not be worth much more in the future.</p>
+<p>In our simple case above Alice accepted the premium (the price of the option) based solely on her strong belief that IonQ would be worth much more in the future. But could she in some way have made a better decision on whether or not the premium of the call option was fair?</p>
+<p>Yes, she herself could have estimated a fair price of the call option based on e.g. the current spot price <span class="math notranslate nohighlight">\(S_t\)</span>, the desired strike price <span class="math notranslate nohighlight">\(K\)</span>, the time to maturity <span class="math notranslate nohighlight">\(T\)</span>, the risk-free rate <span class="math notranslate nohighlight">\(r\)</span>, the assets implied volatility <span class="math notranslate nohighlight">\(\sigma\)</span> by, and a prediction on the value of the underlying at maturity, by estimating the discounted expected payoff</p>
+<div class="math notranslate nohighlight">
+\[
+v = e^{-rT}\mathbb{E}[\phi(S_T)] = e^{-rT}\mathbb{E}[\max(S_T - K, 0)].
+\]</div>
+<p>So what should be the fair price of the European call option? Let’s estimate it using quantum computing! 🚀</p>
+</section>
+</section>
+<section id="asset-distributions-and-payoff-function">
+<h2>1. Asset distributions and payoff function<a class="headerlink" href="#asset-distributions-and-payoff-function" title="Link to this heading"></a></h2>
+<p>The first step in estimating a fair price for the European call option is to encode/load the distribution of the underlying asset on to a quantum circuit. Assume that the underlying asset can be described by the Geometric Brownian Motion</p>
+<div class="math notranslate nohighlight">
+\[
+dS_t = rS_tdt + \sigma S_tdW_t
+\]</div>
+<p>and that we follow the Black &amp; Scholes model such that the spot price at time <span class="math notranslate nohighlight">\(S_t\)</span> is described by the following log-normal distribution</p>
+<div class="math notranslate nohighlight">
+\[
+ln\Bigl( \frac{S_T}{S_t} \Bigr) \sim N\Bigl( (r - \frac{1}{2}\sigma^2)T, \, \sigma \sqrt{T} \Bigr)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the annual drift rate of S and we denote <span class="math notranslate nohighlight">\(\sigma'\)</span> as its scaled volatility, such that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\mu = (r - \frac{\sigma^2}{2})&amp; T + \log(S_0)\\
+\sigma' =\, &amp; \sigma \sqrt{T}
+\end{align}
+\end{split}\]</div>
+<p>Because we will be working with quantum circuits in this tutorial, we will have to create an equidistant discretization of the distribution on to <span class="math notranslate nohighlight">\(2^n\)</span> grid points, where <span class="math notranslate nohighlight">\(n\)</span> is the number of qubits of our quantum circuit. To be able to do this we also have to limit the range of the distribution to some interval, e.g., between 3 standard deviations of its mean</p>
+<div class="math notranslate nohighlight">
+\[
+x \sim N(\mu, \sigma') \in [\mu - 3\sigma', \mu + 3\sigma'].
+\]</div>
+<section id="exercise">
+<h3>📝 Exercise<a class="headerlink" href="#exercise" title="Link to this heading"></a></h3>
+<p>Now we want you to:</p>
+<ol class="arabic simple">
+<li><p>Classically create the distribution that we just defined, and sample from it on an equidistant interval.</p></li>
+<li><p>Change the variables around and see how the distribution of the spot price at maturity <span class="math notranslate nohighlight">\(S_T\)</span> changes.</p></li>
+<li><p>What happens if the asset has a large initial spot price <span class="math notranslate nohighlight">\(S_0 &gt; 10\)</span> with a relatively high volatility <span class="math notranslate nohighlight">\(\sigma &gt; 0.2\)</span>?</p>
+<ul class="simple">
+<li><p>Hint: perhaps we have too few qubits to represent such a “wide” distribution?</p></li>
+</ul>
+</li>
+</ol>
+<p>Some help to get you started:</p>
+<ul class="simple">
+<li><p>To calculate <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> refer to the above equations.</p></li>
+<li><p>To create an equidistant range with <span class="math notranslate nohighlight">\(2^n\)</span> grid points you can use the <code class="docutils literal notranslate"><span class="pre">np.linspace</span></code> method.</p></li>
+<li><p>Normalizing the distribution in this context means that the probabilities should sum to 1.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">n_uncertainty_qubits</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># change this also if you want to :)</span>
+<span class="n">n_qubit_states</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">n_uncertainty_qubits</span>
+
+<span class="n">S</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># initial spot price</span>
+<span class="n">volatility</span> <span class="o">=</span> <span class="mf">0.4</span>  <span class="c1"># implied volatility</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># risk-free market rate</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">40</span> <span class="o">/</span> <span class="mi">365</span>  <span class="c1"># time to maturity</span>
+
+<span class="n">mu</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># this should be the annualized drift rate of S</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># this should be the scaled volatility</span>
+
+<span class="c1"># Some properties of the log-normal distribution</span>
+<span class="c1"># https://en.wikipedia.org/wiki/Log-normal_distribution</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">mu</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">variance</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">std_dev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+
+<span class="n">low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">std_dev</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">high</span> <span class="o">=</span> <span class="n">mean</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">std_dev</span>
+
+<span class="c1"># Scipy log-normal distribution</span>
+<span class="c1"># https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.lognorm.html</span>
+<span class="n">lognorm_scale</span> <span class="o">=</span> <span class="n">S</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># create an equidistant interval from `low` to `high` with `n_qubit_states` grid points</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">lognorm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">lognorm_scale</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># normalize the pdf</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">,</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$ln \frac</span><span class="si">{S_T}{S_t}</span><span class="s2"> \sim N((r - \frac</span><span class="si">{1}{2}</span><span class="s2">\sigma^2)T, \sigma\sqrt</span><span class="si">{T}</span><span class="s2">)$&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Spot price at maturity $S_T$ (€)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Probability ($\%$)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="encode-the-distribution-onto-a-quantum-circuit">
+<h3>Encode the distribution onto a quantum circuit<a class="headerlink" href="#encode-the-distribution-onto-a-quantum-circuit" title="Link to this heading"></a></h3>
+<p>Next we need to construct a circuit to load the log-normal distribution into a quantum state. The distribution as defined before is truncated to the given interval <span class="math notranslate nohighlight">\([\mu - 3\sigma, \mu + 3\sigma]\)</span> and discretized using <span class="math notranslate nohighlight">\(2^n\)</span> grid points, where <span class="math notranslate nohighlight">\(n\)</span> denotes the number of qubits we are using. The unitary operator <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> coresponding to the circuit can be represented as</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{A}\ket{0}_n = \sum_{i=0}^{2^n - 1} \sqrt{p_i}\ket{i}_n
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\ket{i}_n\)</span> is the <span class="math notranslate nohighlight">\(i^{th}\)</span> state, <span class="math notranslate nohighlight">\(p_i\)</span> represents the probability of measuring the <span class="math notranslate nohighlight">\(i^{th}\)</span> discretized grid.</p>
+<p>We can use a pre-defined circuit from the <code class="docutils literal notranslate"><span class="pre">qiskit-finance</span></code> library which calculates the same probabilities as we did above and then initalizes a circuit with gates that encode the probabilities for the states. It uses the <a class="reference external" href="https://github.com/Qiskit/qiskit/blob/5f3f59469fcd9edae2feb80f74026265ebceb29a/qiskit/circuit/library/data_preparation/initializer.py#L33C7-L33C17">Initialize</a> class from the main <code class="docutils literal notranslate"><span class="pre">qiskit</span></code> library to create a circuit with gates that represent the provided probabilities.</p>
+</section>
+<section id="id1">
+<h3>📝 Exercise<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>No we want you to:</p>
+<ol class="arabic simple">
+<li><p>Change the number of qubits (defined in the code cell above) and see how the depth of the circuit changes.</p>
+<ul class="simple">
+<li><p>What happens to the depth? Is this a sustainable behaviour?</p></li>
+</ul>
+</li>
+<li><p>Look at the types of gates and try and think about what would happen if the hardware we wanted to run on only supported a certain set of (native) basis gates. Do you think the circuit would be deeper? Shallower? What are you thoughts?</p>
+<ul class="simple">
+<li><p>You will get to explore this practically later in the tutorial, but it is good to start thinking about already.</p></li>
+</ul>
+</li>
+<li><p>Verify that the quantum circuit has implemented the expected distribution (the one you made in the code cell above).</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit_finance.circuit.library</span> <span class="kn">import</span> <span class="n">LogNormalDistribution</span>
+
+<span class="n">uncertainty_model</span> <span class="o">=</span> <span class="n">LogNormalDistribution</span><span class="p">(</span>
+    <span class="n">n_uncertainty_qubits</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">decomposed_uncertainy_model</span> <span class="o">=</span> <span class="n">uncertainty_model</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">reps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Depth of the P(X) circuit: </span><span class="si">{</span><span class="n">decomposed_uncertainy_model</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">n_uncertainty_qubits</span><span class="si">}</span><span class="s2"> qubits)&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">uncertainty_model</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">decomposed_uncertainy_model</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">))</span>
+
+<span class="c1"># Verify that the circuit encodes the same probability distribution.</span>
+<span class="c1"># You should see the exact same distribution as above when we used `scipy.stats.lognorm.pdf`.</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">uncertainty_model</span><span class="o">.</span><span class="n">values</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">uncertainty_model</span><span class="o">.</span><span class="n">probabilities</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">,</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$ln \frac</span><span class="si">{S_T}{S_t}</span><span class="s2"> \sim N((r - \frac</span><span class="si">{1}{2}</span><span class="s2">\sigma^2)T, \sigma\sqrt</span><span class="si">{T}</span><span class="s2">)$&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Spot price at maturity $S_T$ (€)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Probability ($\%$)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="encoding-the-payoff-function">
+<h2>Encoding the payoff function<a class="headerlink" href="#encoding-the-payoff-function" title="Link to this heading"></a></h2>
+<p>Next step is to encode the payoff function onto a quantum circuit. Remember that the payoff function is defined as</p>
+<div class="math notranslate nohighlight">
+\[
+f(X) = \max(X - K, 0)
+\]</div>
+<p>and since we have a equidistant discretized grid for the random variable <span class="math notranslate nohighlight">\(X\)</span> on <span class="math notranslate nohighlight">\(\{0, 1, \dots, 2^n - 1\}\)</span> we can define an operator <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{F}\ket{i}_n\ket{0} = \sqrt{1 - f(i)}\ket{i}_n\ket{0} + \sqrt{f(i)}\ket{i}_n\ket{1}
+\]</div>
+<p>where it is required that the function <span class="math notranslate nohighlight">\(f(x) \mapsto [0, 1]\)</span>. Applying the operator <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> to our distribution operator <span class="math notranslate nohighlight">\(\mathcal{A}\ket{0}_n\ket{0}\)</span> yields</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{F}\mathcal{A}\ket{0}_n\ket{0} = \dots \ket{0} + \sum_{i=0}^{2^n-1}\sqrt{f(i)}\sqrt{p_i}\ket{i}_n\ket{1}
+\]</div>
+<p>where we get that the probability of measuring <span class="math notranslate nohighlight">\(\ket{1}\)</span> in the final qubit is</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=0}^{2^n-1} f(i)p_i = \mathbb{E}[f(X)].
+\]</div>
+<p>However, we have a problem, because our payoff function does not currently map to the <span class="math notranslate nohighlight">\([0, 1]\)</span> interval. To fix this we can rescale it as</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{f}(X) = \frac{f(\phi(X))}{f(X_{\max})},\,\, \text{with}\,\,\phi(X) = X_{\min} + X * \frac{X_{\max} - X_{\min}}{2^n - 1}.
+\]</div>
+<section id="id2">
+<h3>📝 Exercise<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>No we want you to:</p>
+<ol class="arabic simple">
+<li><p>Set a desired strike price <span class="math notranslate nohighlight">\(K\)</span></p></li>
+<li><p>Implement the payoff function <span class="math notranslate nohighlight">\(f(X)\)</span> classically</p></li>
+</ol>
+<p>Some help:</p>
+<ul class="simple">
+<li><p>Set the strike price based on your belief on how the underlying assets value will evolve until the time to maturity.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">np.maximum</span></code> method can be used to get the largest of two values.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># define a strike price</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">uncertainty_model</span><span class="o">.</span><span class="n">values</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># implement the payoff function</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Payoff function $\phi(S_T) = \max(S_T - K, 0)$&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Spot price at maturity $S_T$ (€)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Payoff amount (€)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">,</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we want to implement this function on a quantum circuit. The <a class="reference external" href="https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.LinearAmplitudeFunction">LinearAmplitudeFunction</a> in the qiskit circuit library uses <a class="reference external" href="https://github.com/Qiskit/qiskit/blob/main/qiskit/circuit/library/arithmetic/piecewise_linear_pauli_rotations.py#L27">PiecewiseLinearPauliRotations</a> to implement the piecewise linear function which is our payoff function.</p>
+</section>
+<section id="id3">
+<h3>📝 Exercise<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Set the slopes of the piecewise payoff function.</p></li>
+<li><p>Set the minimum and maximum value that the payoff function can have.</p></li>
+</ol>
+<p>Some help:</p>
+<ul class="simple">
+<li><p>Look at the above plot of the payoff function and try and figure out which two lines together make up the payoff function.</p>
+<ul>
+<li><p>Hint: At the strike price <span class="math notranslate nohighlight">\(K\)</span> we start making money, before that, we profit nothing (payoff=0).</p></li>
+</ul>
+</li>
+<li><p>What is the minimum amount of money that we can make? Think logically 😊</p></li>
+<li><p>The maximum amount of money we can make depends on the highest value in our equidistant range.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">LinearAmplitudeFunction</span>
+
+<span class="c1"># approximation scaling for the payoff function, determines accuracy in the Taylor approximation.</span>
+<span class="c1"># https://www.nature.com/articles/s41534-019-0130-6</span>
+<span class="n">c_approx</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+<span class="c1"># piecewise linear with breakpoints on x_min and when S_T &gt;= K.</span>
+<span class="n">breakpoints</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+<span class="n">slopes</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># set the slopes of the piecewise linear payoff function</span>
+<span class="n">offsets</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">f_min</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># set the minimum value that the payoff function can have</span>
+<span class="n">f_max</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># set the maximum value that the payoff function can have</span>
+<span class="n">european_call_objective</span> <span class="o">=</span> <span class="n">LinearAmplitudeFunction</span><span class="p">(</span>
+    <span class="n">num_state_qubits</span><span class="o">=</span><span class="n">n_uncertainty_qubits</span><span class="p">,</span>
+    <span class="n">slope</span><span class="o">=</span><span class="n">slopes</span><span class="p">,</span>
+    <span class="n">offset</span><span class="o">=</span><span class="n">offsets</span><span class="p">,</span>
+    <span class="n">domain</span><span class="o">=</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">),</span>
+    <span class="n">image</span><span class="o">=</span><span class="p">(</span><span class="n">f_min</span><span class="p">,</span> <span class="n">f_max</span><span class="p">),</span>
+    <span class="n">breakpoints</span><span class="o">=</span><span class="n">breakpoints</span><span class="p">,</span>
+    <span class="n">rescaling_factor</span><span class="o">=</span><span class="n">c_approx</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">decomposed_european_call_objective</span> <span class="o">=</span> <span class="n">european_call_objective</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">reps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Depth of the f(x) circuit: </span><span class="si">{</span><span class="n">decomposed_european_call_objective</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">n_uncertainty_qubits</span><span class="si">}</span><span class="s2"> qubits)&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">decomposed_european_call_objective</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="wait-now-we-are-working-with-more-qubits-than-we-originally-specified-for-p-x">
+<h3>Wait, now we are working with more qubits than we originally specified for <span class="math notranslate nohighlight">\(P(X)\)</span>.. ❓<a class="headerlink" href="#wait-now-we-are-working-with-more-qubits-than-we-originally-specified-for-p-x" title="Link to this heading"></a></h3>
+<p>For each qubit in our <span class="math notranslate nohighlight">\(P(X)\)</span> circuit we need an equal amount of qubits as ancilla qubits for the payoff function circuit, plus one extra qubit which encodes the value that we are trying to estimate in its <span class="math notranslate nohighlight">\(\ket{1}\)</span> state.</p>
+</section>
+<section id="id4">
+<h3>📝 Exercise<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>For a circuit with <span class="math notranslate nohighlight">\(n\)</span> qubits for the <span class="math notranslate nohighlight">\(P(X)\)</span> circuit, how many total qubits would we need to construct the full circuit with both <span class="math notranslate nohighlight">\(P(X)\)</span> and the payoff function circuit?</p>
+<ul class="simple">
+<li><p>Hint: change the number of qubits for <span class="math notranslate nohighlight">\(P(X)\)</span> and see how the number of qubits changes for the payoff function circuit.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="now-we-need-to-add-the-p-x-distribution-circuit-to-before-the-payoff-function">
+<h3>Now we need to add the <span class="math notranslate nohighlight">\(P(X)\)</span> distribution circuit to before the payoff function<a class="headerlink" href="#now-we-need-to-add-the-p-x-distribution-circuit-to-before-the-payoff-function" title="Link to this heading"></a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">AncillaRegister</span><span class="p">,</span> <span class="n">ClassicalRegister</span><span class="p">,</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">QuantumRegister</span>
+
+<span class="n">n_payoff_qubits</span> <span class="o">=</span> <span class="n">european_call_objective</span><span class="o">.</span><span class="n">num_qubits</span>
+<span class="n">n_cl_bits</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">qreg_s</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">n_uncertainty_qubits</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<span class="n">qreg_target</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">)</span>
+<span class="n">qreg_a</span> <span class="o">=</span> <span class="n">AncillaRegister</span><span class="p">(</span><span class="n">n_payoff_qubits</span> <span class="o">-</span> <span class="n">n_uncertainty_qubits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+<span class="n">creg</span> <span class="o">=</span> <span class="n">ClassicalRegister</span><span class="p">(</span><span class="n">n_cl_bits</span><span class="p">,</span> <span class="s2">&quot;creg&quot;</span><span class="p">)</span>
+
+<span class="n">european_call</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">qreg_s</span><span class="p">,</span> <span class="n">qreg_target</span><span class="p">,</span> <span class="n">qreg_a</span><span class="p">)</span>
+<span class="n">european_call</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uncertainty_model</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_uncertainty_qubits</span><span class="p">))</span>
+<span class="n">european_call</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">european_call_objective</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_payoff_qubits</span><span class="p">))</span>
+
+<span class="n">measured_european_call</span> <span class="o">=</span> <span class="n">european_call</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">measured_european_call</span><span class="o">.</span><span class="n">add_register</span><span class="p">(</span><span class="n">creg</span><span class="p">)</span>
+<span class="n">measured_european_call</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qreg_target</span><span class="p">,</span> <span class="n">creg</span><span class="p">)</span>
+
+<span class="n">decomposed_european_call</span> <span class="o">=</span> <span class="n">european_call</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">reps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">decomposed_measured_european_call</span> <span class="o">=</span> <span class="n">measured_european_call</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">reps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Depth of the P(X) + f operations circuit: </span><span class="si">{</span><span class="n">decomposed_measured_european_call</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">decomposed_measured_european_call</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s2"> qubits)&quot;</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">measured_european_call</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">decomposed_measured_european_call</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="do-you-see-any-potential-issues-with-the-circuit-depth">
+<h3>Do you see any potential issues with the circuit depth?<a class="headerlink" href="#do-you-see-any-potential-issues-with-the-circuit-depth" title="Link to this heading"></a></h3>
+<p>What would happen to the depth if we had to apply the payoff function circuit <span class="math notranslate nohighlight">\(f(x)\)</span> multiple times?</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="classical-monte-carlo-on-a-qc">
+<h2>2. Classical Monte Carlo on a QC<a class="headerlink" href="#classical-monte-carlo-on-a-qc" title="Link to this heading"></a></h2>
+<p>If we sample multiple times from the circuit that we have defined above then we can get an estimate of the expected payoff, however, <strong>this is just classical monte carlo but performed using quantum circuits.</strong></p>
+<p>There is no potential speed-up involved by doing this, but doing this step might be helpful for you to see and understand the gains with doing actual Quantum Monte Carlo (also referred to as Quantum Amplitude Estimation), which you will get to do soon in this tutorial.</p>
+<section id="estimate-the-expected-payoff-for-the-european-call-option">
+<h3>Estimate the expected payoff for the European call option<a class="headerlink" href="#estimate-the-expected-payoff-for-the-european-call-option" title="Link to this heading"></a></h3>
+<p>Now you will perform classical monte carlo using the quantum circuit that you created above. We are specifically interested in the probability of measuring the <span class="math notranslate nohighlight">\(\ket{1}\)</span> state in the target qubit</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{P}(\text{measure  } 1) = \mathbb{E}[f(X)] = \sum_{i=0}^{2^n-1}f(i)p_i
+\]</div>
+<p>and with probability <span class="math notranslate nohighlight">\(1 - \delta\)</span>, the estimate <span class="math notranslate nohighlight">\(\tilde{\mu}\)</span> satisfies <span class="math notranslate nohighlight">\(|\mu - \tilde{\mu}| &lt; \epsilon\)</span> with</p>
+<div class="math notranslate nohighlight">
+\[
+|\mu - \tilde{\mu}| \leq \phi^{-1}\Bigl( 1 - \frac{\delta}{2} \Bigr)\frac{\text{Var}(f(S_T))}{\sqrt{N}} \sim \mathcal{O}\Bigl( \frac{1}{\sqrt{N}} \Bigr)
+\]</div>
+</section>
+<section id="id5">
+<h3>📝 Exercise<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Determine how many samples you want to take.</p>
+<ul class="simple">
+<li><p>Try both a small - and a large amount, and see how the estimation and its confidence bound changes.</p></li>
+</ul>
+</li>
+<li><p>Rescale the estimated value to its original interval <span class="math notranslate nohighlight">\([x_{\min}, x_{\max}]\)</span>.</p>
+<ul class="simple">
+<li><p>Hint: the circuit used for implementing the objective function has a method called <a class="reference external" href="https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.LinearAmplitudeFunction#post_processing">post_processing</a> that can be used to map the scaled results to its original domain.</p></li>
+</ul>
+</li>
+<li><p>Define a confidence bound on the estimated value.</p>
+<ul class="simple">
+<li><p>Hint: assume a confidence bound on <span class="math notranslate nohighlight">\([\mu - 2\sigma, \mu + 2\sigma]\)</span> and use the same method as above to rescale to the correct interval.</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.primitives</span> <span class="kn">import</span> <span class="n">StatevectorSampler</span> <span class="k">as</span> <span class="n">Sampler</span>
+
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
+<span class="n">n_shots</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># how many samples do you want to take for your MC?</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">measured_european_call</span><span class="p">,</span> <span class="p">],</span> <span class="n">shots</span><span class="o">=</span><span class="n">n_shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+<span class="n">quasi_dist_dict</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">creg</span><span class="o">.</span><span class="n">get_int_counts</span><span class="p">()</span>
+<span class="n">quasi_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">quasi_dist_dict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">quasi_dist_dict</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="n">quasi_dist</span> <span class="o">/</span> <span class="n">quasi_dist</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s2">&quot;|0&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;|1&gt;&quot;</span><span class="p">],</span> <span class="n">dist</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Probability of measuring either $|0&gt;$ or $|1&gt;$&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Quasi-probability ($\%$)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">p_hat</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">p_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p_hat</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p_hat</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_shots</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Raw estimated mu=</span><span class="si">{</span><span class="n">p_hat</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, std=</span><span class="si">{</span><span class="n">p_std</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">mc_expectation</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># estimated value</span>
+<span class="n">mc_lower_conf</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># lower confidence bound</span>
+<span class="n">mc_upper_conf</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># upper confidence bound</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimation of the expected payoff:</span><span class="se">\t\t</span><span class="si">{</span><span class="n">mc_expectation</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">exact_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">uncertainty_model</span><span class="o">.</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">uncertainty_model</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">K</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exact expected value from discretization:</span><span class="se">\t</span><span class="si">{</span><span class="n">exact_value</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Confidence bound on estimation:</span><span class="se">\t\t</span><span class="s2">(</span><span class="si">{</span><span class="n">mc_lower_conf</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">mc_upper_conf</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="quantum-amplitude-estimation-qae">
+<h2>3. Quantum Amplitude Estimation (QAE)<a class="headerlink" href="#quantum-amplitude-estimation-qae" title="Link to this heading"></a></h2>
+<p>Remember that the standard Monte Carlo method for pricing consists in approximating the expected payoff <span class="math notranslate nohighlight">\(\mu = \mathbb{E}[f(S_T)]\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[
+\mu \approx \tilde{\mu}_N = \frac{1}{N}\sum_{i=1}^Nf \Bigl( S_T^{(i)} \Bigr)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(S_T^{(i)},\, i=1,\dots,N\)</span> are i.i.d samples from the probability distribution of the underlying asset <span class="math notranslate nohighlight">\(S\)</span> at the expiration time <span class="math notranslate nohighlight">\(T\)</span>. Note that a consequence of the central limit theorem is that the estimation error of the classical Monte Carlo method satisfies</p>
+<div class="math notranslate nohighlight">
+\[
+|\mu - \tilde{\mu}| \sim \mathcal{O}\Bigl( \frac{1}{\sqrt{N}} \Bigr)
+\]</div>
+<p>and the posed question is whether or not the estimation error rate can be improved on?</p>
+<p>Quantum Amplitude Estimation (QAE) is a quantum algorithm that provides an alternative to the classical Monte Carlo in order to compute approximate expectations of random variables.</p>
+<p>Suppose we are able to construct a circuit that implements a state preparation operator <span class="math notranslate nohighlight">\(\mathcal{U}\)</span> acting on an <span class="math notranslate nohighlight">\((n+1)\)</span> qubit register as follows</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{U}\ket{0}_{n+1} = \sqrt{1 - a}\ket{\psi_0}_n \ket{0}+ \sqrt{a}\ket{\psi_1}_n\ket{1}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(a\in[0, 1]\)</span> is an unknonwn quantity associated with the value <span class="math notranslate nohighlight">\(\mu\)</span> which we want to estimate (e.g. an appropriate re-scaling of <span class="math notranslate nohighlight">\(\mu\)</span> to the interval <span class="math notranslate nohighlight">\([0, 1]\)</span>).</p>
+<p>Then, QAE can be used to obtain an estimate of <span class="math notranslate nohighlight">\(a\)</span> through repeated controlled applications of the <a class="reference external" href="https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.library.GroverOperator">Grover operator</a></p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{Q} = \mathcal{U}S_0\mathcal{U}^{\dagger}S_{\Psi_0}
+\]</div>
+<p>together with an inverse <a class="reference external" href="https://courses.physics.illinois.edu/phys498cmp/sp2022/QC/QFT.html">Quantum Fourier Transform (QFT)</a>, where <span class="math notranslate nohighlight">\(S_0\)</span> is the zero reflection and <span class="math notranslate nohighlight">\(S_{\Psi_0}\)</span> is the phase oracle in the Grover operator. For further details on the algorithm, please refer to <a class="reference external" href="https://arxiv.org/abs/quant-ph/0005055">Quantum Amplitude Amplification and Estimation. Brassard et al., 2000</a>.</p>
+<p>It can be showed that, with high probability <span class="math notranslate nohighlight">\((8/\pi^2 \approx 81\%)\)</span>, the estimate <span class="math notranslate nohighlight">\(\tilde{a}_M\)</span> provided by the QAE satisfies</p>
+<div class="math notranslate nohighlight">
+\[
+|a - \tilde{a}_M| \leq \frac{2\pi\sqrt{a(1-a)}}{M} + \frac{\pi^2}{M^2} \sim \mathcal{O}\Bigl( \frac{1}{M} \Bigr)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(M=2^m\)</span>, and <span class="math notranslate nohighlight">\(m\)</span> is the number of ancilla qubits used by the algorithm (which determines how many repetitions of the operator <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> should be applied). Comparing this to classical Monte Carlo and we can see that QAE provides a (theoretical) quadratic speedup.</p>
+<hr class="docutils" />
+<p>Quantum Amplitude Estimation can be applied to our circuit that we performed classical Monte Carlo on, and doing QAE should theoretically improve our estimation on the fair price of the European call option.</p>
+<p>So lets apply QAE and see if we get a better result than classical Monte Carlo! 🚀🚀</p>
+<section id="id6">
+<h3>📝 Exercise<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Pick <span class="math notranslate nohighlight">\(m\)</span>, i.e., the number of repetitions of <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span>.</p>
+<ul class="simple">
+<li><p>How is the depth of the circuit impacted by the choice of <span class="math notranslate nohighlight">\(m\)</span>?</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define QAE circuit</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">QuantumRegister</span><span class="p">,</span> <span class="n">AncillaRegister</span><span class="p">,</span> <span class="n">ClassicalRegister</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">QFT</span><span class="p">,</span> <span class="n">GroverOperator</span>
+<span class="k">class</span> <span class="nc">AECircuit</span><span class="p">(</span><span class="n">QuantumCircuit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_preparation_circuit</span><span class="p">,</span> <span class="n">num_ancilla_qubits</span><span class="p">,</span> <span class="n">objective_qubit</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_preparation_circuit</span> <span class="o">=</span> <span class="n">state_preparation_circuit</span> <span class="c1"># The cirtuit implementing operator A</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_ancilla_qubits</span> <span class="o">=</span> <span class="n">num_ancilla_qubits</span> <span class="c1"># Number of ancilla qubits (m in IQAE paper)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_state_qubits</span> <span class="o">=</span> <span class="n">state_preparation_circuit</span><span class="o">.</span><span class="n">num_qubits</span> <span class="c1"># Number of qubits in circuit A (n+1 in the IQAE paper)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objective_qubit</span> <span class="o">=</span> <span class="n">objective_qubit</span> <span class="c1"># Index of the objective qubit within the circuit A (0&lt;=objective_qubit&lt;=num_state_qubits) </span>
+   
+        <span class="c1"># Initialize circuit </span>
+        <span class="n">ancilla_register</span> <span class="o">=</span> <span class="n">AncillaRegister</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ancilla_qubits</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ancilla&quot;</span><span class="p">)</span>
+        <span class="n">state_register</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_state_qubits</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;state&quot;</span><span class="p">)</span>
+        <span class="n">classical_register</span> <span class="o">=</span> <span class="n">ClassicalRegister</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ancilla_qubits</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;creg&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">ancilla_register</span><span class="p">,</span>
+            <span class="n">state_register</span><span class="p">,</span>
+            <span class="n">classical_register</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Hadamard gates on the ancilla qubits</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ancilla_qubits</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">ancilla_register</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            
+        <span class="c1"># Circuit A on the state and objective qubits</span>
+        <span class="n">A_gate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_preparation_circuit</span><span class="o">.</span><span class="n">to_gate</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$A$&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A_gate</span><span class="p">,</span> <span class="n">state_register</span><span class="p">[:])</span>
+       
+        <span class="bp">self</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+        
+        <span class="c1"># Powers of Q</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">groverOp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_preparation_circuit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">objective_qubit</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_ancilla_qubits</span><span class="p">):</span>
+            <span class="n">Qj</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">to_gate</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$Q^</span><span class="se">{{</span><span class="si">{</span><span class="mi">2</span><span class="o">**</span><span class="n">j</span><span class="si">}</span><span class="se">}}</span><span class="s2">$&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">control</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Controlled version of Q^{2j}</span>
+            <span class="c1"># Apply the controlled Q^{2j} gate on state and objective qubits, controlled by the j-th ancilla qubit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Qj</span><span class="p">,</span> <span class="p">[</span><span class="n">ancilla_register</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ancilla_qubits</span><span class="o">-</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+</span> <span class="n">state_register</span><span class="p">[:])</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+       
+        <span class="c1"># Inverse QFT</span>
+        <span class="n">QFT_gate</span> <span class="o">=</span> <span class="n">QFT</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ancilla_qubits</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">do_swaps</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">to_gate</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$QFT^\dagger$&quot;</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">QFT_gate</span><span class="p">,</span> <span class="n">ancilla_register</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+        
+        <span class="c1"># Measure the ancilla qubits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">ancilla_register</span><span class="p">,</span> <span class="n">classical_register</span><span class="p">)</span>
+       
+    <span class="k">def</span> <span class="nf">groverOp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_preparation_circuit</span><span class="p">,</span> <span class="n">objective_qubit</span><span class="p">):</span>
+        <span class="c1"># construct the grover operator</span>
+        <span class="n">oracle</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">state_preparation_circuit</span><span class="o">.</span><span class="n">num_qubits</span> <span class="o">-</span> <span class="n">state_preparation_circuit</span><span class="o">.</span><span class="n">num_ancillas</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">oracle</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">objective_qubit</span><span class="p">)</span>
+        <span class="n">oracle</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">objective_qubit</span><span class="p">)</span>
+        <span class="n">oracle</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">objective_qubit</span><span class="p">)</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">GroverOperator</span><span class="p">(</span><span class="n">oracle</span><span class="p">,</span> <span class="n">state_preparation_circuit</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="n">Q</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># The number of Q repetitions (number of ancilla qubits)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">m</span>
+<span class="n">n_ancilla_qubits</span> <span class="o">=</span> <span class="n">m</span>
+<span class="n">qae</span> <span class="o">=</span> <span class="n">AECircuit</span><span class="p">(</span>
+    <span class="n">state_preparation_circuit</span><span class="o">=</span><span class="n">decomposed_european_call</span><span class="p">,</span>
+    <span class="n">num_ancilla_qubits</span><span class="o">=</span><span class="n">n_ancilla_qubits</span><span class="p">,</span>
+    <span class="n">objective_qubit</span><span class="o">=</span><span class="n">n_uncertainty_qubits</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">decomposed_qae</span> <span class="o">=</span> <span class="n">qae</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">reps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Depth of the full QAE circuit: </span><span class="si">{</span><span class="n">decomposed_qae</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">decomposed_qae</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s2"> qubits) (</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> ancilla qubits)&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">qae</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Recall from the lecture that quantum amplitude estimation uses a combination of phase estimation and amplitude amplification in order to get an estimate of <span class="math notranslate nohighlight">\(\mu\)</span>, specifically, because of the inverse QFT, what we are measuring from the quantum circuit is a number <span class="math notranslate nohighlight">\(\tilde{q} \in \{0, 1, \dots, 2^m - 1\}\)</span> that we have to map to the actual estimate through</p>
+<div class="math notranslate nohighlight">
+\[
+\tilde{\mu} = \sin^2\Bigl( \frac{\pi \tilde{q}}{2^m} \Bigr).
+\]</div>
+<p>Now you should run the QAE circuit that was constructed above. <strong>Note that in a world with perfect quantum computers, with no errors, we would only have to run this circuit once.</strong></p>
+<p>However, we do not (yet?) live in such a world, and thus we have to sample <span class="math notranslate nohighlight">\(\tilde{q}\)</span> multiple times.</p>
+</section>
+<section id="id7">
+<h3>📝 Exercise<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Define how many times you want to sample/measure from the QAE circuit.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
+<span class="n">n_shots</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># how many samples do you want to take for the estimation?</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">qae</span><span class="p">],</span> <span class="n">shots</span><span class="o">=</span><span class="n">n_shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id8">
+<h3>📝 Exercise<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Calculate the angles based on the measured values <span class="math notranslate nohighlight">\(\tilde{q}\)</span>:</p>
+<ul class="simple">
+<li><p>Hint: the formula for the angle is <span class="math notranslate nohighlight">\(\frac{\pi \tilde{q}}{2^m}\)</span></p></li>
+</ul>
+</li>
+<li><p>Calculate the estimates based on the angles:</p>
+<ul class="simple">
+<li><p>Hint: the formula for the estimate is <span class="math notranslate nohighlight">\(\tilde{\mu} = \sin^2\Bigl( \frac{\pi \tilde{q}}{2^m} \Bigr)\)</span></p></li>
+<li><p>Optional: round it to a suitable number of decimals (e.g. 15)</p></li>
+</ul>
+</li>
+<li><p>Determine which estimate has the highest probability and then post-process it.</p>
+<ul class="simple">
+<li><p>Hint: you can use the <code class="docutils literal notranslate"><span class="pre">np.argmax</span></code> method to get the index with the largest value.</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># QAE Post-processing</span>
+<span class="c1">#</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">creg</span><span class="o">.</span><span class="n">get_int_counts</span><span class="p">()</span>
+<span class="n">qq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<span class="n">theta_estimates</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># Calculate the angles</span>
+<span class="n">estimates</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># Calculate the estimates</span>
+
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">probabilities</span> <span class="o">/</span> <span class="n">probabilities</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Combine any estimate or probability duplicates (because sin is periodic)</span>
+<span class="n">unique_estimates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">estimates</span><span class="p">))</span>
+<span class="n">unique_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">probabilities</span><span class="p">[</span><span class="n">estimates</span><span class="o">==</span><span class="n">e</span><span class="p">])</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">unique_estimates</span><span class="p">]</span>
+<span class="n">qae_estimates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unique_estimates</span><span class="p">)</span>
+<span class="n">qae_probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unique_probabilities</span><span class="p">)</span>
+
+<span class="n">qae_p_mode</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># Extract the estimate with the highest probability</span>
+<span class="n">qae_expectation</span> <span class="o">=</span> <span class="n">european_call_objective</span><span class="o">.</span><span class="n">post_processing</span><span class="p">(</span><span class="n">qae_p_mode</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                   Exact            MC             QAE&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expectation:      </span><span class="si">{</span><span class="n">exact_value</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">        </span><span class="si">{</span><span class="n">mc_expectation</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">         </span><span class="si">{</span><span class="n">qae_expectation</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Diff  (abs):        N/A          </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mc_expectation</span><span class="p">)</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">         </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">qae_expectation</span><span class="p">)</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Diff    (%):        N/A          </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mc_expectation</span><span class="p">)</span><span class="o">/</span><span class="n">mc_expectation</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">         </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">qae_expectation</span><span class="p">)</span><span class="o">/</span><span class="n">qae_expectation</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-if-we-wanted-to-run-this-qmc-circuit-on-a-specific-backend">
+<h3>What if we wanted to run this QMC circuit on a specific backend?<a class="headerlink" href="#what-if-we-wanted-to-run-this-qmc-circuit-on-a-specific-backend" title="Link to this heading"></a></h3>
+<p>If you for example wanted to run this circuit on the Helmi QC then you would have to transpile the circuit to be compatible with the native gate set of the target backend.</p>
+<p>Qiskit has a method for (attempting) translating (<a class="reference external" href="https://docs.quantum.ibm.com/api/qiskit/transpiler">transpiling</a>) your circuit with your gates to the target gate set, this method is called <a class="reference external" href="https://docs.quantum.ibm.com/api/qiskit/compiler#qiskit.compiler.transpile">transpile</a> and composes 6 different stages (each of which can be read about in detail on the provided link).</p>
+<p>The 5th stage in the transpilation process is called <a class="reference external" href="https://docs.quantum.ibm.com/api/qiskit/transpiler#optimization-stage">optimization</a> and can be controlled by the user by specifying what optimization level you want to have. The optimization stage is necessary in order to manage increased circuit depths due to the transpilation process potentially adding a lot of gates in order to both: map the source gates to the target gate set, but also to match the target hardware qubit topology. We have discussed circuit depth quite a bit in this tutorial, and one way to (potentially) cope with extremely deep circuits is through transpilation optimization.</p>
+<p>The user can specify what optimization level they want to run with:</p>
+<ol class="arabic simple" start="0">
+<li><p>no optimization</p></li>
+<li><p>light optimization</p></li>
+<li><p>heavy optimization</p></li>
+<li><p>even heavier optimization</p></li>
+</ol>
+<p>and the default level is 2. The higher the optimization level, the more optimized circuits, at the expense of longer transpilation times. <strong>Important to note is that the transpilation process is stochastic and will thus generate circuits with e.g. varying depth and gate layout even for the same source circuit.</strong></p>
+</section>
+<section id="id9">
+<h3>📝 Exercise<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Decide on a set of native gates that you want to have as target for the transpilation process.</p>
+<ul class="simple">
+<li><p>If you have the time, you could try and find the specifications of a real QPU and its native gate set and use that. Here is a <a class="reference external" href="https://docs.quantum.ibm.com/guides/native-gates">link</a> for the IBM QPUs.</p></li>
+</ul>
+</li>
+<li><p>Set your desired optimization level and see how the depth of the circuit changes as you change the optimization level.</p>
+<ul class="simple">
+<li><p>How many gates can you remove from the original (extremely deep) QAE circuit by optimizing it?</p></li>
+</ul>
+</li>
+<li><p>Can you find a gate set that you can’t transpile the circuit to? Why do you think that is?</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">transpile</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="n">backend_native_gates</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># the native gates of the target backend</span>
+<span class="n">optimization_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># your desired optimization level [0, 3]</span>
+
+<span class="n">transpiled_circuit</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span>
+    <span class="n">circuits</span><span class="o">=</span><span class="n">qae</span><span class="p">,</span>
+    <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend_native_gates</span><span class="p">,</span>
+    <span class="n">optimization_level</span><span class="o">=</span><span class="n">optimization_level</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">transpiled_circuit</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+
+<span class="c1"># You can most likely not display this circuit since the transpilation process</span>
+<span class="c1"># decomposes any grouped gates, meaning, it will try and draw ~100_000 gates...</span>
+<span class="c1"># display(transpiled_circuit.draw(&quot;mpl&quot;))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>That’s all we had prepared for you today, well done! 🎉💫🌟</p>
+<p>Hopefully you had the time to get a better understanding of how quantum amplitude estimation can be used in finance for pricing options, and also that you had the time to reflect on the suitability of these algorithms in the NISQ era.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="code-solutions">
+<h2>Code solutions<a class="headerlink" href="#code-solutions" title="Link to this heading"></a></h2>
+<p>If you are stuck on a problem or you want to compare your code to our code, look here. 😎</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Log-normal distribution (classically)</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">n_uncertainty_qubits</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">n_qubit_states</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">n_uncertainty_qubits</span>
+
+<span class="n">S</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># initial spot price</span>
+<span class="n">volatility</span> <span class="o">=</span> <span class="mf">0.4</span>  <span class="c1"># implied volatility</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># risk-free market rate</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">40</span> <span class="o">/</span> <span class="mi">365</span>  <span class="c1"># time to maturity</span>
+
+<span class="n">mu</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">volatility</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">T</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">volatility</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># Some properties of the log-normal distribution</span>
+<span class="c1"># https://en.wikipedia.org/wiki/Log-normal_distribution</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">mu</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">variance</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">std_dev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+
+<span class="n">low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">std_dev</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">high</span> <span class="o">=</span> <span class="n">mean</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">std_dev</span>
+
+<span class="c1"># Scipy log-normal distribution</span>
+<span class="c1"># https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.lognorm.html</span>
+<span class="n">lognorm_scale</span> <span class="o">=</span> <span class="n">S</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">n_qubit_states</span><span class="p">)</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">lognorm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">lognorm_scale</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">yy</span> <span class="o">/</span> <span class="n">yy</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">,</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$ln \frac</span><span class="si">{S_T}{S_t}</span><span class="s2"> \sim N((r - \frac</span><span class="si">{1}{2}</span><span class="s2">\sigma^2)T, \sigma\sqrt</span><span class="si">{T}</span><span class="s2">)$&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Spot price at maturity $S_T$ (€)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Probability ($\%$)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Encoding the payoff function (classically)</span>
+<span class="c1">#</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="mf">1.713</span>  <span class="c1"># this can be whatever..</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">uncertainty_model</span><span class="o">.</span><span class="n">values</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">xx</span> <span class="o">-</span> <span class="n">K</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Payoff function $\phi(S_T) = \max(S_T - K, 0)$&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Spot price at maturity $S_T$ (€)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Payoff amount (€)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">,</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Encoding the payoff function (QC)</span>
+<span class="c1">#</span>
+
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">LinearAmplitudeFunction</span>
+
+<span class="c1"># approximation scaling for the payoff function, determines accuracy in the Taylor approximation.</span>
+<span class="c1"># https://www.nature.com/articles/s41534-019-0130-6</span>
+<span class="n">c_approx</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+<span class="n">breakpoints</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+<span class="n">slopes</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">offsets</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">f_min</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">f_max</span> <span class="o">=</span> <span class="n">high</span> <span class="o">-</span> <span class="n">K</span>
+<span class="n">european_call_objective</span> <span class="o">=</span> <span class="n">LinearAmplitudeFunction</span><span class="p">(</span>
+    <span class="n">num_state_qubits</span><span class="o">=</span><span class="n">n_uncertainty_qubits</span><span class="p">,</span>
+    <span class="n">slope</span><span class="o">=</span><span class="n">slopes</span><span class="p">,</span>
+    <span class="n">offset</span><span class="o">=</span><span class="n">offsets</span><span class="p">,</span>
+    <span class="n">domain</span><span class="o">=</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">),</span>
+    <span class="n">image</span><span class="o">=</span><span class="p">(</span><span class="n">f_min</span><span class="p">,</span> <span class="n">f_max</span><span class="p">),</span>
+    <span class="n">breakpoints</span><span class="o">=</span><span class="n">breakpoints</span><span class="p">,</span>
+    <span class="n">rescaling_factor</span><span class="o">=</span><span class="n">c_approx</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">decomposed_european_call_objective</span> <span class="o">=</span> <span class="n">european_call_objective</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">reps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Depth of the f(x) circuit: </span><span class="si">{</span><span class="n">decomposed_european_call_objective</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">n_uncertainty_qubits</span><span class="si">}</span><span class="s2"> qubits)&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">decomposed_european_call_objective</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Performing classical MC on a QC</span>
+<span class="c1">#</span>
+
+<span class="kn">from</span> <span class="nn">qiskit.primitives</span> <span class="kn">import</span> <span class="n">StatevectorSampler</span> <span class="k">as</span> <span class="n">Sampler</span>
+
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
+<span class="n">n_shots</span> <span class="o">=</span> <span class="mi">100_000</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">measured_european_call</span><span class="p">,</span> <span class="p">],</span> <span class="n">shots</span><span class="o">=</span><span class="n">n_shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+<span class="n">quasi_dist_dict</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">creg</span><span class="o">.</span><span class="n">get_int_counts</span><span class="p">()</span>
+<span class="n">quasi_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">quasi_dist_dict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">quasi_dist_dict</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="n">quasi_dist</span> <span class="o">/</span> <span class="n">quasi_dist</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s2">&quot;|0&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;|1&gt;&quot;</span><span class="p">],</span> <span class="n">dist</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Probability of measuring either $|0&gt;$ or $|1&gt;$&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Quasi-probability ($\%$)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">p_hat</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">p_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p_hat</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p_hat</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_shots</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Raw estimated mu=</span><span class="si">{</span><span class="n">p_hat</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, std=</span><span class="si">{</span><span class="n">p_std</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">expectation</span> <span class="o">=</span> <span class="n">european_call_objective</span><span class="o">.</span><span class="n">post_processing</span><span class="p">(</span><span class="n">p_hat</span><span class="p">)</span>
+<span class="n">lower_conf</span> <span class="o">=</span> <span class="n">european_call_objective</span><span class="o">.</span><span class="n">post_processing</span><span class="p">(</span><span class="n">p_hat</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">p_std</span><span class="p">)</span>
+<span class="n">upper_conf</span> <span class="o">=</span> <span class="n">european_call_objective</span><span class="o">.</span><span class="n">post_processing</span><span class="p">(</span><span class="n">p_hat</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">p_std</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimation of the expected payoff:</span><span class="se">\t\t</span><span class="si">{</span><span class="n">expectation</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">exact_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">uncertainty_model</span><span class="o">.</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">uncertainty_model</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">K</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exact expected value from discretization:</span><span class="se">\t</span><span class="si">{</span><span class="n">exact_value</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Confidence bound on estimation:</span><span class="se">\t\t</span><span class="s2">(</span><span class="si">{</span><span class="n">lower_conf</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">upper_conf</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># QAE Post-processing</span>
+<span class="c1">#</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">creg</span><span class="o">.</span><span class="n">get_int_counts</span><span class="p">()</span>
+<span class="n">qq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<span class="n">theta_estimates</span> <span class="o">=</span> <span class="n">qq</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">M</span>
+<span class="n">estimates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_estimates</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">probabilities</span> <span class="o">/</span> <span class="n">probabilities</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Combine any estimate or probability duplicates (because sin is periodic)</span>
+<span class="n">unique_estimates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">estimates</span><span class="p">))</span>
+<span class="n">unique_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">probabilities</span><span class="p">[</span><span class="n">estimates</span><span class="o">==</span><span class="n">e</span><span class="p">])</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">unique_estimates</span><span class="p">]</span>
+<span class="n">qae_estimates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unique_estimates</span><span class="p">)</span>
+<span class="n">qae_probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unique_probabilities</span><span class="p">)</span>
+
+<span class="n">qae_p_mode</span> <span class="o">=</span> <span class="n">qae_estimates</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">qae_probabilities</span><span class="p">)]</span>
+<span class="n">qae_expectation</span> <span class="o">=</span> <span class="n">european_call_objective</span><span class="o">.</span><span class="n">post_processing</span><span class="p">(</span><span class="n">qae_p_mode</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                   Exact            MC             QAE&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expectation:      </span><span class="si">{</span><span class="n">exact_value</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">        </span><span class="si">{</span><span class="n">mc_expectation</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">         </span><span class="si">{</span><span class="n">qae_expectation</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Diff  (abs):        N/A          </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mc_expectation</span><span class="p">)</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">         </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">qae_expectation</span><span class="p">)</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Diff    (%):        N/A          </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mc_expectation</span><span class="p">)</span><span class="o">/</span><span class="n">mc_expectation</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">         </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">qae_expectation</span><span class="p">)</span><span class="o">/</span><span class="n">qae_expectation</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Transpiling and optimizing quantum circuits using qiskit</span>
+<span class="c1">#</span>
+
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">transpile</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="n">backend_native_gates</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;ry&quot;</span><span class="p">,</span> <span class="s2">&quot;cx&quot;</span><span class="p">]</span>
+<span class="n">optimization_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">transpiled_circuit</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span>
+    <span class="n">circuits</span><span class="o">=</span><span class="n">qae</span><span class="p">,</span>
+    <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend_native_gates</span><span class="p">,</span>
+    <span class="n">optimization_level</span><span class="o">=</span><span class="n">optimization_level</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">transpiled_circuit</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+
+<span class="c1"># You can most likely not display this circuit since the transpilation process</span>
+<span class="c1"># decomposes any grouped gates, meaning, it will try and draw ~100_000 gates...</span>
+<span class="c1"># display(transpiled_circuit.draw(&quot;mpl&quot;))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.nature.com/articles/s41534-019-0130-6">Quantum Risk Analysis. Woerner, Egger. 2018.</a></p></li>
+<li><p><a class="reference external" href="https://quantum-journal.org/papers/q-2020-07-06-291/">Option Pricing using Quantum Computers. Stamatopoulos et al. 2019.</a></p></li>
+<li><p><a class="reference external" href="https://www.chebfun.org/examples/applics/EuropeanCall.html">Pricing of a European call option. Pachon, Ricardo. 2014.</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../option_pricing/" class="btn btn-neutral float-left" title="Pricing a European call option on a quantum computer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../qsip/" class="btn btn-neutral float-right" title="QSIP - Quantum Sweden Innovation Platform" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1845 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Tutorial - Fault-Tolerant Quantum Computing with CSS codes\n",
+    "\n",
+    "In this notebook we'll explore how fault-tolerant quantum computing looks like at the **circuit-level**.\n",
+    "\n",
+    "For our exploration we'll introduce the *Steane Code*, proposed by Andrew Steane in 1996. It is a quantum code from the class of *Calderbank-Shor-Steane (CSS)* codes which was introduced in the lecture.\n",
+    "\n",
+    "Our **goal** is to understand:\n",
+    "- How is a logical qubit prepared at the circuit-level?\n",
+    "- How can we implement logical gates between those logical qubits?\n",
+    "- How does the quantum error correction procedure looks like at the circuit-level? \n",
+    "\n",
+    "Let's explore the Steane code! 🔭"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Steane Code\n",
+    "\n",
+    "The Steane code is a $[[7,1,3]]$ stabilizer code, which means that it encodes 7 physical qubits into 1 logical qubits. Its code distance is $d=3$, meaning that it will correct up to \n",
+    "$$t = \\lfloor 3 - 1 /2 \\rfloor = 1$$\n",
+    "errors.\n",
+    "\n",
+    "### Code Construction\n",
+    "\n",
+    "**CSS codes:**\n",
+    "\n",
+    "The class of Calderbank-Shor-Steane (CSS) codes provides a simple recipe of constructing quantum error correcting codes from classical *linear* codes.\n",
+    "In a linear $[n,k]$-code $C$, the code space is defined by the kernel of a parity check matrix $H \\in \\mathbb{Z}_2^{n - k \\times n}$.\n",
+    "\n",
+    "Meaning that for a code word $x \\in \\mathbb{Z}_2^n$, we must have:\n",
+    "\n",
+    "$$Hx = 0.$$\n",
+    "\n",
+    "Since we have to protect our quantum state from Pauli-$X$ and Pauli-$Z$ errors, CSS codes combine two classical linear codes $C_1$ and $C_2$. The respective parity check matrices $H_1$ and $H_2$ define the $X$ and $Z$ stabilizers. To emphasize this fact, we'll denote the matrices as $H_X$ and $H_Z$.\n",
+    "\n",
+    "The rows of the parity check matrices define the stabilizer. \n",
+    "\n",
+    "> **Example:** If the $i$-th row of $H_X$ is given as $1001$ then the corresponding stabilizer is $X_1X_4 = X_1 \\otimes I_2 \\otimes I_3 \\otimes X_4$.\n",
+    "\n",
+    "Since all stabilizers from the same parity check matrix necessarily commute, we need to make sure that rows from $H_X$ and $H_Z$ commute. This is ensured if the number of qubits targeted by both stabilizer types is even for each possible pair of stabilizers.\n",
+    "\n",
+    "> **Example:** $X_1X_2X_5X_6$ and $Z_1Z_2Z_3Z_4$ commute as they both target qubits 1 and 2 which is an even number of qubits.\n",
+    "\n",
+    "**Parity Check Matrix:**\n",
+    "\n",
+    "For the Steane code, we have $H_X = H_Z = H$ with\n",
+    "\n",
+    "$$H = \\begin{bmatrix}1 & 1 & 1 & 1 & 0 & 0 & 0\\\\0 & 1 & 1 & 0 & 1 & 1 & 0\\\\ 0 & 0 & 1 & 1 & 0 & 1 & 1\\end{bmatrix}$$\n",
+    "\n",
+    "**Stabilizers:**\n",
+    "\n",
+    "We can now define the generators of the stabilizer group corresponding to the Steane code based on $H$:\n",
+    "\n",
+    "$$S_X = \\langle X_1X_2X_3X_4, X_2X_3X_5X_6, X_3X_4X_6X_7 \\rangle$$\n",
+    "$$S_Z = \\langle Z_1Z_2Z_3Z_4, Z_2Z_3Z_5Z_6, Z_3Z_4Z_6Z_7 \\rangle$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "vscode": {
+     "languageId": "plaintext"
+    }
+   },
+   "source": [
+    "### Exercise 1\n",
+    "Given the stabilizers, write down a valid code state $|\\psi \\rangle = | \\psi_1\\rangle \\otimes | \\psi_2\\rangle \\otimes | \\psi_3\\rangle \\otimes | \\psi_4\\rangle \\otimes | \\psi_5\\rangle \\otimes | \\psi_6\\rangle \\otimes | \\psi_7\\rangle  $ of the Steane code.\n",
+    " \n",
+    "As a reminder, a valid code state is the simultaneous Eigenstate of all stabilizers such that:\n",
+    "$$S|\\psi\\rangle = |\\psi\\rangle \\;\\;\\; \\forall S \\in S_X \\cup S_Z$$\n",
+    "\n",
+    "> **Tip:** Any stabilizer can be decomposed into a product of generators. This means that only generators have to be considered when checking the stabilizing property.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Visualizing the Steane Code"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "To think about the properties of quantum error correcting codes it is often beneficial to visualize them. In the picture below, the vertices represent the physical qubits. Each coloured face defines an $X$ and $Z$-type stabilizer."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "![Steane Code Plaquettes](../img/steane-code-stabilizers.png)\n",
+    "\n",
+    "Putting the stabilizers together we get triangle with three faces also called *plaquettes* in the literature.\n",
+    "\n",
+    "![Steane Code Lattice](../img/steane-code-lattice.png)\n",
+    "\n",
+    "Source: [Arthur Pesah's blog post on the stabilizer formalism](https://arthurpesah.me/blog/2023-01-31-stabilizer-formalism-1/)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Excursion: Stim and Stabilizer formalism\n",
+    "\n",
+    "To implement the Steane Code, we'll use Stim, a stabilizer simulator developed by Google, which is used for quantum error corection research.\n",
+    "\n",
+    "We'll introduce the 3 most important objects, which are:\n",
+    "- `PauliString`: Representation of a Pauli string such as $X_1X_4$.\n",
+    "- `Tableau`: A table holding the current stabilizers of a circuit.\n",
+    "- `Circuit`: Representation of quantum circuit similar to Qiskit."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Pauli Strings\n",
+    "\n",
+    "A Pauli string is an $n$-qubit operator formed by taking the tensor product of single-qubit Pauli operators:\n",
+    "\n",
+    "$$P = P_1 \\otimes P_2 \\otimes \\cdots \\otimes P_n, \\quad \\text{where } P_i \\in \\{I, X, Z, Y\\}$$\n",
+    "\n",
+    "For example, a two-qubit Pauli string might be $P = X \\otimes Y$, often written as $XY$. \n",
+    "\n",
+    "> **Note:** We usually omit the identity gates, by adding indices. For example, for $P = X \\otimes I \\otimes Y$ is written as $X_1Y_3$.\n",
+    "\n",
+    "**Efficient Encoding of Pauli Strings in Software:**\n",
+    "\n",
+    "Stim is designed to allow the simulation of very large stabilizer codes, so an efficient representation on a computer is crucial.\n",
+    "There are 4 different single-qubit Pauli operators, so 2 bits are required to represent them. Stim uses the following encoding:\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "enc(I) &= 00 \\\\\n",
+    "enc(X) &= 10 \\\\\n",
+    "enc(Z) &= 01 \\\\\n",
+    "enc(Y) &= 11\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "This encoding is chosen to reflect the algebraic properties of Pauli operators, also called a [**group homomorphism**](https://en.wikipedia.org/wiki/Group_homomorphism): $enc : (G_1,\\cdot) \\rightarrow (\\mathbb{Z}_2^2,\\oplus)$. \n",
+    "\n",
+    "The first bit indicates the presence of an $X$ operation, while the second bit indicates a $Z$ operation. The $Y$ operator, can be decomposed into $X \\cdot Z$ and has therefore both bits set to 1.\n",
+    "\n",
+    "This enables multiplication of Pauli operators through simple bitwise operations. For two Pauli operators $A$ and $B$, their product (up to a global phase) is computed by:\n",
+    "\n",
+    "$$enc(A \\cdot B) = enc(A) \\oplus enc(B)$$\n",
+    "\n",
+    "where $\\oplus$ represents bitwise XOR. For example:\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "enc(X \\cdot Y) &= enc(X) \\oplus enc(Y) \\\\\n",
+    "&= 10 \\oplus 11 \\\\\n",
+    "&= 01 \\\\\n",
+    "&= enc(Z)\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "This matches the algebraic relation $XY = iZ$ (ignoring the phase factor $i$).\n",
+    "\n",
+    "Let's explore Stim's [`PauliString`](https://github.com/quantumlib/Stim/blob/main/doc/python_api_reference_vDev.md#stim.PauliString) API:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import stim\n",
+    "\n",
+    "xx = stim.PauliString(\"+XX\")\n",
+    "zz = stim.PauliString(\"+ZZ\")\n",
+    "\n",
+    "# Pauli strings can be multiplied\n",
+    "mul_res = xx * zz\n",
+    "print(\"Multiplication: XX * ZZ = \", mul_res)\n",
+    "\n",
+    "# Pauli strings can be concatenated\n",
+    "add_res = xx + zz\n",
+    "print(\"Addition: XX + ZZ = \", add_res)\n",
+    "\n",
+    "# We can check if 2 Pauli strings commute\n",
+    "print(\"XX and ZZ commute: \", xx.commutes(zz))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Tableau\n",
+    "\n",
+    "A tableau is the foundation of efficient simulation of stabilizer circuits. That is circuits, only composed of Clifford gates, mapping Pauli operators to other Pauli operators.\n",
+    "\n",
+    "> **Reminder:** a Clifford operator $C$, applied to a product of Pauli's $P$, maps it to $CPC^{\\dagger}$ which is again a Pauli product.\n",
+    "\n",
+    "During execution of a quantum circuit consisting only of Clifford gates, we only need to update the stabilizer generator Pauli strings by applying the update rule above. With our efficient encoding, this can be done very fast."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Define a Tableau simulator\n",
+    "simulator = stim.TableauSimulator()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Prepare GHZ state\n",
+    "simulator.h(0)\n",
+    "simulator.cx(0,1)\n",
+    "simulator.cx(0,2)\n",
+    "simulator.measure_many(0,1,2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "While it is important to understand how the Tableau works, Stim's Tableau is heavily optimized which increases it's complexity. A nice introduction on Tableau simulation is given by Aaronson and Gottesman in [\"Improved Simulation of Stabilizer Circuits\"](https://arxiv.org/pdf/quant-ph/0406196).\n",
+    "\n",
+    "For now, we are happy that we can apply gates to the Tableau and obtain correct measurements."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Circuit\n",
+    "\n",
+    "Stim allows us to also define quantum circuits with a API like Qiskit or Cirq. Below we create the same 3 qubit circuit preparing a GHZ state."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c = stim.Circuit()\n",
+    "\n",
+    "c.append(\"H\", 0)\n",
+    "c.append(\"CNOT\", [0,1,0,2])\n",
+    "c.append(\"M\", [0,1,2])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can print the circuit using the `diagram` method of `stim.Circuit`.\n",
+    "\n",
+    "There are different options to print the circuit:\n",
+    "- `timeline-text`: ASCII diagram\n",
+    "- `timeline-svg`: SVG image\n",
+    "- `timeline-svg-html`: Resizable SVG image\n",
+    "- `timeline-3d-html`: A 3d model, in GLTF format embedded in HTML\n",
+    "- `timeslice-svg`: Prints circuit between \"TICK\" operations (more on that later)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c.diagram('timeline-text')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can sample from the circuit by compiling a sampler"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sampler = c.compile_sampler()\n",
+    "samples = sampler.sample(shots=10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "As expected roughly half of our measurements are $00$ and the other half is $11$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "samples"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can also execute the circuit with a Tableau simulator:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Reset all qubits\n",
+    "simulator.reset(0,1,2)\n",
+    "simulator.do(c)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# All measurements are stored in the measurement record of the Tableau simulator\n",
+    "simulator.current_measurement_record()[-3::]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Logical Operators of the Steane Code\n",
+    "\n",
+    "The Steane code has exactly 6 stabilizer generators, imposing independent constraints on the logical qubit state:\n",
+    "$$S|\\psi\\rangle = |\\psi\\rangle \\;\\;\\; \\forall S \\in S_X \\cup S_Z$$\n",
+    "\n",
+    "Intuitively, this means that for $7$ qubits we have **1 degree of freedom** left, meaning that the Steane code encodes a single logical qubit.\n",
+    "\n",
+    "> It can be [shown](https://arthurpesah.me/blog/2023-03-16-stabilizer-formalism-2/), that for $m$ stabilizers and $n$ qubits, the number of logical qubits is $k = n - m$.\n",
+    "\n",
+    "Assuming, that we have found a logical operator $O_L$, then applying it to the logical qubit should result in another valid code state. \n",
+    "We can express this condition as:\n",
+    "\n",
+    "$$O_L\\ket{\\psi} = O_LS\\ket{\\psi} = \\ket{\\psi}$$\n",
+    "\n",
+    "Therefore $O_LS$ must be a stabilizer and the following must hold\n",
+    "\n",
+    "$$O_LSO_L^{\\dagger} = \\hat{S} \\in S_X \\cup S_Z$$\n",
+    "\n",
+    "As a reminder, the stabilizer generators for the Steane code are\n",
+    "$$S_X = \\langle X_1X_2X_3X_4, X_2X_3X_5X_6, X_3X_4X_6X_7 \\rangle$$\n",
+    "$$S_Z = \\langle Z_1Z_2Z_3Z_4, Z_2Z_3Z_5Z_6, Z_3Z_4Z_6Z_7 \\rangle$$\n",
+    "\n",
+    "We can see that the operators\n",
+    "\n",
+    "$$X_L = X_5X_6X_7 \\;\\;\\;\\; Z_L = Z_5Z_6Z_7$$\n",
+    "\n",
+    "satisfy the conditions above. We have found logical $X_L$ and $Z_L$ operators! \n",
+    "\n",
+    "> **Note:** Although it is custom to denote the Pauli string containing Pauli-$Z$ as $Z_L$, the naming is completely arbitrary. We only care about the algebraic properties of the operators."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Exercise 2\n",
+    "\n",
+    "**(a)** Verify in Stim, that the logical operators map the set of generators to itself and that $X_L$ and $Z_L$ anti-commute."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from stim import PauliString\n",
+    "\n",
+    "steane_stabilizer = [\n",
+    "  PauliString(\"XXXXIII\"),\n",
+    "  PauliString(\"IXXIXXI\"),\n",
+    "  PauliString(\"IIIXXXX\"),\n",
+    "  PauliString(\"ZZZZIII\"),\n",
+    "  PauliString(\"IZZIZZI\"),\n",
+    "  PauliString(\"IIIZZZZ\"),\n",
+    "]\n",
+    "\n",
+    "log_x = None # TODO\n",
+    "log_z = None # TODO\n",
+    "\n",
+    "# Conjugate the stabilizers one by one with the logical observables and compare the lists\n",
+    "conj_log_x = []\n",
+    "conj_log_z = []\n",
+    "\n",
+    "display(conj_log_x)\n",
+    "display(conj_log_z)\n",
+    "\n",
+    "# Logical operators anti-commute\n",
+    "# TODO"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(b)** Applying a stabilizer to a logical qubit does not change its state. This means that logical observables form equivalence classes modulus the stabilizers. Use Stim to find equivalent logical observables "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "![Steane Logical Co-Sets](../img/steane-code-logical-cosets.png)\n",
+    "\n",
+    "Source: [Arthur Pesah's blog post on the stabilizer formalism](https://arthurpesah.me/blog/2023-01-31-stabilizer-formalism-1/)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(c) - Pen & Paper**\n",
+    "The Steane code is a CSS code, meaning that logical Clifford gates can be performed *transversally*. Verify that $H_L = H^{\\otimes 7}$ is a logical operator. Then show that it correspond to a logical Hadamard based on how it acts on $X_L$ and $Z_L$.\n",
+    "\n",
+    "> **Note:** In the same manner it can be shown that $S_L = S^{\\otimes 7}$ implement the logical $S_L$ operator."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Quantum Computing with Logical Qubits"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### State Initialization\n",
+    "\n",
+    "Quantum circuits usually expect their qubits to be initialized in state $\\ket{0}$. Unfortunately, $\\ket{0000000}$ is not a valid code state.\n",
+    "\n",
+    "> **Question**: Which stabilizers do not stabilize this state?\n",
+    "\n",
+    "Therefore, an important, but usually costly, part of QEC is the logical qubit initialization. A naive approach is to prepare the physical qubits in state $\\ket{0}$ and measure all stabilizers."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "\n",
+    "> **Question:** How many entangling gates are needed to measure all stabilizers of the Steane code naively in sequence?\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "To allow for fault-tolerant preparation of the logical qubit, avoiding spreading of errors due to entangling gates, various efficient schemes have been developed.\n",
+    "\n",
+    "In the following we provide code for a scheme proposed by [Goto](https://www.nature.com/articles/srep19578). \n",
+    "\n",
+    "The scheme requires 8 CNOT gates to prepare the state, followed by a measurement of $Z_L$ via 3 CNOT gates using an ancilla qubit. If the measured ancilla is in the state $|0\\rangle$ then we succesfully prepared the state $|0\\rangle_L$, otherwise we reset all qubits and repeat the procedure. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def encoding_circuit(log_qb_idx: int = 0) -> stim.Circuit:\n",
+    "  \"\"\"Encoding scheme proposed by Goto 2015: https://www.nature.com/articles/srep19578\n",
+    "  To prepare the logical Steane qubit in state |0>_L.\n",
+    "  \n",
+    "  The qubit index allows shifting the indices so that we can prepare multiple logical qubits\n",
+    "  \"\"\"\n",
+    "  c = stim.Circuit()\n",
+    "  # shift registers to target logical qubit with given index\n",
+    "  s = log_qb_idx * 8\n",
+    "  \n",
+    "  c.append(\"H\", [s, 4+s, 6+s])\n",
+    "  c.append(\"CNOT\", [s, 1+s])\n",
+    "  c.append(\"CNOT\", [4+s, 5+s])\n",
+    "  c.append(\"CNOT\", [6+s, 3+s])\n",
+    "  c.append(\"CNOT\", [6+s, 5+s])\n",
+    "  c.append(\"CNOT\", [4+s, 2+s])\n",
+    "  c.append(\"CNOT\", [0+s, 3+s])\n",
+    "  c.append(\"CNOT\", [4+s, 1+s])\n",
+    "  c.append(\"CNOT\", [3+s, 2+s])\n",
+    "  \n",
+    "  # Entangle with ancilla qubit and measure logical Pauli-Z\n",
+    "  c.append(\"CNOT\", [1+s, 7+s])\n",
+    "  c.append(\"CNOT\", [3+s, 7+s])\n",
+    "  c.append(\"CNOT\", [5+s, 7+s])\n",
+    "  c.append(\"M\", [7+s])\n",
+    "\n",
+    "  return c"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The encoding circuit can be visualized in Stim by printing the `diagram`"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c = stim.Circuit()\n",
+    "c += encoding_circuit()\n",
+    "c.diagram('timeline-svg')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Given the encoding scheme, we should verify if it actually prepares a state with the correct stabilizers."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "t = c.to_tableau(ignore_measurement=True)\n",
+    "print(\"Stabilizers\")\n",
+    "t.to_stabilizers()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can see that the state prepared by the circuit is stabilized by \n",
+    "$$X_1X_2X_3X_4,\\;\\;X_2X_3X_5X_6,\\;\\;X_3X_4X_6X_7$$\n",
+    "\n",
+    "What about the Pauli-$Z$ stabilizers?\n",
+    "\n",
+    "The [Goto scheme](https://www.nature.com/articles/srep19578), prepares the $|0\\rangle_L$ state by measuring only the $Z$-stabilizers. Since arbitrary Pauli-$Z$ errors are in this case equivalent to no errors or single-qubit $Z$ errors which can be corrected by the Steane code."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "As a final sanity check, we can sample shots from the circuit and measure $Z_L$. In the absence of noise, we should prepare the state $|0\\rangle_L$ with 100% success rate.\n",
+    "\n",
+    "To avoid code repetition, let's first define a method that takes a circuit, samples from it, and returns the measurements"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "\n",
+    "def measure_logical_qubits(log_qubit_indices: list[int] = [0]) -> stim.Circuit:\n",
+    "  c = stim.Circuit()\n",
+    "  \n",
+    "  for log_qubit_index in log_qubit_indices:\n",
+    "    # shift index\n",
+    "    s = log_qubit_index * 8\n",
+    "    # final measurement\n",
+    "    c.append(\"M\", np.array([0,1,2,3,4,5,6]) + s)\n",
+    "\n",
+    "  return c\n",
+    "\n",
+    "def sample_from_circuit(c: stim.Circuit, shots: int = 10) -> np.array:\n",
+    "  # compile a sampler and sample 10 shots\n",
+    "  s = c.compile_sampler()\n",
+    "  r = s.sample(shots=shots).astype(int)\n",
+    "  \n",
+    "  return r"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Exercise 3\n",
+    "\n",
+    "Given the helper function above, complete the circuit above to correctly compute the logical $Z_L$ measurement result given the measurements of the physical qubits. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c = stim.Circuit()\n",
+    "# prepare |0>_L\n",
+    "c += encoding_circuit()\n",
+    "# append final measurement\n",
+    "c += measure_logical_qubits()\n",
+    "# sample from circuit\n",
+    "r = sample_from_circuit(c, shots=10)\n",
+    "# compute Z_L observable from measurement\n",
+    "logical_measurement_output = None # TODO"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note, that the first column of `r` corresponds to the ancilla qubit measurement and not the first qubit!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(\"Logical measurement outcome: \", logical_measurement_output)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "As there is no noise, the ancilla should always be measured in state $|0\\rangle$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(\"Ancilla qubit measurement outcome: \", r[:,0])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Different Basis State Preparation\n",
+    "\n",
+    "We can prepare the state $| 0 \\rangle_L$ with the method above. Next, we'll want to prepare the logical qubit in different basis states\n",
+    "\n",
+    "$$ \\{ |0\\rangle_L, |1\\rangle_L, |+\\rangle_L, |-\\rangle_L, |+i\\rangle_L, |-i\\rangle_L \\} $$\n",
+    "\n",
+    "This can easily be done by using the logical gates $X_L, Z_L, S_L$, and $H_L$, that we identified in the previous section."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Exercise 4\n",
+    "\n",
+    "Complete the lines marked with `TODO` in the function below (Always add the index shift `s` to prepare for operations on multiple logical qubits!)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def logical_single_qubit_gate(gate: str, log_qb_idx: int = 0) -> stim.Circuit:\n",
+    "  \"\"\"\n",
+    "    Supported logical gates:\n",
+    "        - \"Z\": Logical Z gate\n",
+    "        - \"X\": Logical X gate\n",
+    "        - \"H\": Logical Hadamard gate\n",
+    "        - \"S\": Logical S (phase) gate\n",
+    "    \n",
+    "    Args:\n",
+    "        c (stim.Circuit): The stim Circuit object to append the logical gate to\n",
+    "        gate (str): The name of the logical gate to apply. Must be one of: \"Z\", \"X\", \"H\", \"S\"\n",
+    "        log_qb_idx (int, optional): Index of the logical qubit to operate on. Used to offset the\n",
+    "            physical qubit indices when working with multiple logical qubits. Defaults to 0.\n",
+    "            Each logical qubit uses 8 physical qubits (7 data + 1 ancilla).\n",
+    "            \n",
+    "    Returns:\n",
+    "        stim.Circuit: The modified circuit with the logical gate appended\n",
+    "  \"\"\"\n",
+    "  c = stim.Circuit()\n",
+    "  # shift registers to target logical qubit with given index\n",
+    "  s = log_qb_idx * 8\n",
+    "  \n",
+    "  match gate:\n",
+    "    case \"Z\":\n",
+    "      # TODO\n",
+    "      pass\n",
+    "    case \"X\":\n",
+    "      # TODO\n",
+    "      pass\n",
+    "    case \"H\":\n",
+    "      # TODO\n",
+    "      pass\n",
+    "    case \"S\":\n",
+    "      c.append(\"S\", np.array([0,1,2,3,4,5,6]) + s)\n",
+    "    case \"S_DAG\":\n",
+    "      c.append(\"S_DAG\", np.array([0,1,2,3,4,5,6]) + s)\n",
+    "    case _:\n",
+    "      raise ValueError(\"Logical gate name '{logical_gate}' undefined\")\n",
+    "\n",
+    "  return c"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We define a helper function to prepare the logical qubit in the Eigenstate of a given Stabilizer"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def prepare_stab_eigenstate(stabilizer: str) -> stim.Circuit:\n",
+    "  \"\"\"Generates a circuit preparing the Eigenstate of a given singe-qubit stabilizer\"\"\"\n",
+    "  \n",
+    "  c = stim.Circuit()\n",
+    "  \n",
+    "  match stabilizer:\n",
+    "    case \"+Z\": # |0>\n",
+    "      pass\n",
+    "    case \"-Z\": # |1>\n",
+    "      c += logical_single_qubit_gate(gate=\"X\")\n",
+    "    case \"+X\": # |+>\n",
+    "      c += logical_single_qubit_gate(gate=\"H\")\n",
+    "    case \"-X\": # |->\n",
+    "      c += logical_single_qubit_gate(gate=\"X\")\n",
+    "      c += logical_single_qubit_gate(gate=\"H\")\n",
+    "    case \"+Y\": # |+i>\n",
+    "      c += logical_single_qubit_gate(gate=\"H\")\n",
+    "      c += logical_single_qubit_gate(gate=\"S\")\n",
+    "    case \"-Y\": # |-i>\n",
+    "      c += logical_single_qubit_gate(gate=\"X\")\n",
+    "      c += logical_single_qubit_gate(gate=\"H\")\n",
+    "      c += logical_single_qubit_gate(gate=\"S\")\n",
+    "    case _:\n",
+    "      raise ValueError(f\"Unknown stabilizer {stabilizer}\")\n",
+    "    \n",
+    "  return c"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's test the state preparation for our logical qubit when measuring in the $Z_L$ basis"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c = stim.Circuit()\n",
+    "# prepare |0>_L\n",
+    "c += encoding_circuit()\n",
+    "# apply a bit-flip\n",
+    "c += logical_single_qubit_gate(gate=\"X\")\n",
+    "# append final measurement\n",
+    "c += measure_logical_qubits()\n",
+    "# sample from circuit\n",
+    "r = sample_from_circuit(c, shots=10)\n",
+    "\n",
+    "logical_measurement_output = r[:,5] ^ r[:,6] ^ r[:,7]\n",
+    "print(\"Logical bit-flip measurement outcome: \", logical_measurement_output)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c = stim.Circuit()\n",
+    "# prepare |0>_L\n",
+    "c += encoding_circuit()\n",
+    "# apply a logical Hadamard gate\n",
+    "c += prepare_stab_eigenstate(\"-Z\")\n",
+    "# append final measurement\n",
+    "c += measure_logical_qubits()\n",
+    "# sample from circuit\n",
+    "r = sample_from_circuit(c, shots=20)\n",
+    "\n",
+    "# compute Z_L observable from measurement\n",
+    "logical_measurement_output = r[:,5] ^ r[:,6] ^ r[:,7]\n",
+    "print(\"Logical Hadamard measurement outcome: \", logical_measurement_output)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c = stim.Circuit()\n",
+    "# prepare |0>_L\n",
+    "c += encoding_circuit()\n",
+    "# apply a logical X by using logical HZH construction\n",
+    "c += logical_single_qubit_gate(gate=\"H\")\n",
+    "c += logical_single_qubit_gate(gate=\"Z\")\n",
+    "c += logical_single_qubit_gate(gate=\"H\")\n",
+    "# append final measurement\n",
+    "c += measure_logical_qubits()\n",
+    "# sample from circuit\n",
+    "r = sample_from_circuit(c, shots=20)\n",
+    "\n",
+    "# compute Z_L observable from measurement\n",
+    "logical_measurement_output = r[:,5] ^ r[:,6] ^ r[:,7]\n",
+    "print(\"Logical bit-flip measurement outcome: \", logical_measurement_output)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Based on the results above, we can see that logical operators works as expected and that we prepare any state that we interested in."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Measuring in different Basis\n",
+    "\n",
+    "To measure a qubit in a different basis we usually apply single-qubit rotations before the measurement in the $Z$-basis. \n",
+    "\n",
+    "For example, if we want to measure in the $X$-basis we need to apply a Hadamard gate before the measurement since\n",
+    "\n",
+    "$$\\langle \\psi | H Z H | \\psi \\rangle = \\langle \\psi | X | \\psi \\rangle $$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Exercise 5 \n",
+    "\n",
+    "Complete the lines marked with `TODO` in the function below."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def rotate_to_measurement_basis(meas_basis: str) -> stim.Circuit:\n",
+    "  \"\"\"Appends single-qubit rotations to a circuit to prepare measurement in specified basis\"\"\"\n",
+    "  c = stim.Circuit()\n",
+    "  \n",
+    "  match meas_basis:\n",
+    "    case \"Z\":\n",
+    "      pass\n",
+    "    case \"X\":\n",
+    "      # TODO\n",
+    "      pass\n",
+    "    case \"Y\":\n",
+    "      c += logical_single_qubit_gate(gate=\"S_DAG\")\n",
+    "      c += logical_single_qubit_gate(gate=\"H\")\n",
+    "    case _:\n",
+    "      raise ValueError(\"Specified target basis not known\")\n",
+    "    \n",
+    "  return c "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c = stim.Circuit()\n",
+    "# prepare |0>_L\n",
+    "c += encoding_circuit()\n",
+    "# rotate to X-basis\n",
+    "c += rotate_to_measurement_basis(meas_basis=\"X\")\n",
+    "# append final measurement\n",
+    "c += measure_logical_qubits()\n",
+    "# sample from circuit\n",
+    "r = sample_from_circuit(c, shots=10)\n",
+    "\n",
+    "# compute Z_L observable from measurement\n",
+    "logical_measurement_output = r[:,5] ^ r[:,6] ^ r[:,7]\n",
+    "print(\"Logical bit-flip measurement outcome: \", logical_measurement_output)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Transversal gates\n",
+    "\n",
+    "We have now a good understanding of how to manipulate a single logical qubit. To leverage quantum advantage in the future, we will also need to be able to entangle our logical qubits. \n",
+    "\n",
+    "In this section we are going to implement a logical CNOT gate. Then, we'll put everything together to prepare a logical GHZ state using 14 + 2 physical qubits:\n",
+    "$$\\ket{GHZ}_L = \\frac{1}{\\sqrt{2}}\\left(\\ket{00}_L + \\ket{11}_L\\right)$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In a first step, we prepare the state $|0\\rangle_L \\otimes |0\\rangle_L$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# prepare |0>_L x |0>_L\n",
+    "c = stim.Circuit()\n",
+    "c += encoding_circuit(log_qb_idx=0)\n",
+    "c += encoding_circuit(log_qb_idx=1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c.diagram(\"timeline-svg\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Logical CNOT Implementation\n",
+    "\n",
+    "As shown in the lecture, CSS codes allow for transversal implementation of logical entangling gates such as the logical CNOT gate. \n",
+    "In the Steane code the logical transversal CNOT gate is simply the pairwise CNOT between physical qubits at the same index of their respective logical qubit.  \n",
+    "\n",
+    "Let's write a method that implements the logical CNOT:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def logical_cnot(ctrl_idx: int, target_idx: int) -> stim.Circuit:\n",
+    "  \"\"\"Implement a transversal CNOT by applying CNOT between physical qubits of the logical qubits\n",
+    "  \"\"\"\n",
+    "  c = stim.Circuit()\n",
+    "  if ctrl_idx == target_idx:\n",
+    "    raise ValueError(\"Control index cannot be equal target index\")\n",
+    "  \n",
+    "  offset_ctrl = ctrl_idx * 8\n",
+    "  offset_target = target_idx * 8\n",
+    "  \n",
+    "  for i in range(7):\n",
+    "    c.append(\"CNOT\", [i + offset_ctrl, i + offset_target])\n",
+    "  \n",
+    "  return c"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Before applying the logical CNOT, we flip the control logical qubit to be able to test our gate"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c += logical_single_qubit_gate(gate=\"X\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c += logical_cnot(ctrl_idx=0, target_idx=1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c += measure_logical_qubits(log_qubit_indices=[0,1])\n",
+    "c.diagram(\"timeline-svg\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "r = sample_from_circuit(c, shots=10)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "logical_measurement_output_qb1 = r[:,6] ^ r[:,7] ^ r[:,8]\n",
+    "logical_measurement_output_qb2 = r[:,6 + 7] ^ r[:,7 + 7] ^ r[:,8 + 7]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(logical_measurement_output_qb1)\n",
+    "print(logical_measurement_output_qb2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Logical Bell State\n",
+    "\n",
+    "Now, we have all tools to implement a logical Bell state!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# prepare |0>_L x |0>_L\n",
+    "c = stim.Circuit()\n",
+    "c += encoding_circuit(log_qb_idx=0)\n",
+    "c += encoding_circuit(log_qb_idx=1)\n",
+    "\n",
+    "# Apply Hadamard to first qubit\n",
+    "c += logical_single_qubit_gate(gate=\"H\", log_qb_idx=0)\n",
+    "# Apply logical CNOT\n",
+    "c += logical_cnot(ctrl_idx=0, target_idx=1)\n",
+    "\n",
+    "# Add final measurements\n",
+    "c += measure_logical_qubits(log_qubit_indices=[0,1])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Optionally display the circuit\n",
+    "c.diagram(\"timeline-svg\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# sample and extract states\n",
+    "r = sample_from_circuit(c, shots=20)\n",
+    "\n",
+    "logical_measurement_output_qb1 = r[:,6] ^ r[:,7] ^ r[:,8]\n",
+    "logical_measurement_output_qb2 = r[:,6 + 7] ^ r[:,7 + 7] ^ r[:,8 + 7]\n",
+    "\n",
+    "print(logical_measurement_output_qb1)\n",
+    "print(logical_measurement_output_qb2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Optional: Simulating the Steane Code on noisy Hardware: Quantinuum Experiment\n",
+    "\n",
+    "The Steane code has been realized in various experiments:\n",
+    "- [Quantum computations on a topologically encoded qubit](https://www.science.org/doi/10.1126/science.1253742), 2014, Nigg et al.\n",
+    "- [Realization of Real-Time Fault-Tolerant Quantum Error Correction](https://journals.aps.org/prx/abstract/10.1103/PhysRevX.11.041058), 2021\n",
+    "- [Demonstration of logical qubits and repeated error correction with better-than-physical error rates](https://arxiv.org/html/2404.02280v1), 2024\n",
+    "\n",
+    "In the following, we provide code to simulate parts of the experiment by Quantinuum in 2021, where they implemented a single logical qubit on their ion-trap device and applied multiple rounds of error correction to it.\n",
+    "\n",
+    "This will hopefully give you a better understanding of how rounds of quantum error correction are actually implemented and how errors are handled. Please refer to the paper to learn more about the details of the experiment. Happy exploring!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Introducing Errors"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Quantinuum error parameters\n",
+    "\n",
+    "In their experiment, Quantinuum measured various error sources for their ion-trap device. \n",
+    "\n",
+    "| Operation | Error Channel | Probability |\n",
+    "|---|---|---|\n",
+    "| Initilization | Bit flip | $1.66 \\cdot 10^{-6}$ |\n",
+    "| Measurement |  Bit flip | $2.4 \\cdot  10^{-3}$ |\n",
+    "| Single-qubit gate | Depolarizing | $7 \\cdot 10^{-5}$ |\n",
+    "| Two-qubit gate | Depolarizing | $3.1 \\cdot 10^{-3}$ |\n",
+    "\n",
+    "**Note:** We excluded non-Pauli channels, such as leakage, as they cannot be handled by Stim.\n",
+    "\n",
+    "Below, we define a helper function that allows us to inject the noise defined in the paper into our circuits: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class NoiseModel:\n",
+    "  \"\"\"Applies noise to quantum circuits.\n",
+    "   \n",
+    "   Adds depolarizing noise after 1 and 2-qubit gates, measurement errors,\n",
+    "   and initialization errors based on typical superconducting qubit parameters.\n",
+    "   \"\"\"\n",
+    "  \n",
+    "  def __init__(self):\n",
+    "    self.init_error = 1.66 * 1e-6\n",
+    "    self.meas_error = 2.4 * 1e-3\n",
+    "    self.depolarize1 = 7 * 1e-5\n",
+    "    self.depolarize2 = 3.1 * 1e-3\n",
+    "    self.enabled = True\n",
+    "\n",
+    "  def apply(self, c: stim.Circuit) -> stim.Circuit:\n",
+    "    if not self.enabled:\n",
+    "      return c\n",
+    "    \n",
+    "    cn = stim.Circuit()\n",
+    "    for op in c:\n",
+    "      if not op.name == \"CX\":\n",
+    "        cn.append(op)\n",
+    "        if op.name in [\"H\", \"X\", \"Y\", \"S\", \"S_DAG\"]:\n",
+    "          cn.append(\"DEPOLARIZE1\", op.targets_copy(), self.depolarize1)\n",
+    "        if op.name == \"M\":\n",
+    "          cn.append(\"X_ERROR\", op.targets_copy(), self.meas_error)\n",
+    "        if op.name == \"R\":\n",
+    "          cn.append(\"X_ERROR\", op.targets_copy(), self.init_error)\n",
+    "      \n",
+    "      else:\n",
+    "        targets = op.targets_copy()\n",
+    "        for i in range(0, len(targets), 2):\n",
+    "            control = targets[i]\n",
+    "            target = targets[i+1]\n",
+    "            cn.append(\"CX\", [control, target])\n",
+    "            cn.append(\"DEPOLARIZE2\", [control, target], self.depolarize2)\n",
+    "    return cn\n",
+    "        "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "noise = NoiseModel()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Faulty logical state preparation\n",
+    "\n",
+    "To test our noise model, we apply it to the Goto scheme. We expect to see some state preparation failures."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c = stim.Circuit()\n",
+    "# prepare |0>_L\n",
+    "c += noise.apply(encoding_circuit())\n",
+    "# append final measurement\n",
+    "c += measure_logical_qubits()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c.diagram(\"timeline-svg\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "num_shots = 100_000\n",
+    "r = sample_from_circuit(c, shots=num_shots)\n",
+    "\n",
+    "# compute Z_L observable from measurement\n",
+    "logical_measurement_output = r[:,5] ^ r[:,6] ^ r[:,7]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Measure how often the ancilla qubit is measured in state |0>\n",
+    "print(\"Success rate: \", (1 - (np.sum(r[:,0]) / num_shots)) * 100, \"%\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Syndrome extraction\n",
+    "\n",
+    "After succesful state preparation, the logical qubit is idling and the physical qubits will accumulate errors. This will cuase the logical qubit to decohere if we don't measure the stabilizers, effectively **digitizing the noise**, and tracking the changes in stabilizer measurements!\n",
+    "\n",
+    "Below we first provide a function to measure all stabilizers of the code in a sequence."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def measure_all_syndromes() -> stim.Circuit:\n",
+    "  \"\"\"Appends a circuit that measures all 6 stabilizers of the [[7,1,3]]-Steane code\"\"\"\n",
+    "  \n",
+    "  # indices for X-/Z-stabilizers\n",
+    "  syndrome_qubits = [\n",
+    "    [0,1,2,3], # 1st plaquette\n",
+    "    [1,2,4,5], # 2nd plaquette\n",
+    "    [2,3,5,6]  # 3rd plaquette\n",
+    "  ]\n",
+    "  # indices for ancilla qubits\n",
+    "  ancilla_qubits = [8,9,10]\n",
+    "  \n",
+    "  c = stim.Circuit()\n",
+    "  # measure X-stabilizers\n",
+    "  for ancilla, data_qubits in zip(ancilla_qubits, syndrome_qubits):\n",
+    "    for data in data_qubits:\n",
+    "      c.append(\"CNOT\", [data, ancilla])\n",
+    "    c.append(\"M\", ancilla)\n",
+    "    c.append(\"R\", ancilla)\n",
+    "    \n",
+    "  # measure Z-stabilizers\n",
+    "  for ancilla, data_qubits in zip(ancilla_qubits, syndrome_qubits):\n",
+    "    c.append(\"H\", ancilla)\n",
+    "    for data in data_qubits:\n",
+    "      c.append(\"CNOT\", [ancilla, data])\n",
+    "    c.append(\"H\", ancilla)\n",
+    "    c.append(\"M\", ancilla)\n",
+    "    c.append(\"R\", ancilla)\n",
+    "\n",
+    "  return c"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "c = stim.Circuit()\n",
+    "c += measure_all_syndromes()\n",
+    "c.diagram('timeline-svg')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This approach for syndrome extraction is problematic as it is clearly not fault-tolerant. For example, consider a $Z$ error on one of the ancilla qubits. A single error can spread to 4 physical qubits during a single stabilizer measurement!\n",
+    "\n",
+    "**Can we do better?**\n",
+    "\n",
+    "A first approach could be to group the entangling gates, so that we measure the stabilizers in parallel. We can measure at most 3 stabilizers in parallel. This also reduces the time the physical qubits spent idling.\n",
+    "\n",
+    "Furthermore, we need to consider the spreading of errors from the ancillas, so called **hook errors**. Since the Steane code is a distance $d=3$ code, we can at most correct a single error and detect two errors. \n",
+    "\n",
+    "A simple approach to detect hook errors is to add additional \"flag\" qubits, which measure parity checks on subsets of ancillas. In the following, we define circuits where the ancillas act themselves as flags for hook errors without the need for additional ancillas (Syndrome qubits reciprocally flag each other). "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def measure_flagged_syndromes_xzz() -> stim.Circuit:\n",
+    "  \"\"\"Extracts flagged syndrome measurements for stabilizers 1, 5, 6\n",
+    "  \n",
+    "  1: XXXXIII  (Z errors on first plaquette)\n",
+    "  5: IZZIZZI  (X errors on second plaquette)\n",
+    "  6: IIZZIZZ  (X errors on third plaquette)\n",
+    "  \"\"\"\n",
+    "  c = stim.Circuit()\n",
+    "  c.append(\"H\", 8)\n",
+    "  c.append(\"CNOT\", [8,3])\n",
+    "  c.append(\"CNOT\", [2,10])\n",
+    "  c.append(\"CNOT\", [5,9])\n",
+    "  # correlate\n",
+    "  c.append(\"CNOT\", [8,9])\n",
+    "  c.append(\"CNOT\", [8,0])\n",
+    "  c.append(\"CNOT\", [3,10])\n",
+    "  c.append(\"CNOT\", [4,9])\n",
+    "  c.append(\"CNOT\", [8,1])\n",
+    "  c.append(\"CNOT\", [6,10])\n",
+    "  c.append(\"CNOT\", [2,9])\n",
+    "  #correlate\n",
+    "  c.append(\"CNOT\", [8,10])\n",
+    "  c.append(\"CNOT\", [8,2])\n",
+    "  c.append(\"CNOT\", [5,10])\n",
+    "  c.append(\"CNOT\", [1,9])\n",
+    "  c.append(\"H\", 8)\n",
+    "\n",
+    "  # measure ancillas and reset them\n",
+    "  c.append(\"M\", [8,9,10])\n",
+    "  c.append(\"R\", [8,9,10])\n",
+    "  return c"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "xzz = measure_flagged_syndromes_xzz()\n",
+    "xzz.diagram('timeline-svg')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def measure_flagged_syndromes_zxx() -> stim.Circuit:\n",
+    "  \"\"\"Extracts flagged syndrome measurements for stabilizers 2, 3, 4\n",
+    "  \n",
+    "  2: ZZZZIII  (X errors on first plaquette)\n",
+    "  3: IXXIXXI  (Z errors on second plaquette)\n",
+    "  4: IIXXIXX  (Z errors on third plaquette)\n",
+    "  \"\"\"\n",
+    "  c = stim.Circuit()\n",
+    "  \n",
+    "  c.append(\"H\", [9,10])\n",
+    "  c.append(\"CNOT\", [3,8])\n",
+    "  c.append(\"CNOT\", [10,2])\n",
+    "  c.append(\"CNOT\", [9,5])\n",
+    "  # correlate\n",
+    "  c.append(\"CNOT\", [9,8])\n",
+    "  c.append(\"CNOT\", [0,8])\n",
+    "  c.append(\"CNOT\", [10,3])\n",
+    "  c.append(\"CNOT\", [9,4])\n",
+    "  c.append(\"CNOT\", [1,8])\n",
+    "  c.append(\"CNOT\", [10,6])\n",
+    "  c.append(\"CNOT\", [9,2])\n",
+    "  #correlate\n",
+    "  c.append(\"CNOT\", [10,8])\n",
+    "  c.append(\"CNOT\", [2,8])\n",
+    "  c.append(\"CNOT\", [10,5])\n",
+    "  c.append(\"CNOT\", [9,1])\n",
+    "  c.append(\"H\", [9, 10])\n",
+    "\n",
+    "  # measure ancillas and reset them\n",
+    "  c.append(\"M\", [8,9,10])\n",
+    "  c.append(\"R\", [8,9,10])\n",
+    "  return c "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "\n",
+    "An example of hook errors with flags is shown in the picture below, taken from the Quantinuum paper:\n",
+    "\n",
+    "![Steane Hook Errors](../img/quantinuum-steane-hook-errors.png)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Full QEC cycle\n",
+    "\n",
+    "We are nearly ready to run our full QEC cycle. We can now come up with a protocol to reliably correct a single physical qubit error. Our flagged syndrome circuits can detect hook errors. To differentiate them from heigher weight Pauli errors, we combine flagged and unflagged syndrome extraction.\n",
+    "\n",
+    "If the flagged syndrome circuits do not indicate an error, than we are done and the next QEC cycle starts. Otherwise, we know that an error occurred, but we need to measure the complete set of stabilizers to identify whether a hook error occurred. \n",
+    "\n",
+    "This combination of conditional syndrome extraction is also known as **adaptive syndrome extraction** and can reduce average QEC cycle time significantly.\n",
+    "\n",
+    "The adaptive QEC cycle is depicted in the picture below:\n",
+    "\n",
+    "![](../img/qec_cycle_with_flagged_syndromes.png)\n",
+    "\n",
+    "Unfortunately, Stim does not support conditional circuit execution, which means that we need to drive the `TableauSimulator` manually."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# define a logger allowing us to print the progress of the execution of the QEC experiment\n",
+    "import logging\n",
+    "logging.basicConfig(format='%(message)s')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### The Decoder\n",
+    "\n",
+    "The decoder is a simple two-stage **Lookup Table Decoder (LUT)**. This means that for each syndrome pattern there is a fixed rule on how to update the **Pauli Frame**, which indicates whether the logical qubit has been flipped or not.\n",
+    "\n",
+    "The first stage is used to decode the unflagged syndromes and the second stage decodes the flagged syndromes.\n",
+    "\n",
+    "$X$/$Z$-type errors are handled separately, but since the stabilizers have the same structure we can use the same LUT decoder.\n",
+    "\n",
+    "> **Note:** We don't provide the syndromes directly to the decoder but only whether the syndromes changed between QEC cycle rounds."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def unflagged_decoder(syndromes: np.array) -> int:\n",
+    "  \"\"\"Given X-/Z-type stabilizer measurements. The syndromes are used to infer whether a logical error has occurred\n",
+    "  \n",
+    "  This is exactly the case, when there is a change in syndromes for the 2nd/3rd stabilizer\n",
+    "  \"\"\"\n",
+    "  bad_syndrome_patterns = np.array([[0,0,1], [0,1,0], [0,1,1]])\n",
+    "\n",
+    "  if np.any(np.all(bad_syndrome_patterns == syndromes, axis=1)):\n",
+    "    logging.debug(\"Unflagged decoder: Logical error detected!\")\n",
+    "    return 1\n",
+    "  else:\n",
+    "    return 0\n",
+    "\n",
+    "def flagged_decoder(syndromes: np.array, flagged_syndromes: np.array) -> int:\n",
+    "  \"\"\"\n",
+    "  Handle hook errors.\n",
+    "  \"\"\"\n",
+    "  \n",
+    "  if np.all(flagged_syndromes == [1,0,0]) and np.all(syndromes == [0,1,0]):\n",
+    "    return 1\n",
+    "  elif np.all(flagged_syndromes == [1,0,0]) and np.all(syndromes == [0,0,1]):\n",
+    "    return 1\n",
+    "  elif np.all(flagged_syndromes == [0,1,1]) and np.all(syndromes == [0,0,1]):\n",
+    "    return 1\n",
+    "  else:\n",
+    "    return 0\n",
+    "\n",
+    "def decoder(syndromes: np.array, flagged_syndromes: np.array) -> list[int, int]:\n",
+    "  \n",
+    "  pf = unflagged_decoder(syndromes)\n",
+    "  pf_flag = flagged_decoder(syndromes, flagged_syndromes)\n",
+    "  \n",
+    "  return pf, pf_flag"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def qec_cycle(simulator: stim.TableauSimulator, x_syndromes: np.array, z_syndromes: np.array, pauli_frame: np.array, m_idx: int, noise: NoiseModel) -> int:\n",
+    "  \"\"\"Run a full QEC cycle for the [[7,1,3]]-Steane code by driving the Tableau simulator manually\"\"\"\n",
+    "  \n",
+    "  # track the delta of previous and current syndrome measurement\n",
+    "  flag_diff_x = np.array([0,0,0]) # track delta of X-stabilizers\n",
+    "  flag_diff_z = np.array([0,0,0]) # track delta of Z-stabilizers\n",
+    "  \n",
+    "  # first flagged syndrome extraction\n",
+    "  simulator.do(noise.apply(measure_flagged_syndromes_xzz()))\n",
+    "  # measure first X-stabilizer, and second/third Z-stabilizer\n",
+    "  fx0, fz1, fz2 = simulator.current_measurement_record()[m_idx:m_idx+4]\n",
+    "  # update syndrome delta\n",
+    "  flag_diff_x[0] = fx0 ^ x_syndromes[0]\n",
+    "  flag_diff_z[1] = fz1 ^ z_syndromes[1]\n",
+    "  flag_diff_z[2] = fz2 ^ z_syndromes[2]\n",
+    "  # shift measurement index\n",
+    "  m_idx += 3\n",
+    "  # print delta for debugging\n",
+    "  logging.debug(f\"Delta after 1st flagged measurement (XZZ): X {flag_diff_x}, Z {flag_diff_z}\")\n",
+    "\n",
+    "  # if no syndrome changed continue with second round of flagged syndrome measurements\n",
+    "  if np.all(flag_diff_x == 0) and np.all(flag_diff_z == 0):\n",
+    "    # second flagged syndrome extraction\n",
+    "    simulator.do(noise.apply(measure_flagged_syndromes_zxx()))\n",
+    "    # measure first Z-stabilizer, and second/third X-stabilizer\n",
+    "    fz0, fx1, fx2 = simulator.current_measurement_record()[m_idx:m_idx+4]\n",
+    "    # update syndrome delta\n",
+    "    flag_diff_z[0] = fz0 ^ z_syndromes[0]\n",
+    "    flag_diff_x[1] = fx1 ^ x_syndromes[1]\n",
+    "    flag_diff_x[2] = fx2 ^ x_syndromes[2]\n",
+    "    # shift measurement index\n",
+    "    m_idx += 3\n",
+    "    # print delta for debugging\n",
+    "    logging.debug(f\"Delta after 2nd flagged measurement (ZXX): X {flag_diff_x}, Z {flag_diff_z}\")\n",
+    "\n",
+    "  # re-measure all syndromes if flagged syndrome extraction indicates changes in syndromes\n",
+    "  if np.any(flag_diff_z == 1) or np.any(flag_diff_x == 1):\n",
+    "    # run full syndrome extraction\n",
+    "    simulator.do(noise.apply(measure_all_syndromes()))\n",
+    "    s = simulator.current_measurement_record()[m_idx:m_idx+7]\n",
+    "    # update syndromes\n",
+    "    current_z_syndromes = np.array(s[0:3], dtype=int)  # First 3 measurements Z-stabilizers \n",
+    "    current_x_syndromes = np.array(s[3::], dtype=int)  # Final 3 measurements X-stabilizers\n",
+    "    # compute delta\n",
+    "    diff_x_syndromes = x_syndromes ^ current_x_syndromes\n",
+    "    diff_z_syndromes = z_syndromes ^ current_z_syndromes\n",
+    "    # shift measurement index\n",
+    "    m_idx += 6\n",
+    "    # print new syndrome measurements\n",
+    "    logging.debug(f\"Delta after unflagged measurement: X {diff_x_syndromes}, Z {diff_z_syndromes}\")\n",
+    "    \n",
+    "    # call decoder to get updated pauli frame\n",
+    "    pf_x, pf_flag_x = decoder(diff_x_syndromes, flag_diff_x)\n",
+    "    pf_z, pf_flag_z = decoder(diff_z_syndromes, flag_diff_z)\n",
+    "    \n",
+    "    # update pauli frame\n",
+    "    pauli_frame[0] = pauli_frame[0] ^ pf_x ^ pf_flag_x\n",
+    "    pauli_frame[1] = pauli_frame[1] ^ pf_z ^ pf_flag_z\n",
+    "    logging.debug(f\"Pauli frame: Z: {pauli_frame[0]}, X: {pauli_frame[1]}\")\n",
+    "    \n",
+    "    # update syndromes\n",
+    "    x_syndromes = current_x_syndromes\n",
+    "    z_syndromes = current_z_syndromes\n",
+    "  \n",
+    "  return simulator, x_syndromes, z_syndromes, pauli_frame, m_idx"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For the final round of quantum error correction, we measure all physical qubits simultaneously in the $Z$-basis.\n",
+    "\n",
+    "Given the measurement results, we compute the syndrome measurements as well as the logical observable by classically XORing the bits.\n",
+    "\n",
+    "Depending on the chosen measurement basis, we need to modify the syndromes."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def destructive_logical_measurement(simulator: stim.TableauSimulator, meas_basis: str, x_syndromes: np.array, z_syndromes: np.array, pauli_frame: np.array, m_idx: int, noise: NoiseModel) -> int:\n",
+    "  \"\"\"Perform final destructive measurement where all physical qubits are measured.\n",
+    "  \n",
+    "  Returns a single bit, corresponding to the logical qubit measurement in the specified measurement basis.\n",
+    "  A final set of syndromes can be computed depending on the measurement basis.\n",
+    "  \"\"\"\n",
+    "  \n",
+    "  # Measure all seven physical qubits of our logical qubit destructively\n",
+    "  simulator.do(noise.apply(measure_logical_qubits()))\n",
+    "  r = simulator.current_measurement_record()[m_idx:m_idx+7]\n",
+    "  \n",
+    "  # Compute the logical observable\n",
+    "  log_obs = r[4] ^ r[5] ^ r[6]\n",
+    "  \n",
+    "  # Compute syndromes\n",
+    "  s1 = r[0] ^ r[1] ^ r[2] ^ r[3]  # First plaquette\n",
+    "  s2 = r[1] ^ r[2] ^ r[4] ^ r[5]  # Second plaquette\n",
+    "  s3 = r[2] ^ r[3] ^ r[5] ^ r[6]  # Third plaquette\n",
+    "  syndromes = np.array([s1, s2, s3], dtype=int)\n",
+    "\n",
+    "  match meas_basis:\n",
+    "    case \"X\":\n",
+    "      syndrome_diff = syndromes ^ x_syndromes\n",
+    "    case \"Y\":\n",
+    "      syndrome_diff = syndromes ^ x_syndromes\n",
+    "      syndrome_diff = syndromes ^ z_syndromes\n",
+    "    case \"Z\":\n",
+    "      syndrome_diff = syndromes ^ z_syndromes\n",
+    "    case _:\n",
+    "      raise ValueError(f\"Unknown measurement basis {meas_basis}!\")\n",
+    "\n",
+    "  logging.debug(f\"Delta final round: {syndrome_diff}\")\n",
+    "\n",
+    "  \n",
+    "  # Get final corrections from the unflagged decoder\n",
+    "  final_correction = unflagged_decoder(syndrome_diff)\n",
+    "  \n",
+    "  # Update the logical obs\n",
+    "  log_obs = log_obs ^ final_correction\n",
+    "  \n",
+    "  # Finally, apply correction based on measurement basis\n",
+    "  match meas_basis:\n",
+    "    case \"X\":\n",
+    "      log_obs = log_obs ^ pauli_frame[0]\n",
+    "    case \"Y\":\n",
+    "      log_obs = log_obs ^ pauli_frame[0] ^ pauli_frame[1]\n",
+    "      logging.debug(\"log : %s, pf: %s\", log_obs, pauli_frame)\n",
+    "    case \"Z\":\n",
+    "      log_obs = log_obs ^ pauli_frame[1]\n",
+    "      \n",
+    "  return log_obs\n",
+    "   "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def expected_result(measure_output: int, stabilizer: str, meas_basis: str) -> int:\n",
+    "  \"\"\"Evaluate if measurement corresponds to the expected measurement result for a given stabilizer and measurement basis.\"\"\"\n",
+    "\n",
+    "  pauli_measurement = stim.PauliString(meas_basis)\n",
+    "  pauli_stabilizer = stim.PauliString(stabilizer) \n",
+    "  commute = pauli_stabilizer.commutes(pauli_measurement)\n",
+    "  \n",
+    "  if not commute:\n",
+    "    raise ValueError(\"Anti-commuting stabilzers, measurement is random\")\n",
+    "  \n",
+    "  sign = (pauli_measurement * pauli_stabilizer).sign\n",
+    "  \n",
+    "  if sign == 1:\n",
+    "    return int(0 == measure_output)\n",
+    "  else:\n",
+    "    return int(1 == measure_output)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Finally, we can put everything together and run the whole QEC cycle!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def steane_code_exp(initial_state: str = \"+Z\", meas_basis: str = \"Z\", num_cycles: int = 1, shots: int = 100, noise = NoiseModel()):\n",
+    "  \"\"\"Runs an error correction experiment for the Steane [[7,1,3]]-code.\n",
+    "  \n",
+    "  The quantum state is represented by the state of the stim TableauSimulator.\n",
+    "  \"\"\"\n",
+    "  results = []\n",
+    "  \n",
+    "  for _ in range(shots):\n",
+    "    simulator = stim.TableauSimulator()\n",
+    "    \n",
+    "    m_idx = 0 # shift measurement index\n",
+    "    \n",
+    "    # state preparation (3 attempts)\n",
+    "    # prepare the logical |0>_L state and verify with ancilla\n",
+    "    for _ in range(3):\n",
+    "      simulator.do(noise.apply(encoding_circuit()))\n",
+    "      state_prep_ancilla = simulator.current_measurement_record()[m_idx]\n",
+    "      logging.debug(\"State preparation ancilla: %s\", int(state_prep_ancilla))\n",
+    "      m_idx += 1\n",
+    "      if not state_prep_ancilla:\n",
+    "        break\n",
+    "      \n",
+    "    # apply single qubit gate to prepare correct state\n",
+    "    simulator.do(noise.apply(prepare_stab_eigenstate(initial_state)))\n",
+    "    \n",
+    "    # run QEC cycles\n",
+    "    x_syndromes = np.array([0,0,0])\n",
+    "    z_syndromes = np.array([0,0,0])\n",
+    "    # Pauli frame tracks which logical correction to apply\n",
+    "    # Pauli Frame = [Apply X_L?, Apply Z_L?] \n",
+    "    pauli_frame = np.array([0,0])\n",
+    "    \n",
+    "    for i in range(num_cycles):\n",
+    "      logging.debug(f\"--- QEC cycle {i}\")\n",
+    "      simulator, x_syndromes, z_syndromes, pauli_frame, m_idx = qec_cycle(simulator, x_syndromes, z_syndromes, pauli_frame, m_idx, noise)\n",
+    "\n",
+    "    # Rotate to correct logical measurement basis\n",
+    "    simulator.do(noise.apply(rotate_to_measurement_basis(meas_basis=meas_basis)))\n",
+    "    \n",
+    "    # Perform final destructive logical measurement\n",
+    "    final_measurement = destructive_logical_measurement(simulator, meas_basis, x_syndromes, z_syndromes, pauli_frame, m_idx, noise)\n",
+    "    \n",
+    "    logging.debug(f\"Final measurement: {final_measurement}\")\n",
+    "    \n",
+    "    success = expected_result(final_measurement, initial_state, meas_basis)\n",
+    "    logging.debug(f\"Success: {success}\\n\")\n",
+    "    results.append(success)\n",
+    "    \n",
+    "  return results\n",
+    "  "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Uncomment to follow QEC cycle execution\n",
+    "logging.getLogger().setLevel(logging.DEBUG)\n",
+    "\n",
+    "noise = NoiseModel()\n",
+    "noise.enabled = False\n",
+    "\n",
+    "steane_code_exp(num_cycles=3, shots=1, initial_state=f\"+Y\", meas_basis=f\"Y\", noise=noise)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Simulating Logical Error Rates for Steane Code for each Basis"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "shots = 2048\n",
+    "cycles_sweep = [0,1,2,3,4,5,6]\n",
+    "basis_sweep = [\"Z\", \"X\", \"Y\"]\n",
+    "noise = NoiseModel()\n",
+    "noise.enabled = True\n",
+    "\n",
+    "results = []\n",
+    "for basis in basis_sweep:\n",
+    "  cycle_results = []\n",
+    "  for cycles in cycles_sweep:\n",
+    "    exp_results = steane_code_exp(num_cycles=cycles, shots=shots, initial_state=f\"+{basis}\", meas_basis=f\"{basis}\", noise=noise)\n",
+    "    cycle_results.append(np.sum(exp_results)/shots)\n",
+    "  results.append(cycle_results)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "plt.title(\"Steane Code Logical Error Rate vs. QEC cycles\")\n",
+    "plt.xlabel(\"QEC Cycles\")\n",
+    "plt.ylabel(\"Logical Error Rate\")\n",
+    "plt.grid(axis='y')\n",
+    "plt.yscale('log')\n",
+    "for idx, basis in enumerate(basis_sweep):\n",
+    "  plt.scatter(cycles_sweep, 1 - np.array(results[idx]), label=basis)\n",
+    "plt.legend(title=\"Basis\")"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "stim",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.10"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

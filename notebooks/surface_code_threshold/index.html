@@ -1,0 +1,731 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial - Estimating the Surface Code Threshold &mdash; Quantum Autumn School 2024  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/overrides.css?v=0572569b" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script data-domain="enccs.github.io/qas2024" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Quantum Monte Carlo and quantum finance" href="../../qmc_fin/" />
+    <link rel="prev" title="Tutorial - Fault-Tolerant Quantum Computing with CSS codes" href="../css_code_steane/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../" class="icon icon-home">
+            Quantum Autumn School 2024
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setup/">Setup</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome/">Welcome and introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hpc_qc/">Integration of High Performance Computing and Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../helmi/">Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GHZ_Estimator_Attendees/">Tutorial - Introduction to Helmi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qaoa_vqe_intro/">Introduction to variational quantum algorithms: VQE and QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../QAS2024_QAOA_exercise/">Tutorial - Variational Quantum Algorithms</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 2</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../qec/">Introduction to Quantum Error Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Decoding_excercise/">Tutorial - MAP Decoding Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../css_code_steane/">Tutorial - Fault-Tolerant Quantum Computing with CSS codes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial - Estimating the Surface Code Threshold</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python-dependencies">Python Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-surface-code">The Surface Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#surface-code-circuit-in-stim">Surface Code Circuit in Stim</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#circuit-metadata">Circuit Metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#detectors">Detectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#final-measurement-round">Final Measurement Round</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#detectors-in-the-absence-of-noise">Detectors in the Absence of Noise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#noisy-surface-code-circuits">Noisy Surface Code Circuits</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-detector-error-model-dem">The Detector Error Model (DEM)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-dem-for-repetition-code">Example: DEM for Repetition Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dem-model-and-the-tanner-graph">DEM model and the Tanner Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dem-model-for-decoder-research-and-reproducibility">DEM model for Decoder Research and Reproducibility</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#decoding-errors-minimum-weight-perfect-matching">Decoding Errors: Minimum-Weight Perfect Matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estimating-the-repetition-code-threshold">Estimating the Repetition Code Threshold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercise-estimating-the-threshold-of-the-surface-code">Exercise: Estimating the Threshold of the Surface Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../qmc_fin/">Quantum Monte Carlo and quantum finance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../option_pricing/">Pricing a European call option on a quantum computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../option_pricing_tutorial/">Tutorial - Pricing a European call option using quantum computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qsip/">QSIP - Quantum Sweden Innovation Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Day 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../flight_scheduling_optimization_qaoa/">Tutorial - Solving Flight Scheduling Optimization using QAOA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qwalks/">Quantum walks on quantum computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tergite-overview/">Tergite overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cos/">Distributed Quantum Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../qelm/">Quantum extreme learning machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../matsci_on_qc/README/">Quantum Computing for Materials Science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ihpc/">Quantum Computing Activities of NCC Iceland</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/lessons/">All ENCCS lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://enccs.se/">About ENCCS</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Quantum Autumn School 2024</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial - Estimating the Surface Code Threshold</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/qas2024/blob/main/content/notebooks/surface_code_threshold.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-estimating-the-surface-code-threshold">
+<h1>Tutorial - Estimating the Surface Code Threshold<a class="headerlink" href="#tutorial-estimating-the-surface-code-threshold" title="Link to this heading"></a></h1>
+<p>In this notebook, we will estimate the threshold of the Surface Code, for a simple phenomenological circuit-noise model.</p>
+<section id="python-dependencies">
+<h2>Python Dependencies<a class="headerlink" href="#python-dependencies" title="Link to this heading"></a></h2>
+<p>To run the Jupyter Notebook locally, you’ll need the following dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>stim~<span class="o">=</span><span class="m">1</span>.14
+numpy~<span class="o">=</span><span class="m">1</span>.0<span class="w">  </span><span class="c1"># require for PyMatching</span>
+scipy
+pymatching
+matplotlib
+</pre></div>
+</div>
+<p>If not already installed in your environmnet you can install them with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>stim~<span class="o">=</span><span class="m">1</span>.14<span class="w"> </span>numpy~<span class="o">=</span><span class="m">1</span>.0<span class="w"> </span>scipy<span class="w"> </span>pymatching<span class="w"> </span>matplotlib
+</pre></div>
+</div>
+</section>
+<section id="the-surface-code">
+<h2>The Surface Code<a class="headerlink" href="#the-surface-code" title="Link to this heading"></a></h2>
+<p>As discussed in the lecture, the Surface Code is a stabilizer code with code distance <span class="math notranslate nohighlight">\(d\)</span>, <span class="math notranslate nohighlight">\(d^2\)</span> data qubits, and <span class="math notranslate nohighlight">\(d^2-1\)</span> syndrome measurement qubits, embedded in a 2D-plane.</p>
+<p>The stabilizers of the code have weight 4 (interior) or 2 (boundary) depending on their location on the surface. In the picture below, a distance <span class="math notranslate nohighlight">\(d=5\)</span> Surface Code is shown. The red squares depict the <span class="math notranslate nohighlight">\(X\)</span>-type stabilizers, and the blue squares depict the <span class="math notranslate nohighlight">\(Z\)</span>-type stabilizers.</p>
+<p><img alt="Surface Code" src="../../_images/surface-code.svg" /></p>
+<p><strong>Source:</strong> https://errorcorrectionzoo.org/c/rotated_surface</p>
+<p>To measure the syndromes, the code requires only local operation between neighboring qubits since each syndrome qubit measures only its neighboring data qubits.</p>
+</section>
+<section id="surface-code-circuit-in-stim">
+<h2>Surface Code Circuit in Stim<a class="headerlink" href="#surface-code-circuit-in-stim" title="Link to this heading"></a></h2>
+<p>We will use the stabilizer simulator <a class="reference external" href="https://github.com/quantumlib/Stim"><code class="docutils literal notranslate"><span class="pre">Stim</span></code></a> to simulate the circuit code execution and the circuit noise.</p>
+<p>Stim allows us to load a set of pre-defined quantum circuits for well-known quantum error correction codes such as the Surface Code.</p>
+<p>We’ll start by generating a distance <span class="math notranslate nohighlight">\(d=3\)</span> Surface Code quantum circuits with 3 rounds of syndrome measurements.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stim</span>
+
+<span class="n">circuit</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="o">.</span><span class="n">generated</span><span class="p">(</span>
+  <span class="s2">&quot;surface_code:rotated_memory_x&quot;</span><span class="p">,</span> 
+  <span class="n">rounds</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+  <span class="n">distance</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;timeline-svg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For <span class="math notranslate nohighlight">\(d=3\)</span>, we expect the circuit to have 9 data qubits and 8 ancilla qubits to measure the stabilizers, so a total of 15 qubits. The cirucit generated above contains a few idle wires (corresponding to unused qubits).</p>
+<p>A better way to see which qubits are actually utilized is to print a <strong>timeslice diagram</strong> of the circuit. A timeslice diagram depicts the parts of the circuit executed between two <code class="docutils literal notranslate"><span class="pre">TICK</span></code> operations.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stim</span></code> automatically injects <code class="docutils literal notranslate"><span class="pre">TICK</span></code> operations so that we can easily follow the code circuit execution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;timeslice-svg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that in each round of syndrome measurement, 4 blocks of parallel CNOT gates are applied. In each block, 6 CNOTs are executed - 4 for the stabilizers in the interior of the surface and 2 for the stabilizers at the boundary measuring 2 data qubits.</p>
+<p><strong>Note:</strong> The CNOT gates are executed in a specific order to avoid <strong>hook errors</strong>, which would spread low-weight Pauli errors, to higher weight Pauli errors, making fault-tolerant operations impossible!</p>
+<p>After each round, the ancillas are measured, extracting the stabilizer Eigenvalues, followed by a reset operation to re-use them for the next round of error detection.</p>
+<section id="circuit-metadata">
+<h3>Circuit Metadata<a class="headerlink" href="#circuit-metadata" title="Link to this heading"></a></h3>
+<p>In the circuit above, we can see two other annotations, besides the <code class="docutils literal notranslate"><span class="pre">TICK</span></code> operation, which do not correspond to quantum gates operating on the qubits.</p>
+<p>The first 16 instructions of the circuit use the <code class="docutils literal notranslate"><span class="pre">QUBIT_COORDS(x,</span> <span class="pre">y)</span> <span class="pre">qubit_index</span></code> annotation to provide Stim information about the qubit’s location in space. This information is utilized by various tools to visualize the circuit execution such as the <code class="docutils literal notranslate"><span class="pre">timeslice</span></code> visualizer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">17</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The second annotiation is the <code class="docutils literal notranslate"><span class="pre">DETECTOR</span></code> annotation which is discussed in the next section.</p>
+</section>
+<section id="detectors">
+<h3>Detectors<a class="headerlink" href="#detectors" title="Link to this heading"></a></h3>
+<p>We can see that Stim appended to the end of each QEC cycle a bunch of <code class="docutils literal notranslate"><span class="pre">DETECTOR</span></code> statements.</p>
+<p>A detector is a parity check, based on a set of measurements in the <strong>measurement record</strong> denoted as <code class="docutils literal notranslate"><span class="pre">rec</span></code>. Under noiseless execution, the <strong>parity of the detector should never change</strong>.</p>
+<p>The latest measurement in the measurement recored is accessible through <code class="docutils literal notranslate"><span class="pre">rec[-1]</span></code>.</p>
+<p>Each <code class="docutils literal notranslate"><span class="pre">DETECTOR</span></code> can be assigned a location in space-time via a triplet of coordinates (<span class="math notranslate nohighlight">\(x,y,z\)</span>), which can later be used to display a space-time graph.</p>
+<p>If we print the instructions for the first QEC cycle, we see that 4 detectors have been added. Those are used for the <span class="math notranslate nohighlight">\(Z\)</span>-type stabilizer parity checks, detecting Pauli-<span class="math notranslate nohighlight">\(X\)</span> errors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instructions for the first QEC cycle</span>
+<span class="n">circuit</span><span class="p">[</span><span class="mi">17</span><span class="p">:</span><span class="mi">37</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>What about the <span class="math notranslate nohighlight">\(X\)</span>-type stabilizers?</p>
+<p>Since at the beginning of the circuit we prepared our qubits in the <span class="math notranslate nohighlight">\(\ket{1}\)</span> state, they are already Eigenvectors of all <span class="math notranslate nohighlight">\(Z\)</span>-type stabilizers resulting in a deterministic measurement (<span class="math notranslate nohighlight">\(Z\)</span>-type stabilizers have an even amount of Pauli-<span class="math notranslate nohighlight">\(Z\)</span> operators cancelling out the phase-flip of <span class="math notranslate nohighlight">\(-1\)</span> for single physical qubits).</p>
+<p><strong>Example:</strong> <span class="math notranslate nohighlight">\(ZZZZ\ket{1}\ket{1}\ket{1}\ket{1} = (-1)^4 \ket{1}\ket{1}\ket{1}\ket{1} = \ket{1}\ket{1}\ket{1}\ket{1}\)</span></p>
+<p>For the <span class="math notranslate nohighlight">\(X\)</span>-type stabilizers, we require an initial measurement round projecting them randomly onto one of the 2 Eigenspaces <span class="math notranslate nohighlight">\(+1\)</span>/<span class="math notranslate nohighlight">\(-1\)</span>. Subsequent measurements, in the absence of noise, should always yield the same Eigenvalues when measuring the stabilizers.</p>
+<p>Therefore, we can add additional <code class="docutils literal notranslate"><span class="pre">DETECTOR</span></code> statements for the <span class="math notranslate nohighlight">\(X\)</span>-type stabilizers after the second round of measurements as shown below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span><span class="p">[</span><span class="mi">37</span><span class="p">:</span><span class="mi">60</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the second round, we bitwise XOR the measurement results of the first round, with the measurements of the second round.
+This way, <code class="docutils literal notranslate"><span class="pre">DETECTOR</span></code> events inform the decoder about changes in the syndromes in the presence of noise.</p>
+<p><strong>Note:</strong> The <code class="docutils literal notranslate"><span class="pre">SHIFT_COORDS</span></code> instruction can be used to shift the <span class="math notranslate nohighlight">\(z\)</span>-index (time) by 1, which allows us to to reuse the same detector coordinates in every QEC cycle.</p>
+</section>
+<section id="final-measurement-round">
+<h3>Final Measurement Round<a class="headerlink" href="#final-measurement-round" title="Link to this heading"></a></h3>
+<p>At the end of the circuit, all physical data qubits are measured destructively in the <span class="math notranslate nohighlight">\(X\)</span>-basis, and detectors computing <span class="math notranslate nohighlight">\(Z\)</span>-type stabilizer parities are defined.</p>
+<p>Finally, we define the logical observable measurement as the parity of physical qubits <span class="math notranslate nohighlight">\(1\)</span>, <span class="math notranslate nohighlight">\(8\)</span>, and <span class="math notranslate nohighlight">\(15\)</span>, corresponding to a logical <span class="math notranslate nohighlight">\(X_L\)</span> measurement.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span><span class="p">[</span><span class="mi">60</span><span class="p">::]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="detectors-in-the-absence-of-noise">
+<h3>Detectors in the Absence of Noise<a class="headerlink" href="#detectors-in-the-absence-of-noise" title="Link to this heading"></a></h3>
+<p>Without any noise in the circuit, our detectors and the logical observable should always measure the same parities.</p>
+<p>We can put this to the test by, compiling a <code class="docutils literal notranslate"><span class="pre">sampler</span></code> which will simulate the circuit and collect detector events.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a detector sampler</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">compile_detector_sampler</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample detection events and logical observable</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">detection_events</span><span class="p">,</span> <span class="n">observable_flips</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">shots</span><span class="p">,</span> <span class="n">separate_observables</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below we can see that the detection events never change parity</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">detection_events</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The same applies to the observable</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">observable_flips</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="noisy-surface-code-circuits">
+<h3>Noisy Surface Code Circuits<a class="headerlink" href="#noisy-surface-code-circuits" title="Link to this heading"></a></h3>
+<p>Now, that we understand how the Surface Code circuit looks like and how detectors behave, we can explore what happens when noise is added to the mix.</p>
+<p>Stim doesn’t support a noise model, like the ones Qiskit or Cirq support, but we can easily generate the same Surface Code circuit with noisy gates injected.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">noisy_circuit</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="o">.</span><span class="n">generated</span><span class="p">(</span>
+  <span class="s2">&quot;surface_code:rotated_memory_x&quot;</span><span class="p">,</span> 
+  <span class="n">rounds</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+  <span class="n">distance</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+  <span class="n">after_clifford_depolarization</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+  <span class="n">after_reset_flip_probability</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+  <span class="n">before_measure_flip_probability</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+  <span class="n">before_round_data_depolarization</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The cirucit contains now noise operations, simulating qubit reset, measurement and gate errors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">noisy_circuit</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;timeline-svg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With the noise, we observe for the first time logical errors after measuring the logical observable</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">10_000</span>
+
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">noisy_circuit</span><span class="o">.</span><span class="n">compile_detector_sampler</span><span class="p">()</span>
+<span class="n">detection_events</span><span class="p">,</span> <span class="n">observable_flips</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">shots</span><span class="p">,</span> <span class="n">separate_observables</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Success rate after 1 QEC cycle: </span><span class="si">{</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">observable_flips</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">shots</span><span class="p">))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We also observe detection events in the measured data, indicating the presence of errors:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">detection_events</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="the-detector-error-model-dem">
+<h2>The Detector Error Model (DEM)<a class="headerlink" href="#the-detector-error-model-dem" title="Link to this heading"></a></h2>
+<p>Our goal is to decode the Surface Code. In this section, we introduce a useful abstraction, called the <strong>detector error model (DEM)</strong> which we will use for decoding.</p>
+<p>Given a set of measurement parities, defined through detectors and logical observables in the circuit, the detector error model informs the decoder with which probability any of the checks fails due to an error.</p>
+<p>For our noisy Surface Code circuit, we can compile a detector model and print the DEM model representation</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dem</span> <span class="o">=</span> <span class="n">noisy_circuit</span><span class="o">.</span><span class="n">detector_error_model</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">dem</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first instruction</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="p">(</span><span class="mf">0.00193118</span><span class="p">)</span> <span class="n">D0</span> <span class="n">D2</span>
+</pre></div>
+</div>
+<p>tells us, that there is some error mechanism in our circuit, that occurs with probability <span class="math notranslate nohighlight">\(0.00193118\)</span> and that will flip the parities of both detectors <code class="docutils literal notranslate"><span class="pre">D0</span></code> and <code class="docutils literal notranslate"><span class="pre">D2</span></code>, defined as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">detector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="n">D0</span>
+<span class="n">detector</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="n">D2</span>
+</pre></div>
+</div>
+<p>in our Surface Code circuit. As a reminder: Detectors are directly associated with stabilizer measurements. This means, that the error probability tells us with which probability a stabilizer measurement will fail given the circuit-level noise model.</p>
+<section id="example-dem-for-repetition-code">
+<h3>Example: DEM for Repetition Code<a class="headerlink" href="#example-dem-for-repetition-code" title="Link to this heading"></a></h3>
+<p>Since our noisy Surface Code has many source of errors, retracing the source of error probabilities in the DEM is not a simple task.</p>
+<p>Instead, let’s continue our analysis for the <span class="math notranslate nohighlight">\(X\)</span>-flip repetition code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">repetition_circuit</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    X_ERROR(0.1) 0 1 2</span>
+<span class="s2">    CNOT 0 3 1 3 1 4 2 4 </span>
+<span class="s2">    MR 3 4</span>
+<span class="s2">    DETECTOR(0,0,0) rec[-1]</span>
+<span class="s2">    DETECTOR(0,0,0) rec[-2]</span>
+<span class="s2">  &quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">repetition_circuit</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;timeline-svg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The corresponding DEM has the following form</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dem</span> <span class="o">=</span> <span class="n">repetition_circuit</span><span class="o">.</span><span class="n">detector_error_model</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">dem</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Unsurprisingly, there are three possible errors affecting our detectors. Since both detectors measure the second qubit they will be flipped with probability <span class="math notranslate nohighlight">\(0.1\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span> <span class="n">D0</span> <span class="n">D1</span>
+</pre></div>
+</div>
+<p>Adding Pauli-<span class="math notranslate nohighlight">\(Z\)</span> errors to our circuit does not affect the DEM as the repetition code cannot detect them:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">repetition_circuit</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    X_ERROR(0.1) 0 1 2</span>
+<span class="s2">    Z_ERROR(0.1) 0 1 2</span>
+<span class="s2">    CNOT 0 3 1 3 1 4 2 4 </span>
+<span class="s2">    MR 3 4</span>
+<span class="s2">    DETECTOR(0,0,0) rec[-1]</span>
+<span class="s2">    DETECTOR(0,0,0) rec[-2]</span>
+<span class="s2">  &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">dem</span> <span class="o">=</span> <span class="n">repetition_circuit</span><span class="o">.</span><span class="n">detector_error_model</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">dem</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Replacing the Pauli-<span class="math notranslate nohighlight">\(X\)</span> and Pauli-<span class="math notranslate nohighlight">\(Z\)</span> errors by depolarizing noise, results in the following DEM:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">repetition_circuit</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    DEPOLARIZE1(0.1) 0 1 2</span>
+<span class="s2">    CNOT 0 3 1 3 1 4 2 4 </span>
+<span class="s2">    MR 3 4</span>
+<span class="s2">    DETECTOR(0,0,0) rec[-1]</span>
+<span class="s2">    DETECTOR(0,0,0) rec[-2]</span>
+<span class="s2">  &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">dem</span> <span class="o">=</span> <span class="n">repetition_circuit</span><span class="o">.</span><span class="n">detector_error_model</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">dem</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For depolarizing noise with probability <span class="math notranslate nohighlight">\(p\)</span>, Stim applies a given Pauli gate with  probability:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(I\)</span>: <span class="math notranslate nohighlight">\((1-p)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>: <span class="math notranslate nohighlight">\(\frac{p}{3}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(Y\)</span>: <span class="math notranslate nohighlight">\(\frac{p}{3}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(Z\)</span>: <span class="math notranslate nohighlight">\(\frac{p}{3}\)</span></p></li>
+</ul>
+<p>Therefore, we have a probability of <span class="math notranslate nohighlight">\(\frac{2p}{3}\)</span> that our detectors are flipped as we only need to take into account Pauli-<span class="math notranslate nohighlight">\(X\)</span> and Pauli-<span class="math notranslate nohighlight">\(Y\)</span> errors.</p>
+</section>
+<section id="dem-model-and-the-tanner-graph">
+<h3>DEM model and the Tanner Graph<a class="headerlink" href="#dem-model-and-the-tanner-graph" title="Link to this heading"></a></h3>
+<p>The detector errror model represents a weighted graph, where the nodes are parity checks and the weights represent independent error probabilities affecting the checks.</p>
+<p>This representation is very natural for decoders operating on a Tanner graph such as the <strong>Minimum-Weight Perfect Matching</strong> decoder introduced in the lecture.</p>
+<p>To further emphasize the relationship, we can visualize the DEM of a larger repetition code using Stim:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="o">.</span><span class="n">generated</span><span class="p">(</span>
+    <span class="s2">&quot;repetition_code:memory&quot;</span><span class="p">,</span>
+    <span class="n">rounds</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+    <span class="n">distance</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+    <span class="n">before_round_data_depolarization</span><span class="o">=</span><span class="mf">0.04</span><span class="p">,</span>
+    <span class="n">before_measure_flip_probability</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="n">circuit</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;timeline-svg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dem</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">detector_error_model</span><span class="p">()</span>
+<span class="n">dem</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;matchgraph-svg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The matching graph is a 2D space-time graph. The <span class="math notranslate nohighlight">\(x\)</span>-axis represents space and the <span class="math notranslate nohighlight">\(y\)</span>-axis time.</p>
+<p>At each time step, we count 8 vertices, representing the 8 detectors. Furthermore, we have two invisible boundary nodes, for matching errors on the outer qubits, which are only measured by a single detector.</p>
+<p>For analyzing the Surface Code DEM, it is usually simpler to print the graph in 3D</p>
+<p><strong>Exercise 1:</strong> Test different error mechanisms and see how they affect the connectivity in the DEM graph.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">noisy_circuit</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="o">.</span><span class="n">generated</span><span class="p">(</span>
+  <span class="s2">&quot;surface_code:rotated_memory_x&quot;</span><span class="p">,</span> 
+  <span class="n">rounds</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> 
+  <span class="n">distance</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+  <span class="c1"># before_round_data_depolarization=0.001,</span>
+  <span class="n">after_reset_flip_probability</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+  <span class="n">before_measure_flip_probability</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="n">dem</span> <span class="o">=</span> <span class="n">noisy_circuit</span><span class="o">.</span><span class="n">detector_error_model</span><span class="p">()</span>
+<span class="n">dem</span><span class="o">.</span><span class="n">diagram</span><span class="p">(</span><span class="s1">&#39;matchgraph-3d&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dem-model-for-decoder-research-and-reproducibility">
+<h3>DEM model for Decoder Research and Reproducibility<a class="headerlink" href="#dem-model-for-decoder-research-and-reproducibility" title="Link to this heading"></a></h3>
+<p>Besides being a powerful abstraction, a DEM model is also very useful for sharing noise models.</p>
+<p>DEM model errors can be measured on a real device and loaded into Stim, making Stim a powerful tool for evaluating decoders even without access to actual hardware.</p>
+<p>DEM models for Google’s recent paper: <a class="reference external" href="https://arxiv.org/html/2408.13687v1#S11"><em>Quantum Error Correction Below the Surface Code Threshold</em></a> can be found on <a class="reference external" href="https://zenodo.org/records/13273331">Zenodo</a></p>
+</section>
+</section>
+<section id="decoding-errors-minimum-weight-perfect-matching">
+<h2>Decoding Errors: Minimum-Weight Perfect Matching<a class="headerlink" href="#decoding-errors-minimum-weight-perfect-matching" title="Link to this heading"></a></h2>
+<p>Given a DEM model, it is straightforward to feed the graph and detector events to a minimum-weight perfect matching decoder.</p>
+<p>In this tutorial, we are going to use a MWPM implementation called <a class="reference external" href="https://arxiv.org/abs/2105.13082"><code class="docutils literal notranslate"><span class="pre">PyMatching</span></code></a>, developed by Oscar Higgots.</p>
+<p>We’ll begin by instantiating a noisy repetition circuit in Stim:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instantiate noisy repetition code</span>
+<span class="n">noisy_repetition_circuit</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="o">.</span><span class="n">generated</span><span class="p">(</span>
+    <span class="s2">&quot;repetition_code:memory&quot;</span><span class="p">,</span>
+    <span class="n">rounds</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+    <span class="n">distance</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+    <span class="n">before_round_data_depolarization</span><span class="o">=</span><span class="mf">0.04</span><span class="p">,</span>
+    <span class="n">before_measure_flip_probability</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="c1"># Instantiate a sampler to sample detector events </span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">compile_detector_sampler</span><span class="p">()</span>
+
+<span class="c1"># Sample detection events and observable flips</span>
+<span class="n">num_shots</span> <span class="o">=</span> <span class="mi">10_000</span>
+<span class="n">detection_events</span><span class="p">,</span> <span class="n">observable_flips</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">num_shots</span><span class="p">,</span> <span class="n">separate_observables</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Success rate after 25 QEC cycles: </span><span class="si">{</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">observable_flips</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">num_shots</span><span class="p">))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we import <code class="docutils literal notranslate"><span class="pre">PyMatching</span></code> and use its bindings to construct a graph from our DEM and return predictions given detection events.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pymatching</span>
+
+<span class="c1"># generate DEM for noisy circuit</span>
+<span class="n">detector_error_model</span> <span class="o">=</span> <span class="n">noisy_repetition_circuit</span><span class="o">.</span><span class="n">detector_error_model</span><span class="p">(</span><span class="n">decompose_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Istantiate MWPM decoder</span>
+<span class="n">matcher</span> <span class="o">=</span> <span class="n">pymatching</span><span class="o">.</span><span class="n">Matching</span><span class="o">.</span><span class="n">from_detector_error_model</span><span class="p">(</span><span class="n">detector_error_model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can print some metadata about the decoder</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of detectors:&quot;</span><span class="p">,</span> <span class="n">matcher</span><span class="o">.</span><span class="n">num_detectors</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of nodes:&quot;</span><span class="p">,</span> <span class="n">matcher</span><span class="o">.</span><span class="n">num_nodes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of edges: &quot;</span><span class="p">,</span> <span class="n">matcher</span><span class="o">.</span><span class="n">num_edges</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we are ready to decode our sampled data!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">matcher</span><span class="o">.</span><span class="n">decode_batch</span><span class="p">(</span><span class="n">detection_events</span><span class="p">)</span>
+<span class="c1"># print(predictions)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we need to count the decoding mistakes</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Count the mistakes.</span>
+<span class="n">num_errors</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">shot</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shots</span><span class="p">):</span>
+    <span class="n">actual_for_shot</span> <span class="o">=</span> <span class="n">observable_flips</span><span class="p">[</span><span class="n">shot</span><span class="p">]</span>
+    <span class="n">predicted_for_shot</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="n">shot</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">actual_for_shot</span><span class="p">,</span> <span class="n">predicted_for_shot</span><span class="p">):</span>
+        <span class="n">num_errors</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of errors for </span><span class="si">{</span><span class="n">num_shots</span><span class="si">}</span><span class="s2"> shots: </span><span class="si">{</span><span class="n">num_errors</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="estimating-the-repetition-code-threshold">
+<h2>Estimating the Repetition Code Threshold<a class="headerlink" href="#estimating-the-repetition-code-threshold" title="Link to this heading"></a></h2>
+<p>In order to calculate the threshold of a code for a fixed noise model and decoder, we need to evaluate the decoder at different code distances <span class="math notranslate nohighlight">\(d\)</span> and noise-levels <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p>We start by writing a function that automates the steps we performed above:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_logical_errors</span><span class="p">(</span><span class="n">circuit</span><span class="p">:</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="p">,</span> <span class="n">num_shots</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="c1"># Sample the circuit.</span>
+    <span class="n">sampler</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">compile_detector_sampler</span><span class="p">()</span>
+    <span class="n">detection_events</span><span class="p">,</span> <span class="n">observable_flips</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">num_shots</span><span class="p">,</span> <span class="n">separate_observables</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Configure a decoder using the circuit.</span>
+    <span class="n">detector_error_model</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">detector_error_model</span><span class="p">(</span><span class="n">decompose_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">matcher</span> <span class="o">=</span> <span class="n">pymatching</span><span class="o">.</span><span class="n">Matching</span><span class="o">.</span><span class="n">from_detector_error_model</span><span class="p">(</span><span class="n">detector_error_model</span><span class="p">)</span>
+
+    <span class="c1"># Run the decoder.</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">matcher</span><span class="o">.</span><span class="n">decode_batch</span><span class="p">(</span><span class="n">detection_events</span><span class="p">)</span>
+
+    <span class="c1"># Count the mistakes.</span>
+    <span class="n">num_errors</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">shot</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_shots</span><span class="p">):</span>
+        <span class="n">actual_for_shot</span> <span class="o">=</span> <span class="n">observable_flips</span><span class="p">[</span><span class="n">shot</span><span class="p">]</span>
+        <span class="n">predicted_for_shot</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="n">shot</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">actual_for_shot</span><span class="p">,</span> <span class="n">predicted_for_shot</span><span class="p">):</span>
+            <span class="n">num_errors</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">num_errors</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The function returns the number of logical errors for <code class="docutils literal notranslate"><span class="pre">num_shots</span></code>. From that, we can compute the <strong>logical error rate (LER)</strong> per shot needed for our threshold evaluation.</p>
+<p>Next, let’s run our threshold estimation for our repetition code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">num_shots</span> <span class="o">=</span> <span class="mi">10_000</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Code distance:&quot;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">noise</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]:</span>
+        <span class="n">circuit</span> <span class="o">=</span> <span class="n">stim</span><span class="o">.</span><span class="n">Circuit</span><span class="o">.</span><span class="n">generated</span><span class="p">(</span>
+            <span class="s2">&quot;repetition_code:memory&quot;</span><span class="p">,</span>
+            <span class="n">rounds</span><span class="o">=</span><span class="n">d</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="n">distance</span><span class="o">=</span><span class="n">d</span><span class="p">,</span>
+            <span class="n">before_round_data_depolarization</span><span class="o">=</span><span class="n">noise</span><span class="p">)</span>
+        <span class="n">num_errors_sampled</span> <span class="o">=</span> <span class="n">count_logical_errors</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">num_shots</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decoding errors at noise level </span><span class="si">{</span><span class="n">noise</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">num_errors_sampled</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span>
+        <span class="n">ys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_errors_sampled</span> <span class="o">/</span> <span class="n">num_shots</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">d</span><span class="p">,</span> <span class="p">[</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;physical error rate&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;logical error rate per shot&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The results look very promising. Based on our simulation, the threshold for the repetition code is around <span class="math notranslate nohighlight">\(p=0.4\)</span>!</p>
+<p>For physical noise levels <span class="math notranslate nohighlight">\(\le p\)</span> we observe a significant decrease of the LER, consistent with the threshold theorem.</p>
+<p>Unfortunately, the repetition code is not as good as the graph might indicate!</p>
+<p>There are several problems with our result:</p>
+<ul class="simple">
+<li><p>The repetition code doesn’t consider <span class="math notranslate nohighlight">\(Z\)</span>-type errors</p></li>
+<li><p>We didn’t introduce any reset or measurement errors</p></li>
+<li><p>Our noise model is missing important error processes such as for example <em>leakage</em>, where the qubit escapes its computational subspace and leaks to higher energy states such as <span class="math notranslate nohighlight">\(\ket{2}, \ket{3}, ...\)</span>.</p></li>
+</ul>
+<p>Nevertheless, we were able to estimate the code threshold with a few lines of code, demonstrating the usefulness of Stim :-)</p>
+<p>Next, we are going to evaluate the Surface Code under a slightly more realistic noise model to get an idea of the threshold value of a <em>real</em> quantum code.</p>
+</section>
+<section id="exercise-estimating-the-threshold-of-the-surface-code">
+<h2>Exercise: Estimating the Threshold of the Surface Code<a class="headerlink" href="#exercise-estimating-the-threshold-of-the-surface-code" title="Link to this heading"></a></h2>
+<p><strong>Exercise 2:</strong> Re-use the code for the repetition code to evaluate the Surface Code threshold. This time introduce reset and measurement errors as well depolarizing errors before the QEC cycles.</p>
+<p><strong>Tip 1:</strong> The threshold for the Surface Code is significantly lower than the one for the repetition code. Use a noise range between <span class="math notranslate nohighlight">\([0.002, 0.009]\)</span> to find the threshold.</p>
+<p><strong>Tip 2:</strong> Observe the number of shots needed to sample a logical error and adjust the number of shots accordingly</p>
+<p><strong>Exercise 3:</strong> The error suppression factor <span class="math notranslate nohighlight">\(\Lambda = \frac{\varepsilon_d}{\varepsilon_{d+2}}\)</span> is an important metric to see if our code effectively suppresses the error.</p>
+<p>The LER is denoted as <span class="math notranslate nohighlight">\(\varepsilon_d\)</span>, at a fixed code distance <span class="math notranslate nohighlight">\(d\)</span> and physical error rate <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p>Calculate <span class="math notranslate nohighlight">\(\Lambda\)</span> at <span class="math notranslate nohighlight">\(p=2 \times 10^{-3}\)</span> and compare it to the theoretical estimate <span class="math notranslate nohighlight">\(p_{thr}/p\)</span>.</p>
+<p><strong>Tip:</strong> You can use the <code class="docutils literal notranslate"><span class="pre">results</span></code> list object for your calculations.</p>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<p>To learn more about Stim:</p>
+<ul class="simple">
+<li><p>Read the <a class="reference external" href="https://github.com/quantumlib/Stim/blob/main/doc/getting_started.ipynb"><code class="docutils literal notranslate"><span class="pre">Getting</span> <span class="pre">Started</span> <span class="pre">Tutorial</span></code></a> which forms the basis for this notebook.</p></li>
+<li><p>Check out the paper <a class="reference external" href="https://quantum-journal.org/papers/q-2021-07-06-497/"><code class="docutils literal notranslate"><span class="pre">Stim:</span> <span class="pre">A</span> <span class="pre">fast</span> <span class="pre">stabilizer</span> <span class="pre">circuit</span> <span class="pre">simulator</span></code></a> to learn about Stim’s internals and how it is leveraging <a class="reference external" href="https://www.intel.com/content/www/us/en/support/articles/000005779/processors.html">SIMD instructions</a> to squeeze the maximum performance out of our CPUs.</p></li>
+</ul>
+<p>To learn more about the Surface Code:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/abs/1208.0928">Paper</a> introducing the surface code and logical gates by Fowler et al.</p></li>
+<li><p>Google’s Surface Code experiment: <a class="reference external" href="https://arxiv.org/html/2408.13687v1#S11"><code class="docutils literal notranslate"><span class="pre">Quantum</span> <span class="pre">error</span> <span class="pre">correction</span> <span class="pre">below</span> <span class="pre">the</span> <span class="pre">surface</span> <span class="pre">code</span> <span class="pre">threshold</span></code></a> contains a lot of details about different noise simulation techniques and other decoder types.</p></li>
+</ul>
+<p>To learn more about QEC codes, visit the QEC Zoo: https://errorcorrectionzoo.org/ !</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../css_code_steane/" class="btn btn-neutral float-left" title="Tutorial - Fault-Tolerant Quantum Computing with CSS codes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../qmc_fin/" class="btn btn-neutral float-right" title="Quantum Monte Carlo and quantum finance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, The contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
